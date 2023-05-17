@@ -13,7 +13,6 @@ const configDB = {
   charset: 'utf8'
 }
 
-console.log(configDB)
 // api/address/region
 router.get(
   '/region',

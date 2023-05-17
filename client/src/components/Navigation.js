@@ -1,15 +1,16 @@
-import React, {useEffect, useState, useCallback} from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import 'materialize-css'
-import {Button} from 'react-materialize'
+import { Button } from 'react-materialize'
 import './Navigation.scss'
-import {ReportPanel} from "./ReportPanel"
-import {useHttp} from "../hooks/http.hook"
-import {Link} from "react-router-dom"
-import {Legend} from "./Legend"
+import { ReportPanel } from "./ReportPanel"
+import { PointsPanel } from "./ExpertSystem/PointsPanel"
+import { useHttp } from "../hooks/http.hook"
+import { Link } from "react-router-dom"
+import { Legend } from "./Legend"
 
 export const Navigation = (props) => {
 
-  const {error, request, clearError} = useHttp()
+  const { error, request, clearError } = useHttp()
 
   const [state, setState] = useState({
     area: []
@@ -23,12 +24,29 @@ export const Navigation = (props) => {
     show: false
   })
 
+  const [pointsCalculatorState, setPointsCalculatorState] = useState({
+    show: false
+  })
+
   const handleReportButtonClick = () => {
-    setReportState({...reportState, 'show': !reportState.show})
+    setReportState({ ...reportState, 'show': !reportState.show })
 
     if (legendState.show) {
-      setLegendState({...legendState, show: !legendState.show})
+      setLegendState({ ...legendState, show: !legendState.show })
     }
+  }
+
+  const handlePointsCalculatorButtonClick = () => {
+    setPointsCalculatorState({ ...pointsCalculatorState, 'show': !pointsCalculatorState.show })
+
+    if (legendState.show) {
+      setLegendState({ ...legendState, show: !legendState.show })
+    }
+
+    if (reportState.show) {
+      setReportState({ ...reportState, show: !reportState.show })
+    }
+
   }
 
   useEffect(() => {
@@ -47,23 +65,28 @@ export const Navigation = (props) => {
         area: fetched
       })
 
-    } catch (e) {}
+    } catch (e) { }
   }, [request])
 
   const handleLegendButtonClick = () => {
-    setLegendState({...legendState, show: !legendState.show})
+    setLegendState({ ...legendState, show: !legendState.show })
 
     if (reportState.show) {
-      setReportState({...reportState, 'show': !reportState.show})
+      setReportState({ ...reportState, 'show': !reportState.show })
     }
   }
 
   const setLegendShowHandle = () => {
-    setLegendState({...legendState, show: !legendState.show})
+    setLegendState({ ...legendState, show: !legendState.show })
   }
 
   const handleReportPanelHide = () => {
-    setReportState({...reportState, 'show': !reportState.show})
+    setReportState({ ...reportState, 'show': !reportState.show })
+  }
+
+  
+  const handlePointsCalculatorHide = () => {
+    setPointsCalculatorState({ ...pointsCalculatorState, 'show': !pointsCalculatorState.show })
   }
 
   const handleButtonCloseClick = () => {
@@ -95,7 +118,18 @@ export const Navigation = (props) => {
 
         <div className="navigation__nav navigation__nav--top">
 
+          <Button
+            className="navigation__button blue darken-4 navigation__link"
+            node="button"
+            waves="light"
+            onClick={handlePointsCalculatorButtonClick}
+          >
+            Калькулятор баллов
+          </Button>
+
+
           <Link to="/management" className="navigation__link">
+
             <Button
               className="navigation__button blue darken-4"
               node="button"
@@ -154,18 +188,26 @@ export const Navigation = (props) => {
 
           </div>
 
-          { reportState.show &&
-          <ReportPanel
-            hide={handleReportPanelHide}
-            area={state.area}
-            closeModal={handleReportButtonClick}
-          />
+          {reportState.show &&
+            <ReportPanel
+              hide={handleReportPanelHide}
+              area={state.area}
+              closeModal={handleReportButtonClick}
+            />
           }
 
-          { legendState.show &&
-          <Legend
-            setShow={setLegendShowHandle}
-          />
+          {legendState.show &&
+            <Legend
+              setShow={setLegendShowHandle}
+            />
+          }
+
+          {pointsCalculatorState.show &&
+            <PointsPanel
+              hide={handlePointsCalculatorHide}
+              // area={state.area}
+              closeModal={handlePointsCalculatorButtonClick}
+            />
           }
         </div>
 

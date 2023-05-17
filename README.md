@@ -1,7 +1,7 @@
 
----
+
 ## Клиент (_Windows_)
----
+
 ### Ошибка при запуске npm run start в папке \client
 
 Если у вас свежая версия nodejs (_Node.js v18.12.1_): 
@@ -13,9 +13,9 @@
  написать в package.json в папке \client
  `"start": "react-scripts --openssl-legacy-provider start"`
 
----
+
 ## Сервер (Windows)
----
+
 ### локальная разработка
 
 на серверной части в package.json перейти на локальную разработку на своем ПК `NODE_ENV=_default_
@@ -55,13 +55,18 @@ If that doesn't work, try it without @'localhost' part.
 `pm2 start app.js`
 `pm2 kill`
 
----
+
 ## MYSQL
----
+
 на официальном сайте скачать **MySQL Workbench 8.0** и **MySQL Installer** (чтобы быстро скачать и настроить сервер для запуска БД)
 
 ### MySQL Workbench
 MySQL80 должет быть в состоянии "выполняется" в службах на ПК, все настройки подключения посмотреть в MySQL Installer к этому серверу
+
+
+## Плагины для VSCode
+
+* **REST Client** (testApi.http, можно быстро протестировать api-шки)
 
 
 
