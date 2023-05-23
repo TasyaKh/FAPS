@@ -11,10 +11,10 @@ export const PointsPanel = (props) => {
     columns: [],
     conditions: []
   })
-  // const [data, setData] = useState({
-  //   headers: [],
-  //   objects: []
-  // })
+  const [data, setData] = useState({
+    headers: [],
+    objects: []
+  })
 
   const { loading, error, request, clearError } = useHttp()
 
@@ -25,25 +25,25 @@ export const PointsPanel = (props) => {
     clearError()
   }, [clearError, error])
 
-  // const fetchData = useCallback(async (body) => {
-  //   try {
 
-  //     const fetched = await request('/api/reports', 'POST', body)
+  const handleReportButton = () => {
+    setData({
+      ...state,
+      objects: []
+    })
 
-  //     setData(fetched)
+   setPoints(state)
+  }
 
-  //   } catch (e) {}
-  // }, [request])
+  const setPoints = useCallback(async (body) => {
+    try {
 
-  // const handleReportButton = () => {
-  //   setData({
-  //     ...state,
-  //     objects: []
-  //   })
+      const fetched = await request('/api/points', 'POST', body)
 
-  //   fetchData(state)
-  // }
+      // setData(fetched)
 
+    } catch (e) {}
+  }, [request])
 
   return (
     <div className={`points-panel shadow ${props.className}`}>
@@ -61,15 +61,6 @@ export const PointsPanel = (props) => {
           className="points-panel__collapsible"
           accordion
         >
-          <CollapsibleItem
-            expanded={false}
-            header="Придумать"
-            node="div"
-            className="points-panel__collapsible-item points-panel__collapsible-item--prepared"
-          >
-
-            Пусто
-          </CollapsibleItem>
 
           <CollapsibleItem
             expanded
@@ -82,7 +73,7 @@ export const PointsPanel = (props) => {
               setParams={setState}
               area={props.area}
               params={state}
-              // handleReportButton={handleReportButton}
+              handleReportButton={handleReportButton}
               closeModal={props.closeModal}
             />
 

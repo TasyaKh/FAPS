@@ -18,6 +18,8 @@ import apiReportsWord from './routes/word.routes.js'
 import apiUpload from './routes/upload.routes.js'
 import apiAddress from './routes/address.routes.js'
 import apiLocation from './routes/location.routes.js'
+import apiPoints from './routes/points.routes.js'
+
 import apiEdit from './routes/edit.routes.js'
 
 app.use(express.json({
@@ -46,6 +48,8 @@ app.use('/api/reports/area', apiReportsArea)
 
 app.use('/api/reports/pdf', apiReportsPDF)
 app.use('/api/reports/word', apiReportsWord)
+
+app.use('/api/points', apiPoints)
 
 if (process.env.NODE_ENV === 'production') {
   console.log('Production mode')

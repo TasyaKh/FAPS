@@ -3,187 +3,37 @@
 # Region--------------------------------------------------------
 ###
 
-GET http://localhost:3000/api/address/district
-
-
-
-
-
-
-
-
+POST http://localhost:3000/api/location/localities
 
 ###
-# EVENTS--------------------------------------------------------
-GET http://localhost:3000/api/events?id=20
+
+POST http://localhost:3000/api/location/regions
 
 ###
-GET http://localhost:3000/api/events/5
-
-### events_of_team
-GET http://localhost:3000/api/events/events_of_team/7?level=1
-###
-GET http://localhost:3000/api/events?direction=5
-
-
-
-
-###
-# journals
-GET http://localhost:3000/api/events/journal
-###
-GET http://localhost:3000/api/events/external
-
-
-
-
-###
-# TEAMS--------------------------------------------------------
-# TEAMS--------------------------------------------------------
-# get all users from specific team
-GET http://localhost:3000/api/teams/direction?id_parent=2
-
-###
-# get team by id
-GET http://localhost:3000/api/teams/?id_parent=2
-
-###
-# select head user and teams
-GET http://localhost:3000/api/teams/1
-
-###
-PUT  http://localhost:3000/api/teams/37/change_archive HTTP/1.1
+POST http://localhost:3000/api/points
 content-type: application/json
 
 {
-    "isArchive":true
+    "district_id":3,
+    "pointsAdult":20,
+    "pointsChild":30,
+    "pointsSMP":20,
+    "SMPKm":20,
+
+    "pointsStaffing":20,
+    "staffingPersent":20,
     
+    "pointsState":20,
+
+    "pointsPMSP":20,
+    "PMSPKm":20,
+
+    "pointsAge":20,
+    "ageYears":1900,
+
+    "deteroationGood":20,
+    "deteroationMedium":20,
+    "deteroationBad":20,
+    "deteroationOld":20,
+    "pointsUnfit":20
 }
-###
-# create new team
-POST http://localhost:3000/api/teams HTTP/1.1
-content-type: application/json
-
-{
-    "userID":null,
-    "shortname": "dddd2",
-    "description": "Хотим подняться на гору",
-    "title":"hddddhh",
-    "document":"hddddhh",
-    "charterTeam":"dddddd",
-    "cabinet":"8"
-   
-}
-
-###
-PUT http://localhost:3000/api/teams/17 HTTP/1.1
-content-type: application/json
-
-{
-    "oldLeaderId":63,
-    "newLeaderId":54,
-    "shortname": "train1",
-    "description": "Хотим подняться на гору",
-    "title":"hddddhh",
-    "document":"hddddhh",
-    "charterTeam":"dddddd",
-    "cabinet":"8"
-   
-}
-
-###
-# student-------------------------------------------------------
-POST http://localhost:3000/api/users HTTP/1.1
-content-type: application/json
-
-{
-    "studnumber": "9",
-    "fullname": "psmsokmgoksmbk",
-    "email": "string",
-    "education_group": "string",  
-    "institute": "string",
-    "gender": "string" ,
-    "phone": "string",
-    "birthdate": "24-07-2001",
-    "type_time_study": "string",
-    "permissions":[]
-}
-
-
-
-
-
-###
-# functions------------------------------------------------------
-
-//create new
-POST http://localhost:3000/api/users/functions HTTP/1.1
-content-type: application/json
-
-{
-    "title": "shit2",
-    "team": 31
-   
-}
-
-###
-DELETE  http://localhost:3000/api/users/team/17/leader/54 HTTP/1.1
-
-# update
-###
-PUT http://localhost:3000/api/users/functions/59 HTTP/1.1
-content-type: application/json
-
-{
-    "title": "shit4",
-    "team":30
-}
-
-
-
-
-
-
-
-
-###
-# user functions------------------------------------------------
-
-//create new
-POST http://localhost:3000/api/users/userFunctions HTTP/1.1
-content-type: application/json
-
-{
-    "user": "300",
-    "function": "21"
-   
-}
-
-###
-# login
-POST https://rating-teams-events.ovz1.j37315531.m1yvm.vps.myjino.ru/api/users/login HTTP/1.1
-content-type: application/json
-
-{
-    "password":123,
-    "username": "bossTeam"
-}
-
-###
-# DICTIONARY
-GET http://localhost:3000/api/general/dictionary/2
-
-
-# FILE
-###
-GET http://localhost:3000/api/uploads/file_buffer?path=./public/media/6b3620e359194339a2bc2409fb8de569.png
-
-# get excel file event direction REPORT
-###
-GET http://localhost:3000/api/uploads/excel/events_direction
-
-###
-GET http://localhost:3000/api/uploads/excel/events_of_team?teamId=1
-
-
-

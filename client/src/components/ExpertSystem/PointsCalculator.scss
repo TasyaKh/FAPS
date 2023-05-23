@@ -9,6 +9,10 @@
 	width: 100%;
 	z-index: 3;
 
+	overflow-y: auto;
+	height: auto;
+	max-height: 97%;
+
 	.select-dropdown {
 		max-height: 300px;
 	}
@@ -48,6 +52,23 @@
 		margin: 0;
 		border: none;
 		box-shadow: none;
+
+	}
+
+	&__collapsible-one-elem {
+		padding: 10px;
+		margin: 0;
+		box-shadow: none;
+		border-radius: 10px;
+	}
+
+
+	&__collapsible-one-elem-item {
+		
+		
+		.collapsible-header{
+			padding: 10px !important;
+		}
 	}
 
 	&__collapsible-item {

@@ -52,7 +52,7 @@ If that doesn't work, try it without @'localhost' part.
 
 **Команды:**
 `pm2 logs` 
-`pm2 start app.js`
+`pm2 start app.js --watch`
 `pm2 kill`
 
 
@@ -62,6 +62,14 @@ If that doesn't work, try it without @'localhost' part.
 
 ### MySQL Workbench
 MySQL80 должет быть в состоянии "выполняется" в службах на ПК, все настройки подключения посмотреть в MySQL Installer к этому серверу
+
+### Ошибки
+ > sqlMessage: "Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'map.locality.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by",
+
+ **Решение:**
+ Выполнить Query в MySQL
+ `SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));`
+
 
 
 ## Плагины для VSCode
