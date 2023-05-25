@@ -9,6 +9,7 @@ POST http://localhost:3000/api/location/localities
 
 POST http://localhost:3000/api/location/regions
 
+# points
 ###
 POST http://localhost:3000/api/points
 content-type: application/json
@@ -36,4 +37,13 @@ content-type: application/json
     "deteroationBad":20,
     "deteroationOld":20,
     "pointsUnfit":20
+}
+
+# points/locality
+###
+GET http://localhost:3000/api/points/localities
+content-type: application/json
+
+{
+ "district_id":1
 }

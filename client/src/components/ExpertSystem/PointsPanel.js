@@ -38,10 +38,7 @@ export const PointsPanel = (props) => {
   const setPoints = useCallback(async (body) => {
     try {
 
-      const fetched = await request('/api/points', 'POST', body)
-
-      // setData(fetched)
-
+      await request('/api/points', 'POST', body)
     } catch (e) {}
   }, [request])
 

@@ -3,15 +3,11 @@ import './PointsPanel'
 import { Select, Button, TextInput} from "react-materialize"
 import { useHttp } from "../../hooks/http.hook"
 import { CollapsibleItem, Collapsible } from "react-materialize"
-import magnifer from "../../img/magnifier.svg";
 import {SelectArea} from "../SelectArea"
 
 export const PointsCalculator = (props) => {
 
   const { loading, error, request, clearError } = useHttp()
-  const [types, setTypes] = useState([])
-  const [population, setPopulation] = useState([])
-  const [staffing, setStaffing] = useState([])
 
   const handleTextareaBlur = (e) => {
     const { target } = e

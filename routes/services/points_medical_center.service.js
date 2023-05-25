@@ -7,9 +7,10 @@ export async function setPointsMedicalCenters(req, res, values, conditions) {
 
     let query
     try {
-
+       
         if (req.body.district_id) {
-
+  
+        
             //get medical centers by district id
             query =
                 'SELECT `medical_center`.`id`, `medical_center`.`locality_id`, `medical_center`.`founding_year`,\n' +
@@ -46,7 +47,7 @@ export async function setPointsMedicalCenters(req, res, values, conditions) {
             // res.json(rows)
 
         } else {
-            console.log("cant find district is null")
+            console.log("cant find district is null, medical_center")
         }
     } catch (e) {
         console.log(e)
@@ -97,9 +98,9 @@ async function setPointsMedicalCenter(values, conditions, medCenter) {
                 // Update the existing record
                 connection.query(updateQuery, updateV, (error) => {
                     if (error) {
-                        console.error('Error updating record:', error);
+                        console.error('Error updating record points_medical_center:', error);
                     } else {
-                        console.log('Record updated successfully');
+                        console.log('Record points_medical_center updated successfully');
                     }
                 });
             } else {
@@ -109,9 +110,9 @@ async function setPointsMedicalCenter(values, conditions, medCenter) {
                 // Insert a new record
                 connection.query(insertQuery, insertV, (error) => {
                     if (error) {
-                        console.error('Error inserting record:', error);
+                        console.error('Error inserting record points_medical_center:', error);
                     } else {
-                        console.log('Record inserted successfully');
+                        console.log('Record points_medical_center inserted successfully');
                     }
                 });
             }
