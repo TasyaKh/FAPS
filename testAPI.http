@@ -41,9 +41,9 @@ content-type: application/json
 
 # points/locality
 ###
-GET http://localhost:3000/api/points/localities
+POST http://localhost:3000/api/points/medical-centers
 content-type: application/json
 
 {
- "district_id":1
+ "district_id":2
 }

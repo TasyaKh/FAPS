@@ -21,8 +21,6 @@ export default class PointsMedicalCenter {
     getSum() {
         const s = ( this.foundation_year + this.staffing + this.state + this.age_staffing +
             this.deteroation)
-        // console.log(this.adult_population)
-
         return s
     }
 }

@@ -4,17 +4,14 @@ import connection from '../../db.js'
 
 export async function getPointsLocalitiesOfDistrict(req, res) {
     let r
-    console.log("req.body.district_id")
-    console.log(req.body.district_id)
+   
     try {
 
         if (req.body.district_id) {
 
-            //получить мед учреждение с минимальными баллами (чем ниже балл, тем лучше)
-
            const query = `SELECT locality.name, points_locality.availability_PMSP, points_locality.availability_SMP,
                     points_locality.population_adult, points_locality.population_child, points_locality.water_supply,
-                    points_locality.sewerage, points_locality.heating, points_locality.internet
+                    points_locality.sewerage, points_locality.heating, points_locality.internet, points_locality.sum
                     FROM points_locality 
                                     LEFT JOIN locality
                                     ON points_locality.locality_id = locality.id

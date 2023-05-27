@@ -3,7 +3,7 @@ import { ReportPanel } from 'components/ReportPanel'
 import { TableView } from 'components/TableView'
 import { useHttp } from 'hooks/http.hook'
 import Scrollbars from 'react-custom-scrollbars'
-import { ProgressBar } from 'react-materialize'
+import { ProgressBar, RadioGroup, Tab, Tabs } from 'react-materialize'
 import { FilterPointsLocalities } from 'components/ExpertSystem/FilterPointsLocalities'
 import './PointsLocalities.scss'
 import { TableMC } from 'components/ExpertSystem/TableMC'
@@ -14,12 +14,12 @@ export const PointsLocalities = () => {
 
     const [state, setState] = useState({
         modified: [],
-        default: []
+        isFaps: false,
     })
 
-    const [headers, setHeaders] = useState([])
 
-    const [visibleReports, setVisibleReports] = useState(false)
+    // const [isFaps, setIsFaps] = useState(false)
+
 
     useEffect(() => {
         if (error) {
@@ -29,67 +29,44 @@ export const PointsLocalities = () => {
     }, [clearError, error])
 
 
-    const reportViewRef = useRef()
-
-    const handleReportsViewClick = (e) => {
-        const { target } = e
-
-        if (reportViewRef.current === target) {
-            setVisibleReports(!visibleReports)
-        }
-    }
-
-    const updateData = (value, force = false) => {
+    const updateData = (value, faps) => {
 
         setState({
-            ...state,
-            default: force ? value : state.default,
-            modified: value
+            modified: value,
+            isFaps: faps
         })
 
-     
     }
+
 
     return (
         <div className="view">
 
-
             <CustomScrollbars>
-                <FilterPointsLocalities
-                    updateData={updateData}
-                />
 
-                <div className="container table-container">
+                <div className="container">
+                    <FilterPointsLocalities
+                        updateData={updateData}
+                    // setIsFaps={setIsFaps}
+                    />
 
-                    {
-                        loading ? <ProgressBar /> :
-                            state.modified.length === 0 ? 'Элементов не найдено, пожалуйста, измените критерии поиска' :
-                                <TableMC
-                                    data={state.modified}
-                                    // headers={headers}
-                                />
 
-                    }
+                    <div className="table-container">
 
+                        {
+                            loading ? <ProgressBar /> :
+                                state.modified.length === 0 ? 'Элементов не найдено, пожалуйста, измените критерии поиска' :
+                                    <TableMC
+                                        data={state.modified}
+                                        isFaps={state.isFaps}
+                                    />
+
+                        }
+
+                    </div>
                 </div>
 
             </CustomScrollbars>
-
-            {visibleReports &&
-                <div
-                    className="view__reports"
-                    ref={reportViewRef}
-                    onClick={handleReportsViewClick}
-                >
-
-                    <ReportPanel
-                        area={[]}
-                        className="view__report-panel"
-                        hide={() => setVisibleReports(false)}
-                    />
-
-                </div>
-            }
 
         </div>
     )
@@ -105,3 +82,5 @@ class CustomScrollbars extends Component {
         );
     }
 }
+
+

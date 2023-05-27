@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import './PointsCalculator.scss'
-import { CollapsibleItem, Collapsible, Button, Select } from "react-materialize"
+import { CollapsibleItem, Collapsible, Button, Select, ProgressBar } from "react-materialize"
 import { useHttp } from "../../hooks/http.hook"
 // import {ReportView} from "./ReportView"
 import { PointsCalculator } from "./PointsCalculator"
@@ -32,14 +32,14 @@ export const PointsPanel = (props) => {
       objects: []
     })
 
-   setPoints(state)
+    setPoints(state)
   }
 
   const setPoints = useCallback(async (body) => {
     try {
 
       await request('/api/points', 'POST', body)
-    } catch (e) {}
+    } catch (e) { }
   }, [request])
 
   return (
@@ -73,18 +73,16 @@ export const PointsPanel = (props) => {
               handleReportButton={handleReportButton}
               closeModal={props.closeModal}
             />
+            {
+              loading ? <ProgressBar /> : null
+
+          }
 
           </CollapsibleItem>
 
         </Collapsible>
 
       </div>
-
-      {/* <ReportView
-        loading={loading}
-        data={data}
-        parameters={state}
-      /> */}
 
     </div>
   )

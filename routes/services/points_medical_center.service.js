@@ -2,15 +2,56 @@ import PointsMedicalCenter from './enities/points_medical_center.entity.js'
 import connection from '../../db.js'
 
 
+export async function getPointsMedicalCentersOfDistrict(req, res) {
+    let r
+
+    try {
+
+        if (req.body.district_id) {
+
+            const query = `SELECT medical_center.name as mc_name, locality.name as locality_name,  pmc.foundation_year,
+                   pmc.state, pmc.staffing, pmc.age_staffing, pmc.deteroation, pmc.sum
+                   FROM points_medical_center as pmc
+                                   LEFT JOIN medical_center
+                                   ON pmc.medical_center_id = medical_center.id
+                                   LEFT JOIN locality
+                                   ON medical_center.locality_id = locality.id
+                              
+                                   WHERE district_id = ?`
+
+            const rows = await new Promise((resolve, reject) => {
+                connection.query(query, [req.body.district_id], (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            });
+
+            r = rows
+
+        } else {
+            console.log("cant find district is null")
+            res.status(500).json({ message: 'Район не найден' })
+        }
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' })
+    }
+
+    return r
+}
+
 // задать баллы медицинским пунктам
 export async function setPointsMedicalCenters(req, res, values, conditions) {
 
     let query
     try {
-       
+
         if (req.body.district_id) {
-  
-        
+
+
             //get medical centers by district id
             query =
                 'SELECT `medical_center`.`id`, `medical_center`.`locality_id`, `medical_center`.`founding_year`,\n' +
@@ -48,6 +89,7 @@ export async function setPointsMedicalCenters(req, res, values, conditions) {
 
         } else {
             console.log("cant find district is null, medical_center")
+            res.status(500).json({ message: 'Район не найден' })
         }
     } catch (e) {
         console.log(e)
@@ -106,7 +148,7 @@ async function setPointsMedicalCenter(values, conditions, medCenter) {
             } else {
                 const insertV = [medCenter.id, pointsMedicalCenter.foundation_year,
                 pointsMedicalCenter.state, pointsMedicalCenter.staffing,
-                pointsMedicalCenter.age_staffing, pointsMedicalCenter.deteroation,  pointsMedicalCenter.getSum()]
+                pointsMedicalCenter.age_staffing, pointsMedicalCenter.deteroation, pointsMedicalCenter.getSum()]
                 // Insert a new record
                 connection.query(insertQuery, insertV, (error) => {
                     if (error) {

@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { setPointsMedicalCenters } from './services/points_medical_center.service.js'
+import { getPointsMedicalCentersOfDistrict, setPointsMedicalCenters } from './services/points_medical_center.service.js'
 import { setPointsLocalities, getPointsLocalitiesOfDistrict } from './services/points_locality.service.js'
 
 import {PointsConditions, PointsValues } from './services/classes/points.js'
@@ -36,7 +36,10 @@ router.post(
     
     setPointsMedicalCenters(req, res, values, conditions)
     const r = await setPointsLocalities(req, res, values, conditions)
-    res.json(r)
+    res.json({
+      success: true
+    })
+   //res.json(r)
   }
 )
 
@@ -45,6 +48,15 @@ router.post(
   [],
   async (req, res) => {
      const r = await getPointsLocalitiesOfDistrict(req, res)
+     res.json(r)
+  }
+)
+
+router.post(
+  '/medical-centers',
+  [],
+  async (req, res) => {
+     const r = await getPointsMedicalCentersOfDistrict(req, res)
      res.json(r)
   }
 )
