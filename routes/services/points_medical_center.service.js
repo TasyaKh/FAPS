@@ -77,15 +77,10 @@ export async function setPointsMedicalCenters(req, res, values, conditions) {
                 });
             });
 
-            //let jsonMedCenters = JSON.stringify(rows)
-
+           
             for (let i = 0; i < rows.length; i++) {
-                // console.log("rows[i]")
-                // console.log(rows[i])
                 setPointsMedicalCenter(values, conditions, rows[i])
             }
-
-            // res.json(rows)
 
         } else {
             console.log("cant find district is null, medical_center")

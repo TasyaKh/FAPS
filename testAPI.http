@@ -41,7 +41,7 @@ content-type: application/json
 
 # points/locality
 ###
-POST http://localhost:3000/api/points/medical-centers
+POST http://localhost:3000/api/points/localities
 content-type: application/json
 
 {

@@ -9,15 +9,26 @@ export async function getPointsLocalitiesOfDistrict(req, res) {
 
         if (req.body.district_id) {
 
-           const query = `SELECT locality.name, points_locality.availability_PMSP, points_locality.availability_SMP,
-                    points_locality.population_adult, points_locality.population_child, points_locality.water_supply,
-                    points_locality.sewerage, points_locality.heating, points_locality.internet, points_locality.sum
-                    FROM points_locality 
-                                    LEFT JOIN locality
-                                    ON points_locality.locality_id = locality.id
-                                    LEFT JOIN population
-                                    ON points_locality.locality_id = population.locality_id
-                                    WHERE district_id = ?`
+           const query = `SELECT min_sum_fap, count_mc, locality.name, pl.availability_PMSP, pl.availability_SMP,
+            pl.population_adult, pl.population_child, pl.water_supply,
+            pl.sewerage, pl.heating, pl.internet, pl.sum
+            FROM points_locality  as pl
+            
+                    LEFT JOIN locality
+                    ON pl.locality_id = locality.id
+                    
+                      left JOIN (
+                           SELECT medical_center_id, locality_id, MIN(sum) AS min_sum_fap, COUNT(medical_center_id) as count_mc
+                           FROM points_medical_center
+                       
+                           -- выбрать учреждения
+                           LEFT JOIN medical_center as mc
+                           ON mc.id = medical_center_id
+                       
+                           GROUP BY locality_id) AS pmc
+                           ON pl.locality_id = pmc.locality_id
+                                               
+            WHERE district_id = ?`
 
             const rows = await new Promise((resolve, reject) => {
                 connection.query(query, [req.body.district_id], (err, result) => {

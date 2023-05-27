@@ -1,7 +1,7 @@
 import { SelectArea } from 'components/SelectArea'
 import { useHttp } from 'hooks/http.hook'
 import React, { useCallback, useEffect, useState } from 'react'
-import { columnsPointsLocalities, columnsPointsMedicalCenters } from './ColumnsTables'
+import { columnsPointsLocalities, columnsPointsMedicalCenters } from './AdditionData/ColumnsTables'
 
 export const FilterPointsLocalities = (props) => {
 

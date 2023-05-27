@@ -1,57 +1,8 @@
 import React, { useMemo } from "react"
 import { Table } from "react-materialize"
 import '../TableView.scss'
-
-// export const TableMC = ( /** @type {{ data: any[]; }} */ props) => {
-
-//    const headers = ["№", "НП", "ПМСП", "СМП", "Взрослое население", "Детское население", 
-//    "Водоснабжение", "Канализация", "Отопление", "Интернет", "Итог"]
-
-//     return (
-//             <Table  className="table-view">
-//                 <thead>
-//                     <tr >
-//                         {headers.map((obj, i) => (
-//                             <th
-//                                 key={i}
-//                                 className="table-view__header"
-//                             >
-//                                 {obj}
-//                             </th>
-//                         ))}
-
-//                     </tr>
-//                 </thead>
-//                 <tbody>
-//                     {props.data && props.data.map((obj, i) => (
-//                         <tr
-//                             key={i}
-//                             className='table-view__row'
-//                         >
-//                             <td>{i + 1}</td>
-//                             {Object.keys(obj).map((el, j) => (
-//                                 <td
-//                                     key={j}
-//                                     data-label={headers[j+1]??""}
-//                                 >
-//                                     {obj[el]}
-//                                 </td>
-//                             ))}
-
-//                         </tr>
-//                     ))}
-//                 </tbody>
-//             </Table>
-
-
-//     )
-// }
-
-// src/components/sorting.table.js
-
-
 import { useTable, useSortBy } from 'react-table'
-import { columnsPointsLocalities, columnsPointsMedicalCenters } from "./ColumnsTables"
+import { columnsPointsLocalities, columnsPointsMedicalCenters } from "./AdditionData/ColumnsTables"
 
 function TableL({ columns, data }) {
     // Use the state and functions returned from useTable to build your UI
@@ -121,8 +72,6 @@ function TableL({ columns, data }) {
 }
 
 export function TableMC(props) {
-
-
 
     const columns = useMemo(() => {
         if (props.isFaps) {

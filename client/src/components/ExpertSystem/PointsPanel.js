@@ -76,9 +76,11 @@ export const PointsPanel = (props) => {
             {
               loading ? <ProgressBar /> : null
 
-          }
+            }
 
           </CollapsibleItem>
+
+        
 
         </Collapsible>
 

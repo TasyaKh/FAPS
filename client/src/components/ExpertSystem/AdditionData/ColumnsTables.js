@@ -45,6 +45,14 @@ export const columnsPointsLocalities =
             Header: 'Итог',
             accessor: 'sum',
         },
+        {
+            Header: 'Кол-во учреждений',
+            accessor: 'count_mc',
+        },
+        {
+            Header: 'Мин балл учреждений',
+            accessor: 'min_sum_fap',
+        },
     ],
 }
 

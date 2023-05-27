@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState, Component, useRef } from 'react'
-import { ReportPanel } from 'components/ReportPanel'
-import { TableView } from 'components/TableView'
 import { useHttp } from 'hooks/http.hook'
 import Scrollbars from 'react-custom-scrollbars'
-import { ProgressBar, RadioGroup, Tab, Tabs } from 'react-materialize'
-import { FilterPointsLocalities } from 'components/ExpertSystem/FilterPointsLocalities'
+import { ProgressBar } from 'react-materialize'
+import { FilterPointsLocalities } from 'components/ExpertSystem/FilterPoints'
 import './PointsLocalities.scss'
 import { TableMC } from 'components/ExpertSystem/TableMC'
 
@@ -16,10 +14,6 @@ export const PointsLocalities = () => {
         modified: [],
         isFaps: false,
     })
-
-
-    // const [isFaps, setIsFaps] = useState(false)
-
 
     useEffect(() => {
         if (error) {
@@ -47,7 +41,6 @@ export const PointsLocalities = () => {
                 <div className="container">
                     <FilterPointsLocalities
                         updateData={updateData}
-                    // setIsFaps={setIsFaps}
                     />
 
 
