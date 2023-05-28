@@ -173,7 +173,7 @@ function calculatePointsMC(values, conditions, medCenter) {
     const deteroation = medCenter.deteroation * 100
 
     // год основания foundation_year
-    if (founding_year && founding_year >= conditions.ageYears) {
+    if (founding_year && founding_year <= conditions.ageYears) {
         pointsMedicalCenter.foundation_year = values.pointsAge
     }
 

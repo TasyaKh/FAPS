@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState, Component, useRef } from 'react'
 import { useHttp } from 'hooks/http.hook'
-import Scrollbars from 'react-custom-scrollbars'
-import { ProgressBar } from 'react-materialize'
+import { Button, ProgressBar } from 'react-materialize'
 import { FilterPointsLocalities } from 'components/ExpertSystem/FilterPoints'
 import './PointsLocalities.scss'
-import { TableMC } from 'components/ExpertSystem/TableMC'
+import { TablePoints } from 'components/ExpertSystem/TablePoints'
+import { PointsPanel } from 'components/ExpertSystem/PointsPanel'
 
 export const PointsLocalities = () => {
 
@@ -13,6 +13,10 @@ export const PointsLocalities = () => {
     const [state, setState] = useState({
         modified: [],
         isFaps: false,
+    })
+
+    const [pointsCalculatorState, setPointsCalculatorState] = useState({
+        show: false
     })
 
     useEffect(() => {
@@ -32,48 +36,62 @@ export const PointsLocalities = () => {
 
     }
 
+    const handlePointsCalculatorButtonClick = () => {
+        setPointsCalculatorState({ ...pointsCalculatorState, 'show': !pointsCalculatorState.show })
+
+    }
+
+    const handlePointsCalculatorHide = () => {
+        setPointsCalculatorState({ ...pointsCalculatorState, 'show': !pointsCalculatorState.show })
+    }
 
     return (
         <div className="view">
 
-            <CustomScrollbars>
 
-                <div className="container">
+            <div className="container">
+
+                <div className='container__filter'>
                     <FilterPointsLocalities
                         updateData={updateData}
+
                     />
+                </div>
+                <Button
+                    className="navigation__button blue darken-4 btn navigation__link"
+                    node="button"
+                    waves="light"
+                    onClick={handlePointsCalculatorButtonClick}
+                ><i className="material-icons right">settings</i>
+                    Калькулятор баллов
+                </Button>
 
+                <div className="table-container">
 
-                    <div className="table-container">
+                    {
+                        loading ? <ProgressBar /> :
+                            state.modified.length === 0 ? 'Элементов не найдено, пожалуйста, измените критерии поиска' :
+                                <TablePoints
+                                    data={state.modified}
+                                    isFaps={state.isFaps}
+                                />
 
-                        {
-                            loading ? <ProgressBar /> :
-                                state.modified.length === 0 ? 'Элементов не найдено, пожалуйста, измените критерии поиска' :
-                                    <TableMC
-                                        data={state.modified}
-                                        isFaps={state.isFaps}
-                                    />
+                    }
 
-                        }
-
-                    </div>
                 </div>
 
-            </CustomScrollbars>
+                {pointsCalculatorState.show &&
+                    <PointsPanel
+                        hide={handlePointsCalculatorHide}
+                        closeModal={handlePointsCalculatorButtonClick}
+                        pointsButtonVisible={false}
+                        area={undefined}
+                    />
+                }
+            </div>
 
         </div>
     )
-}
-
-class CustomScrollbars extends Component {
-    render() {
-        return (
-            <Scrollbars
-                renderView={props => <div {...props} className="view__scroll-view" />}>
-                {this.props.children}
-            </Scrollbars>
-        );
-    }
 }
 
 

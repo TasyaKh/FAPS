@@ -175,27 +175,27 @@ async function setPointsLocality(values, conditions, locality) {
 }
 
 
-async function getMinPointsOfMC(req, res, locality_id) {
+// async function getMinPointsOfMC(req, res, locality_id) {
 
-    let minPoints = null
-    query = `SELECT MIN(sum) AS min_points  FROM points_medical_center
-    LEFT JOIN medical_center
-    ON points_medical_center.medical_center_id = medical_center.id
-    WHERE medical_center.locality_id = ?`
+//     let minPoints = null
+//     query = `SELECT MIN(sum) AS min_points  FROM points_medical_center
+//     LEFT JOIN medical_center
+//     ON points_medical_center.medical_center_id = medical_center.id
+//     WHERE medical_center.locality_id = ?`
 
-    const rows = await new Promise((resolve, reject) => {
-        connection.query(query, [locality_id], (err, result) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(result);
-                minPoints = rows.min_points
-            }
-        });
-    });
+//     const rows = await new Promise((resolve, reject) => {
+//         connection.query(query, [locality_id], (err, result) => {
+//             if (err) {
+//                 reject(err);
+//             } else {
+//                 resolve(result);
+//                 minPoints = rows.min_points
+//             }
+//         });
+//     });
 
-    return minPoints
-}
+//     return minPoints
+// }
 
 
 

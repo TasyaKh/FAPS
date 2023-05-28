@@ -4,7 +4,6 @@ import { Select, Button, TextInput, ProgressBar } from "react-materialize"
 import { useHttp } from "../../hooks/http.hook"
 import { CollapsibleItem, Collapsible } from "react-materialize"
 import { SelectArea } from "../SelectArea"
-import { Link } from 'react-router-dom'
 
 export const PointsCalculator = (props) => {
 
@@ -40,19 +39,6 @@ export const PointsCalculator = (props) => {
 
   return (
     <div className="points-builder points-panel__builder">
-
-      <Link to="/points-localities">
-
-        <Button
-          node="button"
-          waves="light"
-          className="blue darken-4"
-
-        >
-          Проcмотр баллов
-        </Button>
-
-      </Link>
 
 
       <div className="points-panel__wrapper">
@@ -200,7 +186,7 @@ export const PointsCalculator = (props) => {
               type="number"
               onBlur={handleTextareaBlur}
               name="ageYears"
-              label="Если превышено (лет)"
+              label="Год основания (например 1900>=)"
             />
           </div>
         </div>

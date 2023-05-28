@@ -84,7 +84,7 @@ export const Navigation = (props) => {
     setReportState({ ...reportState, 'show': !reportState.show })
   }
 
-  
+
   const handlePointsCalculatorHide = () => {
     setPointsCalculatorState({ ...pointsCalculatorState, 'show': !pointsCalculatorState.show })
   }
@@ -119,11 +119,11 @@ export const Navigation = (props) => {
         <div className="navigation__nav navigation__nav--top">
 
           <Button
-            className="navigation__button blue darken-4 navigation__link"
+            className="navigation__button blue darken-4 btn navigation__link"
             node="button"
             waves="light"
             onClick={handlePointsCalculatorButtonClick}
-          >
+          ><i className="material-icons right">settings</i>
             Калькулятор баллов
           </Button>
 
@@ -207,6 +207,8 @@ export const Navigation = (props) => {
               hide={handlePointsCalculatorHide}
               // area={state.area}
               closeModal={handlePointsCalculatorButtonClick}
+              pointsButtonVisible={true}
+              area={state.area}
             />
           }
         </div>

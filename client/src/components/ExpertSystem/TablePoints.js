@@ -23,6 +23,7 @@ function TableL({ columns, data }) {
     // Render the UI for your table
     return (
         <div>
+
             <Table className="table-view" {...getTableProps()}>
                 <thead>
                     {headerGroups.map(headerGroup => (
@@ -35,11 +36,14 @@ function TableL({ columns, data }) {
                                     {column.render('Header')}
                                     {/* Add a sort direction indicator */}
                                     <span>
-                                        {column.isSorted
-                                            ? column.isSortedDesc
-                                                ? ' 🔽'
-                                                : ' 🔼'
-                                            : ''}
+                                        <i className="tiny material-icons">
+                                            {column.isSorted
+                                                ? column.isSortedDesc
+                                                    ? "arrow_downward"
+                                                    : "arrow_upward"
+                                                : "sort"}
+                                        </i>
+
                                     </span>
                                 </th>
                             ))}
@@ -71,7 +75,7 @@ function TableL({ columns, data }) {
     )
 }
 
-export function TableMC(props) {
+export function TablePoints(props) {
 
     const columns = useMemo(() => {
         if (props.isFaps) {
@@ -80,7 +84,7 @@ export function TableMC(props) {
             ];
         } else {
             return [
-              columnsPointsLocalities
+                columnsPointsLocalities
             ];
         }
     }, [props.isFaps]);
