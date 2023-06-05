@@ -205,10 +205,12 @@ export const Navigation = (props) => {
           {pointsCalculatorState.show &&
             <PointsPanel
               hide={handlePointsCalculatorHide}
+              handleCalculateButton = {null}
               // area={state.area}
               closeModal={handlePointsCalculatorButtonClick}
               pointsButtonVisible={true}
               area={state.area}
+              handleCalculateButton ={null}
             />
           }
         </div>

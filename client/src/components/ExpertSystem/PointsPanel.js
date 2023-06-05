@@ -6,8 +6,7 @@ import { useHttp } from "../../hooks/http.hook"
 import { PointsCalculator } from "./PointsCalculator"
 import { Link } from 'react-router-dom'
 
-export const PointsPanel = (/** @type {{ hide: React.MouseEventHandler<HTMLButtonElement>; pointsButtonVisible: Boolean; area: any; closeModal: any; }} */
- props) => {
+export const PointsPanel = (/** @type {{ handleCalculateButton: (arg0: any) => void; hide: React.MouseEventHandler<HTMLButtonElement>; pointsButtonVisible: any; area: any; }} */ props) => {
 
   const [state, setState] = useState({
     columns: [],
@@ -28,7 +27,7 @@ export const PointsPanel = (/** @type {{ hide: React.MouseEventHandler<HTMLButto
   }, [clearError, error])
 
 
-  const handleReportButton = () => {
+  const handleCalculateButton = () => {
     setData({
       ...state,
       objects: []
@@ -41,6 +40,8 @@ export const PointsPanel = (/** @type {{ hide: React.MouseEventHandler<HTMLButto
     try {
 
       await request('/api/points', 'POST', body)
+      if(body.district_id &&  props.handleCalculateButton != null)
+         props.handleCalculateButton(body)
     } catch (e) { }
   }, [request])
 
@@ -87,7 +88,7 @@ export const PointsPanel = (/** @type {{ hide: React.MouseEventHandler<HTMLButto
               setParams={setState}
               area={props.area}
               params={state}
-              handleReportButton={handleReportButton}
+              handleCalculateButton={handleCalculateButton}
               // closeModal={props.closeModal}
             />
             {

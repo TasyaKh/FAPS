@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useState, Component, useRef } from 'react'
 import { useHttp } from 'hooks/http.hook'
 import { Button, ProgressBar } from 'react-materialize'
-import { FilterPointsLocalities } from 'components/ExpertSystem/FilterPoints'
+import { FilterPointsLocalities } from 'components/ExpertSystem/FilterPointsLocalities'
 import './PointsLocalities.scss'
 import { TablePoints } from 'components/ExpertSystem/TablePoints'
 import { PointsPanel } from 'components/ExpertSystem/PointsPanel'
 
 export const PointsLocalities = () => {
+
+    // contants ----------------------------------------------------------------
 
     const { loading, error, request, clearError } = useHttp()
 
@@ -15,8 +17,16 @@ export const PointsLocalities = () => {
         isFaps: false,
     })
 
+    const [isFaps, setIsFaps] = useState(false)
+
     const [pointsCalculatorState, setPointsCalculatorState] = useState({
         show: false
+    })
+
+    const [filters, setFilters] = useState({
+       
+        district_id: 0
+       
     })
 
     useEffect(() => {
@@ -27,13 +37,20 @@ export const PointsLocalities = () => {
     }, [clearError, error])
 
 
+    useEffect(() => {
+        fetchData(filters, isFaps)
+
+    }, [isFaps])
+
+    // useEffect ----------------------------------------------------------------
+
     const updateData = (value, faps) => {
 
         setState({
             modified: value,
             isFaps: faps
         })
-
+        
     }
 
     const handlePointsCalculatorButtonClick = () => {
@@ -45,25 +62,53 @@ export const PointsLocalities = () => {
         setPointsCalculatorState({ ...pointsCalculatorState, 'show': !pointsCalculatorState.show })
     }
 
+    const handleCalculateButton = (body)=>{
+       setFilters({district_id: body.district_id})
+       fetchData(body, isFaps)
+    }
+
+    const fetchData = useCallback(async (body, faps) => {
+      
+        setFilters(body)
+        try {
+
+            let req =''
+
+            if(faps){
+                req = '/api/points/medical-centers'
+            }else{
+                req =  '/api/points/localities'
+            }
+            const fetched = await request(req, 'POST', body)
+           // console.log(fetched)
+            updateData(fetched, faps)
+
+        } catch (e) { }
+    }, [request])
+
+    
     return (
         <div className="view">
 
-
             <div className="container">
-
+         
                 <div className='container__filter'>
                     <FilterPointsLocalities
-                        updateData={updateData}
-
+                        fetchData={fetchData}
+                        district_id={filters.district_id} 
+                        setIsFaps={setIsFaps}
+                        isFaps={isFaps}   
+                        setFilters = {setFilters}                     // handleSelectChange = {handleSelectChange}
+                        // handleSelect = {handleSelect}
                     />
                 </div>
+
                 <Button
-                    className="navigation__button blue darken-4 btn navigation__link"
+                    className="btn-floating"
                     node="button"
                     waves="light"
-                    onClick={handlePointsCalculatorButtonClick}
-                ><i className="material-icons right">settings</i>
-                    Калькулятор баллов
+                    onClick={handlePointsCalculatorButtonClick}>
+                    <i className="material-icons medium icon-floating">settings</i>
                 </Button>
 
                 <div className="table-container">
@@ -86,6 +131,7 @@ export const PointsLocalities = () => {
                         closeModal={handlePointsCalculatorButtonClick}
                         pointsButtonVisible={false}
                         area={undefined}
+                        handleCalculateButton = {handleCalculateButton}
                     />
                 }
             </div>

@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import { getPointsMedicalCentersOfDistrict, setPointsMedicalCenters } from './services/points_medical_center.service.js'
 import { setPointsLocalities, getPointsLocalitiesOfDistrict } from './services/points_locality.service.js'
-
-import {PointsConditions, PointsValues } from './services/classes/points.js'
+import { PointsConditions, PointsValues } from './services/classes/points.js'
+// import {exec } from "child_process"
 
 const router = Router()
 
@@ -33,31 +33,48 @@ router.post(
     conditions.ageYears = req.body.ageYears ?? 0
     conditions.staffingPersent = req.body.staffingPersent ?? 0
 
-    
+
     setPointsMedicalCenters(req, res, values, conditions)
     const r = await setPointsLocalities(req, res, values, conditions)
     res.json({
       success: true
     })
-   //res.json(r)
+    //res.json(r)
   }
 )
 
+// getPointsLocalitiesOfDistrict
 router.post(
   '/localities',
   [],
   async (req, res) => {
-     const r = await getPointsLocalitiesOfDistrict(req, res)
-     res.json(r)
+   
+    // const pythonFile = "test.py"
+    //  exec(`python ${pythonFile}`, (error, stdout, stderr) => {
+    //   if (error) {
+    //     console.error(`Error executing Python file: ${error.message}`);
+    //     return;
+    //   }
+    //   if (stderr) {
+    //     console.error(`Python error: ${stderr}`);
+    //     return;
+    //   }
+    //   console.log(`Python output: ${stdout}`);
+    // });
+
+
+    const r = await getPointsLocalitiesOfDistrict(req, res)
+    res.json(r)
   }
 )
 
+//getPointsMedicalCentersOfDistrict
 router.post(
   '/medical-centers',
   [],
   async (req, res) => {
-     const r = await getPointsMedicalCentersOfDistrict(req, res)
-     res.json(r)
+    const r = await getPointsMedicalCentersOfDistrict(req, res)
+    res.json(r)
   }
 )
 

@@ -5,7 +5,7 @@ import { useHttp } from "../../hooks/http.hook"
 import { CollapsibleItem, Collapsible } from "react-materialize"
 import { SelectArea } from "../SelectArea"
 
-export const PointsCalculator = (props) => {
+export const PointsCalculator = (/** @type {{ params: any; setParams: (arg0: any) => void; handleCalculateButton: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void; closeModal: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void; }} */ props) => {
 
   const { loading, error, request, clearError } = useHttp()
 
@@ -254,7 +254,7 @@ export const PointsCalculator = (props) => {
             waves="light"
             className="modal-trigger report-panel__control"
             href="#report-modal"
-            onClick={props.handleReportButton}
+            onClick={props.handleCalculateButton}
           >
             Рассчитать
           </Button>

@@ -45,5 +45,5 @@ POST http://localhost:3000/api/points/localities
 content-type: application/json
 
 {
- "district_id":2
+ "district_id":1
 }
