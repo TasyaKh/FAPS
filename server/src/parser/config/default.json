@@ -1,0 +1,9 @@
+{
+  "port": 5000,
+  "jwtSecret": "keyMapHospitals",
+  "host": "127.0.0.1",
+  "user": "root",
+  "portDB": 3306,
+  "password": "Akita857281959",
+  "database": "map"
+}
