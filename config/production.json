@@ -1,9 +1,0 @@
-{
-  "port": 3000,
-  "jwtSecret": "keyMapHospitals",
-  "host": "127.0.0.1",
-  "user": "map_user",
-  "portDB": 3306,
-  "password": "3aWSLy7k",
-  "database": "map"
-}

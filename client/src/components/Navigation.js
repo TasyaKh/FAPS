@@ -36,18 +36,6 @@ export const Navigation = (props) => {
     }
   }
 
-  const handlePointsCalculatorButtonClick = () => {
-    setPointsCalculatorState({ ...pointsCalculatorState, 'show': !pointsCalculatorState.show })
-
-    if (legendState.show) {
-      setLegendState({ ...legendState, show: !legendState.show })
-    }
-
-    if (reportState.show) {
-      setReportState({ ...reportState, show: !reportState.show })
-    }
-
-  }
 
   useEffect(() => {
     if (error) {
@@ -118,14 +106,16 @@ export const Navigation = (props) => {
 
         <div className="navigation__nav navigation__nav--top">
 
-          <Button
-            className="navigation__button blue darken-4 btn navigation__link"
-            node="button"
-            waves="light"
-            onClick={handlePointsCalculatorButtonClick}
-          ><i className="material-icons right">settings</i>
-            Калькулятор баллов
-          </Button>
+          {/* кнопка для экспертной системы */}
+          <Link to="/expert-system" className="navigation__link">
+            <Button
+              className="navigation__button blue darken-4 btn navigation__link"
+              node="button"
+              waves="light"
+            ><i className="material-icons right">build</i>
+              Экспертная система
+            </Button>
+          </Link>
 
 
           <Link to="/management" className="navigation__link">
@@ -202,17 +192,6 @@ export const Navigation = (props) => {
             />
           }
 
-          {pointsCalculatorState.show &&
-            <PointsPanel
-              hide={handlePointsCalculatorHide}
-              handleCalculateButton = {null}
-              // area={state.area}
-              closeModal={handlePointsCalculatorButtonClick}
-              pointsButtonVisible={true}
-              area={state.area}
-              handleCalculateButton ={null}
-            />
-          }
         </div>
 
       </div>

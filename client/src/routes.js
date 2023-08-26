@@ -8,6 +8,7 @@ import { ErrorPage } from "./pages/ErrorPage"
 import { AdminPage } from "./pages/AdminPage"
 import { AddPage } from "./pages/AddPage"
 import { PointsLocalities } from 'pages/ExpertSystem/PointsLocalities'
+import { EMapPage } from 'pages/ExpertSystem/EMapPage'
 
 export const useRoutes = isAuthenticated => {
   if (isAuthenticated) {
@@ -56,12 +57,18 @@ export const useRoutes = isAuthenticated => {
       </Route>
 
       {/* expert system */}
-      <Route path="/points-localities">
-        <PointsLocalities />
+
+      <Route path="/expert-system">
+        <EMapPage />
       </Route>
 
+      <Route path="/expert-system/points-localities">
+        <PointsLocalities />
+      </Route>
+      {/* expert system */}
+
       <Route path="/">
-        <MapPage />
+        <EMapPage />
       </Route>
 
 
