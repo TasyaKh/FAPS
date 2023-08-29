@@ -39,8 +39,8 @@ content-type: application/json
     "pointsUnfit":20
 }
 
-# points/locality
-###
+
+###points/locality
 POST http://localhost:3000/api/points/localities
 content-type: application/json
 
@@ -49,7 +49,11 @@ content-type: application/json
 }
 
 
-### clusterize/district
+
+
+
+
+### CLUSTER clusterize/district
 
 POST http://localhost:3000/api/clusterize/district
 content-type: application/json
@@ -57,3 +61,31 @@ content-type: application/json
 {
   "district_id":8
 }
+
+
+
+
+
+### DEV dev/district
+
+POST http://localhost:3000/api/dev_fetch_data/openrouteservice_distances
+content-type: application/json
+
+{
+  "district_id":4
+}
+
+
+
+
+
+### open route
+
+POST http://localhost:8080/ors/v2/matrix/driving-car
+content-type: application/json
+
+{
+  "locations":[[104.44722,52.66111],[104.32694,52.71306]],
+  "metrics":["distance","duration"]
+}
+

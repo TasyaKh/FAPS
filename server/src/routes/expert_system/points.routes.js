@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import {PointsConditions, PointsValues} from "../../services/classes/points.js";
-import {getPointsMedicalCentersOfDistrict, setPointsMedicalCenters} from "../../services/points_medical_center.service.js";
-import { getPointsLocalitiesOfDistrict, setPointsLocalities } from '../../services/points_locality.service.js';
+import {getPointsMedicalCentersOfDistrict, setPointsMedicalCenters} from "../../services/database/points_medical_center.service.js";
+import { getPointsLocalitiesOfDistrict, setPointsLocalities } from '../../services/database/points_locality.service.ts';
+import {PointsConditions, PointsValues} from "../../classes/points.js";
 
 const router = Router()
 

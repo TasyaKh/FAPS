@@ -66,4 +66,4 @@ try {
 catch (e) {
     console.log('Ошибка: ', e);
 }
-//# sourceMappingURL=db.js.map
+//# sourceMappingURL=db.ts.map

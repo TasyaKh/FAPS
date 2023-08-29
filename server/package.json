@@ -19,7 +19,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/mysql": "^2.15.21",
     "@types/node-fetch": "^2.6.4",
+    "axios": "^1.5.0",
     "bcrypt": "^5.0.1",
     "config": "^3.3.2",
     "cross-env": "^7.0.3",

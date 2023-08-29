@@ -4,7 +4,7 @@
       "module": "ESNext", // or ES2015, ES2020
       "esModuleInterop": true,
       "forceConsistentCasingInFileNames": true,
-      "strict": true,
+      "strict": false,
       "skipLibCheck": true,
       "noImplicitAny": true,
       "allowJs": true,
@@ -12,11 +12,11 @@
       "rootDir": "src",
       "sourceMap": true,
       "allowSyntheticDefaultImports": true,
-
+      "moduleResolution": "nodenext"
     },
     "ts-node": {
       "esm": true,
       "experimentalSpecifierResolution": "node"
     },
- 
+
   }

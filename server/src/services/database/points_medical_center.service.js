@@ -1,5 +1,5 @@
-import PointsMedicalCenter from './enities/points_medical_center.entity.js'
-import connection from '../db.js'
+import PointsMedicalCenter from '../../enities/points_medical_center.entity.ts'
+import connection from '../../db.ts'
 
 
 export async function getPointsMedicalCentersOfDistrict(req, res) {

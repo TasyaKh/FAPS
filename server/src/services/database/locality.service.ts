@@ -1,14 +1,14 @@
-import connection from "../db";
+import connection from "../../db.js";
 
 export async function getLocalitiesByDistrictId(districtId: number) {
     let r: any
 
-    const query = 'SELECT `locality`.`id`, `locality`.`district_id`, `locality`.`name`, (`population`.`population_adult`) AS `population` FROM `locality`\n' +
+    const query = 'SELECT `locality`.`id`, `locality`.`district_id`, `locality`.`name`, `locality`.`longitude`, `locality`.`latitude`,   (`population`.`population_adult`) AS `population` FROM `locality`\n' +
         'LEFT JOIN `population`\n' +
         ' ON `locality`.`id` = `population`.`locality_id`\n' +
         'WHERE `locality`.`district_id` = ? '
-    'GROUP BY `locality`.`id`\n' +
-    'ORDER BY `locality`.`name`'
+        'GROUP BY `locality`.`id`\n' +
+        'ORDER BY `locality`.`name`'
 
 
     r = await new Promise((resolve, reject) => {

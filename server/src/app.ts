@@ -20,7 +20,8 @@ import apiAddress from './routes/faps/address.routes.js'
 import apiLocation from './routes/faps/location.routes.js'
 // expert system
 import apiPoints from './routes/expert_system/points.routes.js'
-import apiCluster from './routes/expert_system/cluster.routes'
+import apiCluster from './routes/expert_system/cluster.routes.js'
+import apiDev from './routes/expert_system/dev_fetch_data.routes.js'
 
 import apiEdit from './routes/faps/edit.routes.js'
 
@@ -54,6 +55,8 @@ app.use('/api/reports/word', apiReportsWord)
 // expert system
 app.use('/api/points', apiPoints)
 app.use('/api/clusterize', apiCluster)
+app.use('/api/dev_fetch_data', apiDev)
+
 
 if (process.env.NODE_ENV === 'production') {
   console.log('Production mode')
