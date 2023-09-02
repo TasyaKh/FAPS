@@ -25,6 +25,7 @@ export const SelectArea = (props) => {
       
       setState(fetched)
     } catch (e) {}
+    // eslint-disable-next-line
   }, [request, props.query, props.value])
 
   useEffect(() => {

@@ -68,7 +68,7 @@ export const useRoutes = isAuthenticated => {
       {/* expert system */}
 
       <Route path="/">
-        <EMapPage />
+        <MapPage />
       </Route>
 
 

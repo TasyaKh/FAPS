@@ -6,10 +6,6 @@
 	transition: .3s;
 	background-color: #ffffff;
 	border-top: 1px solid rgba(#000000, .2);
-
-	& > {
-		transition: inherit;
-	}
 	
 	&:focus,
 	&:hover {

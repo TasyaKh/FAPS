@@ -46,16 +46,9 @@ export const ENavigation = (props) => {
     clearError()
   }, [clearError, error])
 
-  const fetchData = useCallback(async (body) => {
-    try {
-      const fetched = await request('/api/reports/area', 'POST', body)
+  const fetchData = useCallback(async () => {
 
-      setState({
-        ...state,
-        area: fetched
-      })
 
-    } catch (e) { }
   }, [request])
 
 
@@ -71,7 +64,7 @@ export const ENavigation = (props) => {
   }
 
   useEffect(() => {
-    fetchData()
+    fetchData().then(r => {})
   }, [])
 
   return (

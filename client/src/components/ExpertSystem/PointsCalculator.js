@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import './PointsPanel'
-import { Select, Button, TextInput, ProgressBar } from "react-materialize"
+import { Button, TextInput } from "react-materialize"
 import { useHttp } from "../../hooks/http.hook"
 import { CollapsibleItem, Collapsible } from "react-materialize"
 import { SelectArea } from "../SelectArea"
 
 export const PointsCalculator = (/** @type {{ params: any; setParams: (arg0: any) => void; handleCalculateButton: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void; closeModal: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void; }} */ props) => {
 
-  const { loading, error, request, clearError } = useHttp()
+  const { loading, error, clearError } = useHttp()
 
   const handleTextareaBlur = (e) => {
     const { target } = e

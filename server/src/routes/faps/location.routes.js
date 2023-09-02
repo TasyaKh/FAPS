@@ -57,14 +57,14 @@ router.post(
       let query
 
       if (req.body.id) {
-        query = 'SELECT `district`.`id`, `district`.`name`, `district`.`region_id`, COUNT(`locality`.`id`) AS `localities_count` FROM `district`\n' +
+        query = 'SELECT `district`.`id`, `district`.`name`, `locality`.`longitude`, `locality`.`latitude`, `district`.`region_id`, COUNT(`locality`.`id`) AS `localities_count` FROM `district`\n' +
           'LEFT JOIN `locality`\n' +
           '\tON `district`.`id` = `locality`.`district_id`\n' +
           'WHERE `district`.`region_id` = ' + req.body.id + '\n' +
           'GROUP BY `district`.`id`\n' +
           'ORDER BY `district`.`name`'
       } else {
-        query = 'SELECT `district`.`id`, `district`.`name`, `district`.`region_id`, COUNT(`locality`.`id`) AS `localities_count` FROM `district`\n' +
+        query = 'SELECT `district`.`id`, `district`.`name`, `locality`.`longitude`, `locality`.`latitude`, `district`.`region_id`, COUNT(`locality`.`id`) AS `localities_count` FROM `district`\n' +
           'LEFT JOIN `locality`\n' +
           '\tON `district`.`id` = `locality`.`district_id`\n' +
           'GROUP BY `district`.`id`\n' +
@@ -100,14 +100,14 @@ router.post(
       let query
 
       if (req.body.id) {
-        query = 'SELECT `locality`.`id`, `locality`.`district_id`, `locality`.`name`, (`population`.`population_adult`) AS `population` FROM `locality`\n' +
+        query = 'SELECT `locality`.`id`, `locality`.`district_id`, `locality`.`longitude`, `locality`.`latitude`, `locality`.`name`, (`population`.`population_adult`) AS `population` FROM `locality`\n' +
           'LEFT JOIN `population`\n' +
           ' ON `locality`.`id` = `population`.`locality_id`\n' +
           'WHERE `locality`.`district_id` = ' + req.body.id + '\n' +
           'GROUP BY `locality`.`id`\n' +
           'ORDER BY `locality`.`name`'
       } else {
-        query = 'SELECT `locality`.`id`, `locality`.`district_id`, `locality`.`name`, (`population`.`population_adult`) AS `population` FROM `locality`\n' +
+        query = 'SELECT `locality`.`id`, `locality`.`district_id`, `locality`.`longitude`, `locality`.`latitude`, `locality`.`name`, (`population`.`population_adult`) AS `population` FROM `locality`\n' +
           'LEFT JOIN `population`\n' +
           ' ON `locality`.`id` = `population`.`locality_id`\n' +
           'GROUP BY `locality`.`name`\n' +
@@ -129,6 +129,54 @@ router.post(
       res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
     }
   }
+)
+
+// /api/location/localities-with-faps
+router.post(
+    '/localities-with-faps',
+    [],
+    async (req, res) => {
+        try {
+
+            const connection = initializeConnection(configDB)
+
+            let query
+            let values = []
+
+            query =`SELECT locality.id, locality.district_id, locality.longitude, locality.latitude, 
+                locality.name, (population.population_adult) AS population, dtmc.distance as min_distance, 
+                dtmc.duration as min_duration, mc.id as mc_id, mc.longitude as mc_longitude, mc.latitude as mc_latitude,
+                mc.name as medical_center_name, mc.staffing as mc_staffing FROM locality 
+                LEFT JOIN population ON locality.id = population.locality_id
+                LEFT JOIN distance_to_mc as dtmc ON locality.id = dtmc.locality_id
+                LEFT JOIN medical_center as mc ON mc.id = dtmc.mc_id
+                WHERE (dtmc.distance = (
+                SELECT MIN(distance) FROM distance_to_mc AS dtmc2
+                WHERE dtmc2.locality_id = locality.id) or dtmc.distance is null)`
+
+
+            if (req.body.district_id) {
+                query += ` and locality.district_id = ?`
+                values.push(req.body.district_id)
+            }
+
+            query+=` GROUP BY locality.id
+                ORDER BY population DESC`
+
+            connection.query(query, values,(err, rows) => {
+                connection.end()
+
+                if (err) {
+                    throw err
+                }
+
+                res.json(rows)
+            })
+        }catch (e) {
+            console.log(e)
+            res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+        }
+    }
 )
 
 // --- Update block

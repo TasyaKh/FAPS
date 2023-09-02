@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, Component, useRef } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useHttp } from 'hooks/http.hook'
 import { Button, ProgressBar } from 'react-materialize'
 import { FilterPointsLocalities } from 'components/ExpertSystem/FilterPointsLocalities'

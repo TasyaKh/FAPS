@@ -46,7 +46,7 @@ export const Sidebar = (props) => {
         show: !state.filter.show
       }})
   }
-
+// eslint-disable-next-line
   const HandleInputSearch = (e) => {
     setState({...state, 'search': e.target.value.trim().toLowerCase()})
   }

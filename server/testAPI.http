@@ -48,6 +48,14 @@ content-type: application/json
  "district_id":2
 }
 
+###points/localities-with-faps
+POST http://localhost:3000/api/location/localities-with-faps
+content-type: application/json
+
+{
+  "district_id":6
+}
+
 
 
 
@@ -66,13 +74,15 @@ content-type: application/json
 
 
 
-### DEV dev/district
+### DEV dev/openrouteservice_distances
 
 POST http://localhost:3000/api/dev_fetch_data/openrouteservice_distances
 content-type: application/json
 
 {
-  "district_id":4
+  "district_id":4,
+  "region_id":1,
+  "distance": 30
 }
 
 
@@ -85,7 +95,7 @@ POST http://localhost:8080/ors/v2/matrix/driving-car
 content-type: application/json
 
 {
-  "locations":[[104.44722,52.66111],[104.32694,52.71306]],
+  "locations":[[105.2175, 52.94611111],[ 105.217522, 52.946095]],
   "metrics":["distance","duration"]
 }
 

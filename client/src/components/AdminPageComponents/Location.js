@@ -40,6 +40,7 @@ export const Location = (props) => {
         setSelect(0)
       }
     } catch (e) {}
+    // eslint-disable-next-line
   }, [request])
 
   const fetchFilteredData = useCallback(async (id) => {
@@ -48,14 +49,17 @@ export const Location = (props) => {
 
       setState(fetched)
     } catch (e) {}
+    // eslint-disable-next-line
   }, [request])
 
   useEffect(() => {
     fetchData()
+    // eslint-disable-next-line
   }, [fetchData])
 
   useEffect(() => {
     fetchFilteredData(select)
+    // eslint-disable-next-line
   }, [select])
 
   const handleSelectChange = (e) => {

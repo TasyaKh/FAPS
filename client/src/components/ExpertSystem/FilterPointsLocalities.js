@@ -1,10 +1,11 @@
 import { SelectArea } from 'components/SelectArea'
 import { useHttp } from 'hooks/http.hook'
 import React, {  useEffect, useState } from 'react'
+import './Item.scss'
 
 export const FilterPointsLocalities = ( props) => {
 
-    const { loading, error, request, clearError } = useHttp()
+    const { loading } = useHttp()
 
     const [filters, setFilters] = useState({
        
@@ -29,6 +30,7 @@ export const FilterPointsLocalities = ( props) => {
     
     useEffect(() => {
         props.fetchData(filters, props.isFaps)
+        // eslint-disable-next-line
     }, [filters])
 
     // const handleSelect = async (faps) => {

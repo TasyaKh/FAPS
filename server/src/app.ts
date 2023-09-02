@@ -53,7 +53,7 @@ app.use('/api/reports/pdf', apiReportsPDF)
 app.use('/api/reports/word', apiReportsWord)
 
 // expert system
-app.use('/api/points', apiPoints)
+// app.use('/api/points', apiPoints)
 app.use('/api/clusterize', apiCluster)
 app.use('/api/dev_fetch_data', apiDev)
 

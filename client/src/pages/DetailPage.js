@@ -35,14 +35,17 @@ export const DetailPage = () => {
 
       setData(fetched[0])
     } catch (e) {}
+    // eslint-disable-next-line
   }, [request])
 
   useEffect(() => {
     fetchData()
+    // eslint-disable-next-line
   }, [fetchData])
 
   const getPointData = () => {
     return {
+      // eslint-disable-next-line
       clusterCaption: "placemark <strong>" + "</strong>"
     };
   };
@@ -64,6 +67,7 @@ export const DetailPage = () => {
         history.push('/view')
       }, 5000)
     } catch (e) {}
+    // eslint-disable-next-line
   }, [request])
 
   const handleDeleteModalButton = (id) => {

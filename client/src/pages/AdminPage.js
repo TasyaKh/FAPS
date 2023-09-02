@@ -1,5 +1,4 @@
-import React, {useCallback, useEffect, Component} from 'react'
-import {useHttp} from "../hooks/http.hook"
+import React, { Component} from 'react'
 import './AdminPage.scss'
 import { Scrollbars } from 'react-custom-scrollbars'
 import {Location} from "../components/AdminPageComponents/Location"
