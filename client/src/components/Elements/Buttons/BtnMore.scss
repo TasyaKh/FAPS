@@ -1,0 +1,28 @@
+@import "../../../scss/vars";
+@import "../../../scss/animation";
+
+// help animation
+// https://harrix.dev/blog/2018/animation-from-display-none/
+
+.see-more {
+
+  &__btn {
+    &:hover {
+      color: $link-hover;
+      transition: 0.3s;
+    }
+  }
+
+  &__body {
+    transition: 0.3s;
+    display: none;
+    opacity: 0;
+  }
+
+  &__body.is-visible{
+    display: block;
+    animation: fadeInFromNone 0.4s ease-in-out;
+    animation-fill-mode: forwards;
+  }
+
+}

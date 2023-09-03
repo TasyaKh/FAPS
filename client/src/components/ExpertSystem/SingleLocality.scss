@@ -1,0 +1,59 @@
+
+.single-locality {
+  max-height: 100%;
+  background-color: #f6f6f6;
+  height: 100%;
+  font-size: 14px;
+  padding: 10px 0;
+
+  &__title {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+
+  &__wrapper {
+    margin-top: 90px;
+  }
+
+  &__button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+    &--back {
+      transform: rotate(180deg);
+      margin-right: 5px;
+
+
+      &:focus,
+      &:hover {
+        background-color: transparent;
+
+        svg {
+          fill: #000000;
+        }
+      }
+    }
+  }
+
+  &__body {
+    background-color: #ffffff;
+  }
+
+  &__head {
+    background-color: #ffffff;
+
+  }
+
+  &__line{
+    margin: 20px 0;
+    padding: 0;
+    height: 0;
+    border: none;
+    border-top: 2px dashed #ddd;
+  }
+
+
+}
