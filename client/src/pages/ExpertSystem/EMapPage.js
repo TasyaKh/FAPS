@@ -14,10 +14,7 @@ export const EMapPage = () => {
     const [hiddenSidebar, setHiddenSidebar] = useState(false)
     const [hiddenNavigation, setHiddenNavigation] = useState(true)
     const [orgs, setOrgs] = useState([])
-    const [singleView, setSingleView] = useState({
-        flag: false,
-        id: null
-    })
+    // показать подробную информацию о населенном пункте
 
     const [filters, setFilters] = useState({
         district_id: 2,
@@ -100,8 +97,8 @@ export const EMapPage = () => {
                     loading={loading}
                     data={objects}
                     orgs={orgs}
-                    singleView={singleView}
-                    setSingleView={setSingleView}
+                    // singleView={singleView}
+                    // setSingleView={setSingleView}
                     hiddenSidebar={hiddenSidebar}
                     setHiddenSidebar={setHiddenSidebar}
                     setHiddenNavigation={setHiddenNavigation}

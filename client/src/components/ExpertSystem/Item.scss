@@ -1,4 +1,5 @@
 @import "../../scss/vars";
+
 .item {
   position: relative;
   padding: 20px;
@@ -42,6 +43,14 @@
       padding: 5px 8px;
     }
 
+  }
+
+  &__line{
+    margin: 20px 0;
+    padding: 0;
+    height: 0;
+    border: none;
+    border-top: 2px dashed #ddd;
   }
 
 }

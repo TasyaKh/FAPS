@@ -53,7 +53,7 @@ POST http://localhost:3000/api/location/localities-with-faps
 content-type: application/json
 
 {
-  "district_id":6
+  "district_id":2
 }
 
 
@@ -80,7 +80,7 @@ POST http://localhost:3000/api/dev_fetch_data/openrouteservice_distances
 content-type: application/json
 
 {
-  "district_id":4,
+  "district_id":5,
   "region_id":1,
   "distance": 30
 }

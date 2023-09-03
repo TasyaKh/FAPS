@@ -18,10 +18,11 @@ import apiReportsWord from './routes/faps/word.routes.js'
 import apiUpload from './routes/faps/upload.routes.js'
 import apiAddress from './routes/faps/address.routes.js'
 import apiLocation from './routes/faps/location.routes.js'
+
 // expert system
-import apiPoints from './routes/expert_system/points.routes.js'
 import apiCluster from './routes/expert_system/cluster.routes.js'
 import apiDev from './routes/expert_system/dev_fetch_data.routes.js'
+import apiDist from './routes/expert_system/distance.routes.js'
 
 import apiEdit from './routes/faps/edit.routes.js'
 
@@ -56,6 +57,8 @@ app.use('/api/reports/word', apiReportsWord)
 // app.use('/api/points', apiPoints)
 app.use('/api/clusterize', apiCluster)
 app.use('/api/dev_fetch_data', apiDev)
+app.use('/api/distance', apiDist)
+
 
 
 if (process.env.NODE_ENV === 'production') {
