@@ -1,0 +1,46 @@
+.legend {
+	background-color: #ffffff;
+	position: fixed;
+	overflow: hidden;
+	bottom: 80px;
+	right: 25px;
+	border-radius: 8px;
+	max-width: 291px;
+	width: 100%;
+	font-size: 14px;
+	overflow-y: auto;
+	height: auto;
+	max-height: 97%;
+	z-index: 3;
+	top: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	&__wrapper {
+		padding: 20px 30px;
+	}
+
+	&__title {
+		margin-bottom: 30px;
+		font-size: 18px;
+	}
+
+	&__button {
+		border: none;
+		cursor: pointer;
+
+		&--close {
+			background-color: #f1f1f1;
+			padding: 15px 0;
+			width: 100%;
+		}
+	}
+
+}
+
+@media only screen and (max-width: 768px) {
+	.legend {
+		bottom: 20px;
+	}
+}

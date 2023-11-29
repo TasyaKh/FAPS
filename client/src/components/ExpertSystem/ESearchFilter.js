@@ -1,11 +1,19 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import './ESearchFilter.scss'
-import { CardPanel} from "react-materialize"
+import {CardPanel, Checkbox} from "react-materialize"
 import {useHttp} from "../../hooks/http.hook";
 import {SelectArea} from "../SelectArea";
 
 export const ESearchFilter = (props) => {
     const {loading, error, request, clearError} = useHttp()
+
+
+    useEffect(() => {
+        if (error) {
+            console.log('Ошибка: ' + error)
+        }
+        clearError()
+    }, [clearError, error])
 
     const handleSelectChange = (e) => {
         const {target} = e
@@ -15,12 +23,15 @@ export const ESearchFilter = (props) => {
         props.onFilterChanged({[name]: !isNaN(value) ? value !== 0 ? value : null : null})
     }
 
-    useEffect(() => {
-        if (error) {
-            console.log('Ошибка: ' + error)
-        }
-        clearError()
-    }, [clearError, error])
+    const handleCheckBoxFilterClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {target} = e
+        const {value, checked} = target
+        if (target.value === 'faps')
+            props.onCheckBoxShowFapsClick(checked)
+        else if (target.value === 'settlements')
+            props.onCheckBoxShowSettlementsClick(checked)
+
+    }
 
 
     // const fetchDataFilter = useCallback(async (body) => {
@@ -49,27 +60,43 @@ export const ESearchFilter = (props) => {
 
         <CardPanel
             className={`search-filter white ${props.className} ${(props.visible ? 'search-filter--visible' : 'search-filter--hidden')} ${props.style}`}>
-            <div className="search-filter__wrapper">
+            <div className="">
 
                 <h4 className="search-filter__title">Фильтры:</h4>
+                <div className="row">
+                    <div className="col">
+                        <Checkbox
+                            filledIn
+                            className=""
+                            checked={props.showSettlements}
+                            id="show__settlements"
+                            label="Показать НП-ы"
+                            value="settlements"
+                            onClick={handleCheckBoxFilterClick}
+                        /></div>
+                    <div className="col">
+                        <Checkbox
+                            filledIn
+                            className=""
+                            id="show__faps"
+                            label="Показать ФАП-ы"
+                            checked={props.showFaps}
+                            value="faps"
+                            onClick={handleCheckBoxFilterClick}
+                        /></div>
 
-                <div className="search-filter__flex">
+                </div>
+                <div className="row">
 
-                    <div className="search-filter__elem">
-
-                        <div className="search-filter__block search-filter__block--high">
-                            <SelectArea
-                                // empty={true}
-                                value={props.filters.district_id}
-                                name="district_id"
-                                onChange={handleSelectChange}
-                                disabled={loading}
-                                label="Район:"
-                                query="district"
-                            />
-                        </div>
-
-                    </div>
+                    <SelectArea
+                        // empty={true}
+                        value={props.filters.district_id}
+                        name="district_id"
+                        onChange={handleSelectChange}
+                        disabled={loading}
+                        label="Район:"
+                        query="district"
+                    />
                 </div>
             </div>
         </CardPanel>

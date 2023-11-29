@@ -33,8 +33,8 @@ router.post(
     conditions.staffingPersent = req.body.staffingPersent ?? 0
 
 
-    setPointsMedicalCenters(req, res, values, conditions)
-    const r = await setPointsLocalities(req, res, values, conditions)
+    await setPointsMedicalCenters(req, res, values, conditions)
+    await setPointsLocalities(req, res, values, conditions)
     res.json({
       success: true
     })

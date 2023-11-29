@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import "./SingleLocality.scss"
 import {ReactComponent as ArrowBack} from '../../img/arrow-back.svg'
 import {useHttp} from "../../hooks/http.hook";
-import {LocalityItem} from "./LocalityItem";
 import {DistanceMcElem} from "../Elements/DistanceMcElem";
+import {MapContext} from "../../context/MapContext";
+
 
 export const SingleLocality = (props) => {
 
@@ -11,6 +12,7 @@ export const SingleLocality = (props) => {
 
     const [locality, setLocality] = useState({});
     const [mcs, setMcs] = useState({});
+    const {mapState, setMapState} = useContext(MapContext)
 
 
     const fetchLocality = async () => {
@@ -38,6 +40,17 @@ export const SingleLocality = (props) => {
         fetchMcs()
 
     }, [props.id])
+
+    function handleOnMcClick(e, lon, lat) {
+        
+        if(lon && lat)
+            setMapState({
+                ...mapState,
+                zoom: 12,
+                center: [lat, lon]
+            })
+    }
+
 
     return (
 
@@ -80,6 +93,9 @@ export const SingleLocality = (props) => {
                                             name={mc.mc_name}
                                             distance={mc.distance}
                                             duration={mc.duration}
+                                            longitude={mc.mc_longitude}
+                                            latitude={mc.mc_latitude}
+                                            onMcClick={handleOnMcClick}
                                             key={i}
                                         />
 

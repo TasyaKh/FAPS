@@ -19,7 +19,7 @@ export async function getPointsMedicalCentersOfDistrict(req, res) {
                               
                                    WHERE district_id = ?`
 
-            const rows = await new Promise((resolve, reject) => {
+            r = await new Promise((resolve, reject) => {
                 connection.query(query, [req.body.district_id], (err, result) => {
                     if (err) {
                         reject(err);
@@ -27,9 +27,7 @@ export async function getPointsMedicalCentersOfDistrict(req, res) {
                         resolve(result);
                     }
                 });
-            });
-
-            r = rows
+            })
 
         } else {
             console.log("cant find district is null")
@@ -50,7 +48,6 @@ export async function setPointsMedicalCenters(req, res, values, conditions) {
     try {
 
         if (req.body.district_id) {
-
 
             //get medical centers by district id
             query =

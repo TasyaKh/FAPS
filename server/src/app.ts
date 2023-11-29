@@ -25,6 +25,7 @@ import apiDev from './routes/expert_system/dev_fetch_data.routes.js'
 import apiDist from './routes/expert_system/distance.routes.js'
 
 import apiEdit from './routes/faps/edit.routes.js'
+import apiPoints from './routes/expert_system/points.routes.js'
 
 app.use(express.json({
   // extended: true,
@@ -54,7 +55,7 @@ app.use('/api/reports/pdf', apiReportsPDF)
 app.use('/api/reports/word', apiReportsWord)
 
 // expert system
-// app.use('/api/points', apiPoints)
+app.use('/api/points', apiPoints)
 app.use('/api/clusterize', apiCluster)
 app.use('/api/dev_fetch_data', apiDev)
 app.use('/api/distance', apiDist)

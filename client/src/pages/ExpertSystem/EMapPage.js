@@ -20,6 +20,16 @@ export const EMapPage = () => {
         district_id: 2,
     })
 
+    // use vals from local storage
+    const [showSettlements, setShowSettlements] = useState(() => {
+        const storedVal = localStorage.getItem('showSettlements')
+        return storedVal ? JSON.parse(storedVal) : true;
+    })
+    const [showFaps, setShowFaps] = useState(() => {
+        const storedVal = localStorage.getItem('showFaps')
+        return storedVal ? JSON.parse(storedVal) : true;
+    })
+
 
     const fetchMedicalCenters = async () => {
         try {
@@ -68,6 +78,23 @@ export const EMapPage = () => {
 
     }
 
+    const handleCheckBoxShowFapsClick = (checked:boolean) => {
+        setShowFaps(checked)
+    }
+
+    const handleCheckBoxShowSettlementsClick = (checked:boolean) => {
+        setShowSettlements(checked)
+    }
+
+    // save in local storage
+    useEffect(() => {
+        localStorage.setItem('showSettlements', JSON.stringify(showSettlements))
+    }, [showSettlements]);
+
+    useEffect(() => {
+        localStorage.setItem('showFaps', JSON.stringify(showFaps))
+    }, [showFaps]);
+
     // effects
     // ----------------------------------------------------------------------------------------------------
     useEffect(() => {
@@ -86,8 +113,6 @@ export const EMapPage = () => {
 
 
 
-
-
     return (
         <div className="map-page container--map">
             <MapContext.Provider value={{
@@ -97,6 +122,10 @@ export const EMapPage = () => {
                     loading={loading}
                     data={objects}
                     orgs={orgs}
+
+                    showSettlements={showSettlements}
+                    showFaps={showFaps}
+
                     // singleView={singleView}
                     // setSingleView={setSingleView}
                     hiddenSidebar={hiddenSidebar}
@@ -105,6 +134,9 @@ export const EMapPage = () => {
                     onFilterChanged={handleFilterChanged}
                     filters={filters}
                     localities={localities}
+
+                    onCheckBoxShowFapsClick= {handleCheckBoxShowFapsClick}
+                    onCheckBoxShowSettlementsClick = { handleCheckBoxShowSettlementsClick}
                 />
 
                 <EMap
@@ -113,6 +145,8 @@ export const EMapPage = () => {
                     localities={localities}
                     orgs={orgs}
                     districtId={filters.district_id}
+                    showFaps={showFaps}
+                    showSettlements={showSettlements}
                 />
 
                 <ENavigation

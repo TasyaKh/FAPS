@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {CardPanel, TextInput} from "react-materialize";
 import magnifer from "../../img/magnifier.svg";
 import {ReactComponent as Filter} from "../../img/filter.svg";
@@ -40,7 +40,13 @@ export const ESearch = (props) => {
             <ESearchFilter
                 visible={props.filterShow}
                 onFilterChanged={props.onFilterChanged}
+
+                onCheckBoxShowFapsClick={props.onCheckBoxShowFapsClick}
+                onCheckBoxShowSettlementsClick={props.onCheckBoxShowSettlementsClick}
+
                 filters={props.filters}
+                showSettlements={props.showSettlements}
+                showFaps={props.showFaps}
             />
 
         </CardPanel>

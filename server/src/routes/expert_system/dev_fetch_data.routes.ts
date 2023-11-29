@@ -1,9 +1,6 @@
 import express, {Router} from 'express'
-import {DistanceOpenRoute} from "../../services/findDistandeOpenRoute.service.js";
 import {getMedicalCenters} from "../../services/database/medical_center.service.js";
 import MC from "../../enities/medical_center.entity.js";
-import {DistanceService} from "../../services/database/distance.service.js";
-import Distance from "../../enities/distance.entity.js";
 import {getLocalitiesByDistrictId} from "../../services/database/locality.service.js";
 import {DevService} from "../../services/database/dev.service.js";
 import {getOrganizationsByDistrictId} from "../../services/database/organization.service.js";
@@ -31,7 +28,6 @@ router.post(
                 localities = await getLocalitiesByDistrictId(requestBody.district_id)
                 // get medical facilities
                 mcsDistrict = await getOrganizationsByDistrictId(requestBody.district_id)
-
             }
 
             // get mc_centers by disctrict

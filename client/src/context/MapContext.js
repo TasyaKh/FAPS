@@ -7,3 +7,5 @@ export const MapContext = createContext({
   zoom: 9,
   setMapState: noop
 })
+
+// export const SelectedItem = createContext([])

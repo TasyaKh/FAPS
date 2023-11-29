@@ -6,8 +6,6 @@ import {MapContext} from "../../context/MapContext";
 import {ESearch} from "./ESearch";
 import {ListViewLocalities} from "./ListViewLocalities";
 import CustomScrollbars from "../CustomScrollbar";
-import {SingleViewOrg} from "../SingleViewOrg";
-import {SingleView} from "../SingleView";
 import {SingleLocality} from "./SingleLocality";
 
 export const ESidebar = (props) => {
@@ -79,7 +77,7 @@ export const ESidebar = (props) => {
 
     const handleMedicalCenterClick = (e, localityAndMc, isMC) => {
 
-        if (isMC){
+        if (isMC) {
             if (localityAndMc && localityAndMc.mc_latitude && localityAndMc.mc_longitude) {
                 setMapState({
                     ...mapState,
@@ -87,7 +85,7 @@ export const ESidebar = (props) => {
                     center: [localityAndMc.mc_latitude, localityAndMc.mc_longitude]
                 })
             }
-        }else {
+        } else {
             if (localityAndMc && localityAndMc.mcf_latitude && localityAndMc.mcf_longitude) {
                 setMapState({
                     ...mapState,
@@ -121,6 +119,13 @@ export const ESidebar = (props) => {
                 <ESearch
                     filterShow={state.filter.show}
                     scroll={state.scroll}
+
+                    showSettlements={props.showSettlements}
+                    showFaps={props.showFaps}
+
+                    onCheckBoxShowFapsClick={props.onCheckBoxShowFapsClick}
+                    onCheckBoxShowSettlementsClick={props.onCheckBoxShowSettlementsClick}
+
                     handleInput={HandleInputSearch}
                     handleFilter={handleFilterButton}
                     onFilterChanged={props.onFilterChanged}
@@ -153,6 +158,7 @@ export const ESidebar = (props) => {
 
                                     <SingleLocality
                                         id={singleLocality.id}
+                                        key={singleLocality.id}
                                         back={(e) => handleBack(e)}
                                     />
                                     :

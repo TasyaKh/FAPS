@@ -58,7 +58,7 @@ export const PointsPanel = (/** @type {{ handleCalculateButton: (arg0: any) => v
       <div className="points-panel__wrapper">
 
         { props.pointsButtonVisible ?
-          <Link to="/points-localities">
+          <Link to="/expert-system/points-localities">
 
             <Button
               node="button"
