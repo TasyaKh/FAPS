@@ -7,15 +7,14 @@ export const columnsPointsLocalities =
             Header: 'НП',
             accessor: 'name',
         },
-        {
-            Header: 'ПМСП',
-            accessor: 'availability_PMSP',
-        },
-
-        {
-            Header: 'СМП',
-            accessor: 'availability_SMP',
-        },
+        // {
+        //     Header: 'ПМСП',
+        //     accessor: 'availability_PMSP',
+        // },
+        // {
+        //     Header: 'СМП',
+        //     accessor: 'availability_SMP',
+        // },
         {
             Header: 'Взрослое население',
             accessor: 'population_adult',
@@ -24,33 +23,44 @@ export const columnsPointsLocalities =
             Header: 'Детское население',
             accessor: 'population_child',
         },
+        // {
+        //     Header: 'Водоснабжение',
+        //     accessor: 'water_supply',
+        // },
+        // {
+        //     Header: 'Канализация',
+        //     accessor: 'sewerage',
+        // },
+        // {
+        //     Header: 'Отопление',
+        //     accessor: 'heating',
+        // },
+        // {
+        //     Header: 'Интернет',
+        //     accessor: 'internet',
+        // },
         {
-            Header: 'Водоснабжение',
-            accessor: 'water_supply',
+            Header: 'МП',
+            accessor: 'MC',
         },
         {
-            Header: 'Канализация',
-            accessor: 'sewerage',
+            Header: 'Есть медик',
+            accessor: 'haveStaff',
         },
         {
-            Header: 'Отопление',
-            accessor: 'heating',
+            Header: 'тип МП',
+            accessor: 'typeMC',
         },
         {
-            Header: 'Интернет',
-            accessor: 'internet',
+            Header: 'МП, км',
+            accessor: 'MCkm',
         },
         {
-            Header: 'Итог',
-            accessor: 'sum',
-        },
-        {
-            Header: 'Кол-во учреждений',
-            accessor: 'count_mc',
-        },
-        {
-            Header: 'Мин балл учреждений',
-            accessor: 'min_sum_fap',
+            Header: 'МП, время',
+            accessor: 'MCtime',
+        }, {
+            Header: 'Результат',
+            accessor: 'result',
         },
     ],
 }

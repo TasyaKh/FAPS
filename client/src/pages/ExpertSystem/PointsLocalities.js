@@ -72,7 +72,7 @@ export const PointsLocalities = () => {
         setFilters(body)
         try {
 
-            let req =''
+            let req
 
             if(faps){
                 req = '/api/points/medical-centers'
