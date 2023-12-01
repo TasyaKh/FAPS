@@ -1,6 +1,5 @@
 import {Router} from 'express'
-import {initializeConnection} from '../../functions/initializeConnection.js'
-import {configDB} from "./configDB";
+import AppDataSource from "../../typeorm.config";
 
 const router = Router()
 
@@ -13,20 +12,12 @@ export default (app: Router) => {
       async (req, res) => {
         try {
 
-          const connection = initializeConnection(configDB)
+          const entityManager = AppDataSource.createEntityManager()
 
           const query = 'SELECT `region`.`id`, `region`.`name` AS `region_name`  FROM `region` ORDER BY `region_name`'
 
-          connection.query(query, (err, rows) => {
-            connection.end()
-
-            if (err) {
-              throw err
-            }
-
-            res.json(rows)
-          })
-
+          const result = await entityManager.query(query)
+          res.json(result)
         } catch (e) {
           console.log(e)
           res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
@@ -41,20 +32,12 @@ export default (app: Router) => {
       async (req, res) => {
         try {
 
-          const connection = initializeConnection(configDB)
+          const entityManager = AppDataSource.createEntityManager()
 
           const query = 'SELECT `district`.`id`, `district`.`name` AS `district_name`  FROM `district` ORDER BY `district_name`'
 
-          connection.query(query, (err, rows) => {
-            connection.end()
-
-            if (err) {
-              throw err
-            }
-
-            res.json(rows)
-          })
-
+          const result = await entityManager.query(query)
+          res.json(result)
         } catch (e) {
           console.log(e)
           res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
@@ -69,19 +52,12 @@ export default (app: Router) => {
       async (req, res) => {
         try {
 
-          const connection = initializeConnection(configDB)
+          const entityManager = AppDataSource.createEntityManager()
 
           const query = 'SELECT `locality`.`id`, `locality`.`name` AS `locality_name`  FROM `locality` ORDER BY `locality_name`'
 
-          connection.query(query, (err, rows) => {
-            connection.end()
-
-            if (err) {
-              throw err
-            }
-
-            res.json(rows)
-          })
+          const result = await entityManager.query(query)
+          res.json(result)
 
         } catch (e) {
           console.log(e)
@@ -97,19 +73,12 @@ export default (app: Router) => {
       async (req, res) => {
         try {
 
-          const connection = initializeConnection(configDB)
+          const entityManager = AppDataSource.createEntityManager()
 
           const query = 'SELECT `medical_facility`.`id`, `medical_facility`.`name` AS `facility_name` FROM `medical_facility` ORDER BY `facility_name`'
 
-          connection.query(query, (err, rows) => {
-            connection.end()
-
-            if (err) {
-              throw err
-            }
-
-            res.json(rows)
-          })
+          const result = await entityManager.query(query)
+          res.json(result)
 
         } catch (e) {
           console.log(e)
@@ -125,20 +94,12 @@ export default (app: Router) => {
       async (req, res) => {
         try {
 
-          const connection = initializeConnection(configDB)
+          const entityManager = AppDataSource.createEntityManager()
 
           const query = 'SELECT `types`.`id`, `types`.`name` AS `type_name` FROM `types`'
 
-          connection.query(query, (err, rows) => {
-            connection.end()
-
-            if (err) {
-              throw err
-            }
-
-            res.json(rows)
-          })
-
+          const result = await entityManager.query(query)
+          res.json(result)
         } catch (e) {
           console.log(e)
           res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})

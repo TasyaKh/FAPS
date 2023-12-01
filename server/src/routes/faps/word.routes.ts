@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import {HeadingLevel, Packer, PageOrientation, Paragraph, Table, TableCell, TableRow, TextRun} from "docx"
+import {HeadingLevel, Packer, PageOrientation, Paragraph, Table, TableCell, TableRow, TextRun, Document} from "docx"
 import {getParameters} from '../../functions/getParameters.js'
 
 const router = Router()
@@ -98,7 +98,7 @@ export default (app: Router) => {
 
       return tableBody
     }
-    // @ts-ignore
+
     return new Document({
       sections: [{
         properties: {

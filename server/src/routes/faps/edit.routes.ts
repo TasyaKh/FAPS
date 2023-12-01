@@ -1,139 +1,123 @@
 import {Router} from 'express'
-import {initializeConnection} from '../../functions/initializeConnection.js'
-import {configDB} from "./configDB";
+import AppDataSource from "../../typeorm.config";
 
 const router = Router()
 
 export default (app: Router) => {
-  app.use('/edit', router)
-  const updateRatesInDataBase = (connection, id) => {
-    let query = 'SELECT `medical_center`.`id`, `staff`.`rate_full`, `staff`.`rate_occupied` FROM `medical_center`\n' +
-        'LEFT JOIN `staff`\n' +
-        ' ON `medical_center`.`id` = `staff`.`medical_center_id`\n' +
-        'WHERE `medical_center`.`id` = 125'
+    app.use('/edit', router)
+    const updateRatesInDataBase = async (id) => {
+        let query = 'SELECT `medical_center`.`id`, `staff`.`rate_full`, `staff`.`rate_occupied` FROM `medical_center`\n' +
+            'LEFT JOIN `staff`\n' +
+            ' ON `medical_center`.`id` = `staff`.`medical_center_id`\n' +
+            'WHERE `medical_center`.`id` = 125'
 
-    connection.query(query, (e, rows) => {
-      if (e) {
-        throw e
-      }
+        const entityManager = AppDataSource.createEntityManager()
 
-      let rateFullSum = 0
-      let rateOccupiedSum = 0
 
-      for (const row of rows) {
-        rateFullSum += row.rate_full
-        rateOccupiedSum += row.rate_occupied
-      }
+        await entityManager.query(query).catch((err) => {
+            throw err
+        }).then( async (rows) => {
+            // TODO: CHECK all in file
+            let rateFullSum = 0
+            let rateOccupiedSum = 0
 
-      const staffing = Math.floor(rateOccupiedSum / rateFullSum * 100) / 100
+            for (const row of rows) {
+                rateFullSum += row.rate_full
+                rateOccupiedSum += row.rate_occupied
+            }
 
-      query = 'UPDATE `medical_center` SET `staffing` = ' + staffing + ' WHERE `medical_center`.`id` = ' + id
+            const staffing = Math.floor(rateOccupiedSum / rateFullSum * 100) / 100
 
-      connection.query(query, (err) => {
-        if (err) {
-          throw err
-        }
+            query = 'UPDATE `medical_center` SET `staffing` = ' + staffing + ' WHERE `medical_center`.`id` = ' + id
 
-        connection.end()
 
-        return true
-      })
-    })
-  }
+            await entityManager.query(query).catch((err) => {
+                throw err
+            })
+
+            return true
+        })
+
+
+    }
 
 // /api/edit/rate/add
-  router.post(
-      '/rate/add',
-      [],
-      async (req, res) => {
-        try {
-          const connection = initializeConnection(configDB)
+    router.post(
+        '/rate/add',
+        [],
+        async (req, res) => {
+            try {
 
-          let date = new Date()
-          // @ts-ignore
-          date = date.getFullYear() + '-' + (date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()) + '-' + date.getDate()
+                const entityManager = AppDataSource.createEntityManager()
 
-          const query = "INSERT INTO `staff` (`id`, `medical_center_id`, `date`, `position`, `rate_full`, `rate_occupied`) VALUES (?, ?, ?, ?, ?, ?)"
+                let date = new Date()
+                // @ts-ignore
+                date = date.getFullYear() + '-' + (date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()) + '-' + date.getDate()
 
-          connection.query(query, [null, req.body.medical_center_id, date, req.body.position, parseFloat(req.body.rate_full), parseFloat(req.body.rate_occupied)], (err) => {
-            if (err) {
-              throw err
+                const query = "INSERT INTO `staff` (`id`, `medical_center_id`, `date`, `position`, `rate_full`, `rate_occupied`) VALUES (?, ?, ?, ?, ?, ?)"
+
+                try {
+                    const result = await entityManager.query(query,
+                        [null, req.body.medical_center_id, date, req.body.position, parseFloat(req.body.rate_full), parseFloat(req.body.rate_occupied)])
+                    res.json(result)
+                } catch (err) {
+                    await updateRatesInDataBase(req.body.medical_center_id)
+                    res.json({
+                        success: true
+                    })
+                }
+            } catch (e) {
+                console.log(e)
+                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
             }
-
-            updateRatesInDataBase(connection, req.body.medical_center_id)
-
-            res.json({
-              success: true
-            })
-          })
-
-        } catch (e) {
-          console.log(e)
-          res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
         }
-      }
-  )
+    )
 
 // /api/edit/rate/update
-  router.post(
-      '/rate/update',
-      [],
-      async (req, res) => {
-        try {
-          const connection = initializeConnection(configDB)
+    router.post(
+        '/rate/update',
+        [],
+        async (req, res) => {
+            try {
+                const entityManager = AppDataSource.createEntityManager()
 
-          let date = new Date()
-          // @ts-ignore
-          date = date.getFullYear() + '-' + (date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()) + '-' + date.getDate()
+                let date = new Date()
+                // @ts-ignore
+                date = date.getFullYear() + '-' + (date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()) + '-' + date.getDate()
 
-          const query = "UPDATE `staff` SET `date` = ?, `position` = ?, `rate_full` = ?, `rate_occupied` = ? WHERE `staff`.`id` = ?"
+                const query:string = "UPDATE `staff` SET `date` = ?, `position` = ?, `rate_full` = ?, `rate_occupied` = ? WHERE `staff`.`id` = ?"
 
-          connection.query(query, [date, req.body.position, req.body.rate_full, req.body.rate_occupied, req.body.id], (err) => {
+                await entityManager.query(query, [date, req.body.position, req.body.rate_full, req.body.rate_occupied, req.body.id])
 
-            if (err) {
-              throw err
+                await updateRatesInDataBase(req.body.medical_center_id)
+
+                res.json({
+                    success: true
+                })
+            } catch (e) {
+                console.log(e)
+                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
             }
-
-            updateRatesInDataBase(connection, req.body.medical_center_id)
-
-            res.json({
-              success: true
-            })
-          })
-
-        } catch (e) {
-          console.log(e)
-          res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
         }
-      }
-  )
+    )
 
 // /api/edit/rate/delete
-  router.post(
-      '/rate/delete',
-      [],
-      async (req, res) => {
-        try {
-          const connection = initializeConnection(configDB)
+    router.post(
+        '/rate/delete',
+        [],
+        async (req, res) => {
+            try {
+                const entityManager = AppDataSource.createEntityManager()
 
-          const query = "DELETE FROM `staff` WHERE `staff`.`id` = ?"
+                const query = "DELETE FROM `staff` WHERE `staff`.`id` = ?"
 
-          connection.query(query, [req.body.id], (err) => {
-            if (err) {
-              throw err
+                await entityManager.query(query, [req.body.id])
+                await updateRatesInDataBase(req.body.medical_center_id)
+
+            } catch (e) {
+                console.log(e)
+                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
             }
-
-            updateRatesInDataBase(connection, req.body.medical_center_id)
-
-            res.json({
-              success: true
-            })
-          })
-
-        } catch (e) {
-          console.log(e)
-          res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
         }
-      }
-  )
+    )
 }

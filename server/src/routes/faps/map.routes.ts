@@ -1,6 +1,5 @@
 import {Router} from 'express'
-import {initializeConnection} from '../../functions/initializeConnection.js'
-import {configDB} from "./configDB";
+import AppDataSource from "../../typeorm.config";
 
 const router = Router()
 
@@ -13,7 +12,7 @@ export default (app: Router) => {
         [],
         async (req, res) => {
             try {
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
                 const query = 'SELECT `medical_center`.`id`, `medical_center`.`name`, `medical_center`.`street`, `medical_center`.`number_of_house`, `medical_center`.`latitude`, `medical_center`.`longitude`, `locality`.`name` AS `locality_name`, `district`.`name` AS `district_name`,  `district`.`id` AS `district_id`, `region`.`name` AS `region_name`,  `medical_center`.`staffing` FROM `medical_center`\n' +
                     '    LEFT JOIN `locality`\n' +
                     '        ON `medical_center`.`locality_id` = `locality`.`id`\n' +
@@ -23,15 +22,8 @@ export default (app: Router) => {
                     '        ON `region`.`id` = `district`.`region_id`' +
                     '    ORDER BY `medical_center`.`name`'
 
-                connection.query(query, (err, rows) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json({data: rows})
-                })
+                const result = await entityManager.query(query)
+                res.json({data:result})
 
             } catch (e) {
                 console.log(e)
@@ -46,7 +38,7 @@ export default (app: Router) => {
         [],
         async (req, res) => {
             try {
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
                 const query = 'SELECT `medical_facility`.`id`, `medical_facility`.`name`, `type_id`,  `medical_facility`.`latitude`, `medical_facility`.`longitude`, `locality_id`, `street`, `number_of_house`, `locality`.`name` AS `locality_name`, `district`.`name` AS `district_name`, `region`.`name` AS `region_name` FROM `medical_facility`\n' +
                     'LEFT JOIN `locality`\n' +
                     '    ON `medical_facility`.`locality_id` = `locality`.`id`\n' +
@@ -55,16 +47,8 @@ export default (app: Router) => {
                     'LEFT JOIN `region`\n' +
                     '    ON `region`.`id` = `district`.`region_id`'
 
-                connection.query(query, (err, rows) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json({data: rows})
-                })
-
+                const result = await entityManager.query(query)
+                res.json({data:result})
             } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})

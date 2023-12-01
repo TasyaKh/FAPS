@@ -30,10 +30,10 @@ export default class Distance {
 
    @ManyToOne(() => MedicalCenter, { nullable: true, onDelete: 'CASCADE' })
    @JoinColumn({ name: 'mc_id' })
-   medicalCenter: MedicalCenter;
+   medical_center: MedicalCenter;
 
    @ManyToOne(() => MedicalFacility, { nullable: true, onDelete: 'CASCADE' })
    @JoinColumn({ name: 'mc_facility_id' })
-   medicalFacility: MedicalFacility;
+   medical_facility: MedicalFacility;
 
 }

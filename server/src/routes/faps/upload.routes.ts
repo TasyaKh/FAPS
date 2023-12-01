@@ -1,9 +1,8 @@
 import {Router} from 'express'
 import multer from 'multer'
-import {initializeConnection} from '../../functions/initializeConnection.js'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
 import fs from 'fs'
-import {configDB} from "./configDB";
+import AppDataSource from "../../typeorm.config";
 
 const router = Router()
 
@@ -62,30 +61,22 @@ export default (app: Router) => {
                 if (!req.file)
                     res.status(500).json({message: 'Неверный формат файла'})
 
-                const connection = initializeConnection(configDB)
+                let query:string = 'INSERT INTO `photo` (`id`, `medical_center_id`, `name`) VALUES (?, ?, ?)'
+                const entityManager = AppDataSource.createEntityManager()
 
-                try {
-                    connection.query('INSERT INTO `photo` (`id`, `medical_center_id`, `name`) VALUES (?, ?, ?)', [null, req.body.id, req.file.filename], (err, rows) => {
-                        connection.end()
-
-                        if (err) {
-                            deleteFile(req.file.filename)
-                            throw err
-                        }
-
-                        res.status(200).send({
-                            message: 'Файл загружен',
-                            image: {
-                                id: rows.insertId,
-                                medical_center_id: parseInt(req.body.id),
-                                name: req.file.filename
-                            }
-                        })
-                    })
-                } catch (sqlErrors) {
+                const result = await entityManager.query(query, [null, req.body.id, req.file.filename]).catch((err)=>{
                     deleteFile(req.file.filename)
-                    console.log('SQL Errors', sqlErrors)
-                }
+                    throw err
+                }).then((rows)=>{
+                    res.status(200).send({
+                        message: 'Файл загружен',
+                        image: {
+                            id: rows.insertId,
+                            medical_center_id: parseInt(req.body.id),
+                            name: req.file.filename
+                        }
+                    })
+                })
 
             } catch (e) {
                 deleteFile(req.file.filename)
@@ -102,26 +93,16 @@ export default (app: Router) => {
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
-                try {
-                    connection.query('DELETE FROM `photo` WHERE `photo`.`id` = ?', [req.body.id], (err) => {
-                        connection.end()
+                let query = 'DELETE FROM `photo` WHERE `photo`.`id` = ?'
+                const result = await entityManager.query(query, [req.body.id])
 
-                        if (err) {
-                            throw err
-                        }
+                deleteFile(req.body.name)
 
-                        deleteFile(req.body.name)
-
-                        res.status(200).send({
-                            message: 'Файл удален'
-                        })
-                    })
-                } catch (sqlErrors) {
-                    console.log('SQL Errors', sqlErrors)
-                }
-
+                res.status(200).send({
+                    message: 'Файл удален'
+                })
             } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})

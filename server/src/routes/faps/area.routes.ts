@@ -1,6 +1,5 @@
 import {Router} from 'express'
-import {initializeConnection} from '../../functions/initializeConnection.js'
-import {configDB} from "./configDB";
+import AppDataSource from "../../typeorm.config";
 
 const router = Router()
 export default (app: Router) => {
@@ -13,20 +12,12 @@ export default (app: Router) => {
             async (req, res) => {
                 try {
 
-                    const connection = initializeConnection(configDB)
+                    const entityManager = AppDataSource.createEntityManager()
 
                     const query = 'SELECT `id`, `region_id`, `name` AS `district_name` FROM `district`'
 
-                    connection.query(query, (err, rows, fields) => {
-                        connection.end()
-
-                        if (err) {
-                            throw err
-                        }
-
-                        res.json(rows)
-                    })
-
+                    const result = await entityManager.query(query)
+                    res.json(result)
                 } catch (e) {
                     console.log(e)
                     res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})

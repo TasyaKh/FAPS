@@ -1,0 +1,7 @@
+### distance
+POST http://localhost:3002/api/location/districts
+content-type: application/json
+
+{
+
+}

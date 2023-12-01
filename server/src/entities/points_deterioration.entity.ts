@@ -18,5 +18,5 @@ export class PointsDeterioration {
 
     @ManyToOne(() => MedicalCenter, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'mc_id' })
-    medicalCenter: MedicalCenter;
+    medical_center: MedicalCenter;
 }

@@ -21,5 +21,5 @@ export default class BuildingCondition {
 
    @ManyToOne(() => MedicalCenter, (mc) => mc.id, { onDelete: 'CASCADE' })
    @JoinColumn([{ name: 'medical_center_id' }])
-   medicalCenter:MedicalCenter
+   medical_center:MedicalCenter
 }

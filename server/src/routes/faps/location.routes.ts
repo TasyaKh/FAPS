@@ -1,10 +1,9 @@
 import {Router} from 'express'
-import {initializeConnection} from '../../functions/initializeConnection.js'
-import {configDB} from "./configDB";
+import AppDataSource from "../../typeorm.config";
 
 const router = Router()
 export default (app: Router) => {
-    app.use('/locality', router)
+    app.use('/location', router)
 // /api/location/regions
     router.post(
         '/regions',
@@ -12,26 +11,17 @@ export default (app: Router) => {
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
-                const query = 'SELECT `region`.`id`, `region`.`name`, COUNT(`district`.`id`) AS `districts_count` FROM `region`\n' +
+                const result = await entityManager.query('SELECT `region`.`id`, `region`.`name`, COUNT(`district`.`id`) AS `districts_count` FROM `region`\n' +
                     'LEFT JOIN `district` \n' +
                     '\tON `region`.`id` = `district`.`region_id` \n' +
                     'GROUP BY `region`.`id`\n' +
-                    'ORDER BY `region`.`name`'
+                    'ORDER BY `region`.`name`');
 
-                connection.query(query, (err, rows) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json(rows)
-                })
+                res.json(result)
 
             } catch (e) {
-                console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
             }
         }
@@ -44,10 +34,9 @@ export default (app: Router) => {
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
-                let query
-
+                let query: string
                 if (req.body.id) {
                     query = 'SELECT `district`.`id`, `district`.`name`, `locality`.`longitude`, `locality`.`latitude`, `district`.`region_id`, COUNT(`locality`.`id`) AS `localities_count` FROM `district`\n' +
                         'LEFT JOIN `locality`\n' +
@@ -63,15 +52,9 @@ export default (app: Router) => {
                         'ORDER BY `district`.`name`'
                 }
 
-                connection.query(query, (err, rows) => {
-                    connection.end()
+                const result = await entityManager.query(query)
 
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json(rows)
-                })
+                res.json(result)
 
             } catch (e) {
                 console.log(e)
@@ -87,9 +70,9 @@ export default (app: Router) => {
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
-                let query
+                let query: string
 
                 if (req.body.id) {
                     query = 'SELECT `locality`.`id`, `locality`.`district_id`, `locality`.`longitude`, `locality`.`latitude`, `locality`.`name`, (`population`.`population_adult`) AS `population` FROM `locality`\n' +
@@ -106,15 +89,8 @@ export default (app: Router) => {
                         'ORDER BY `locality`.`name`'
                 }
 
-                connection.query(query, (err, rows) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json(rows)
-                })
+                const result = await entityManager.query(query)
+                res.json(result)
 
             } catch (e) {
                 console.log(e)
@@ -130,7 +106,7 @@ export default (app: Router) => {
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
                 let query = `
 SELECT locality.id, locality.district_id, locality.longitude, locality.latitude, 
@@ -150,16 +126,8 @@ FROM locality
             GROUP BY locality.id
             ORDER BY locality.name`
 
-
-                connection.query(query, [req.params.id], (err, rows) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json(rows[0])
-                })
+                const result = await entityManager.query(query)
+                res.json(result)
 
             } catch (e) {
                 console.log(e)
@@ -175,9 +143,9 @@ FROM locality
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
-                let query
+                let query: string
                 let values = []
 
                 query = `
@@ -254,15 +222,9 @@ FROM
                 query += ` GROUP BY locality.id
                 ORDER BY population DESC`
 
-                connection.query(query, values, (err, rows) => {
-                    connection.end()
+                const result = await entityManager.query(query, values)
+                res.json(result)
 
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json(rows)
-                })
             } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
@@ -279,22 +241,14 @@ FROM
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
                 const query = "UPDATE `district` SET `region_id` = " + req.body.region_id + ", `name` = '" + req.body.name + "' WHERE `district`.`id` = " + req.body.id
 
-                connection.query(query, (err) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json({
-                        success: true
-                    })
+                const result = await entityManager.query(query)
+                res.json({
+                    success: true
                 })
-
             } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
@@ -309,23 +263,14 @@ FROM
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
                 const query = "UPDATE `locality` SET `district_id` = '" + req.body.district_id + "', `name` = '" + req.body.name + "' WHERE `locality`.`id` = " + req.body.id
 
-
-                connection.query(query, (err) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json({
-                        success: true
-                    })
+                const result = await entityManager.query(query)
+                res.json({
+                    success: true
                 })
-
             } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
@@ -339,22 +284,14 @@ FROM
         [],
         async (req, res) => {
             try {
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
                 const query = "UPDATE `region` SET `name` = '" + req.body.name + "' WHERE `region`.`id` = " + req.body.id
 
-                connection.query(query, (err) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json({
-                        success: true
-                    })
+                const result = await entityManager.query(query)
+                res.json({
+                    success: true
                 })
-
             } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
@@ -371,22 +308,14 @@ FROM
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
                 const query = "INSERT INTO `district` (`id`, `region_id`, `name`) VALUES (NULL, " + req.body.region_id + ", '" + req.body.name + "')"
 
-                connection.query(query, (err) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json({
-                        success: true
-                    })
+                const result = await entityManager.query(query)
+                res.json({
+                    success: true
                 })
-
             } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
@@ -401,23 +330,14 @@ FROM
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
                 const query = "INSERT INTO `locality` (`id`, `district_id`, `name`) VALUES (NULL, " + req.body.district_id + ", '" + req.body.name + "')"
 
-                connection.query(query, (err) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json({
-                        success: true
-                    })
-                })
-
-            } catch (e) {
+                const result = await entityManager.query(query)
+                res.json({
+                    success: true
+                })            } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
             }
@@ -431,23 +351,14 @@ FROM
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
                 const query = "INSERT INTO `region` (`id`, `name`) VALUES (NULL, '" + req.body.name + "')"
 
-                connection.query(query, (err) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json({
-                        success: true
-                    })
-                })
-
-            } catch (e) {
+                const result = await entityManager.query(query)
+                res.json({
+                    success: true
+                })            } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
             }
@@ -464,22 +375,14 @@ FROM
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
                 const query = "DELETE FROM `district` WHERE `district`.`id` = " + req.body.id
 
-                connection.query(query, (err) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json({
-                        success: true
-                    })
+                const result = await entityManager.query(query)
+                res.json({
+                    success: true
                 })
-
             } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
@@ -494,23 +397,14 @@ FROM
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
                 const query = "DELETE FROM `locality` WHERE `locality`.`id` = " + req.body.id
 
-                connection.query(query, (err) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json({
-                        success: true
-                    })
-                })
-
-            } catch (e) {
+                const result = await entityManager.query(query)
+                res.json({
+                    success: true
+                })            } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
             }
@@ -524,23 +418,14 @@ FROM
         async (req, res) => {
             try {
 
-                const connection = initializeConnection(configDB)
+                const entityManager = AppDataSource.createEntityManager()
 
                 const query = "DELETE FROM `region` WHERE `region`.`id` = " + req.body.id
 
-                connection.query(query, (err) => {
-                    connection.end()
-
-                    if (err) {
-                        throw err
-                    }
-
-                    res.json({
-                        success: true
-                    })
-                })
-
-            } catch (e) {
+                const result = await entityManager.query(query)
+                res.json({
+                    success: true
+                })            } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
             }

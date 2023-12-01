@@ -1,4 +1,4 @@
-import express, {Router} from 'express'
+import express, {NextFunction, Router} from 'express'
 import {DistanceService} from "../../services/database/distance.service";
 import DistanceC from "../../classes/distanceC";
 
@@ -9,7 +9,7 @@ export default (app: Router) => {
     router.post(
         '/mc',
         [],
-        async (req: express.Request, res: express.Response) => {
+        async (req: express.Request, res: express.Response,  next: NextFunction) => {
 
             const distService = new DistanceService()
 
@@ -18,7 +18,7 @@ export default (app: Router) => {
                 const dist = new DistanceC()
                 dist.locality_id = requestBody.locality_id
 
-                let distances = await distService.getDistToMc(dist)
+                let distances = await distService.getDistToMc(res, dist)
                 res.json(distances)
 
             } catch (error) {

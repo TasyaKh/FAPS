@@ -1,6 +1,5 @@
 import {Router} from 'express'
-import {initializeConnection} from '../../functions/initializeConnection.js'
-import {configDB} from "./configDB";
+import AppDataSource from "../../typeorm.config";
 
 const router = Router()
 export default (app: Router) => {
@@ -14,20 +13,13 @@ export default (app: Router) => {
 
           const id = req.body.id
 
-          const connection = initializeConnection(configDB)
+            const entityManager = AppDataSource.createEntityManager()
 
           const query = 'SELECT `name` FROM `images` WHERE\n' +
               '\t`photo_id` = ' + id
 
-          connection.query(query, (err, rows) => {
-            connection.end()
-
-            if (err) {
-              throw err
-            }
-
-            res.json(rows)
-          })
+            const result = await entityManager.query(query)
+            res.json(result)
 
         } catch (e) {
           console.log(e)

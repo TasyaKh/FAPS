@@ -23,5 +23,5 @@ export class Staff {
 
    @ManyToOne(() => MedicalCenter, { nullable: false, onDelete: 'CASCADE' })
    @JoinColumn({ name: 'medical_center_id' })
-   medicalCenter: MedicalCenter;
+   medical_center: MedicalCenter;
 }

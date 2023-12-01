@@ -2,6 +2,7 @@ import DistanceC from "../../classes/distanceC";
 import AppDataSource from "../../typeorm.config";
 import connection from "../../db";
 import Distance from "../../entities/distance.entity";
+import express from "express";
 
 export class DistanceService {
 
@@ -31,58 +32,31 @@ export class DistanceService {
     }
 
     // получить расстояния до мед учреждений по заданым параметрам
-    async getDistToMc(distance: DistanceC) {
+    async getDistToMc(res: express.Response, distance: DistanceC) {
 
         const distRepository = AppDataSource.getRepository(Distance);
-        const dist = await distRepository.find({where:{id:2}}).catch((err)=>{
-            console.log(err)
-        })
-        console.log('dddd', dist)
+        let distances: Distance[]
+        try {
+            let query = distRepository.createQueryBuilder('distance')
+                .select(['distance.id', 'mc.id', 'mc.name', 'mc.staffing',
+                    'mc.longitude', 'mc.latitude'])
+                .leftJoin('distance.medical_center', 'mc')
+                .where('distance.mc_id IS NOT NULL')
+                .limit(distance.limit)
+                .orderBy(' distance.distance', 'ASC')
 
-        let res: any
-        let values: any[] = []
+            distance.locality_id ? query.andWhere('distance.locality_id = :locality_id',
+                {locality_id: distance.locality_id}) : query
 
-        let query: string = `
-SELECT 
-    distance.distance AS distance,
-    distance.duration AS duration,
-    mc.id AS mc_id,
-    mc.name AS mc_name,
-    mc.staffing AS mc_staffing,
-    mc.longitude AS mc_longitude,
-    mc.latitude AS mc_latitude
-FROM
-    distance
-        LEFT JOIN
-    medical_center AS mc ON mc.id = distance.mc_id
-WHERE distance.mc_id IS NOT NULL`
-
-        if (distance.locality_id) {
-            query += ` AND distance.locality_id = ?`
-            values.push(distance.locality_id)
+            distances = await query.getMany()
+        } catch (err) {
+            res.status(500).json({error: err})
         }
 
-        query += ` ORDER BY distance.distance ASC
-LIMIT ?`
-        values.push(distance.limit)
-
-        // get distances
-        res = await new Promise((resolve, reject) => {
-            connection.query(query, values, (err: any, result: any) => {
-
-                if (err) {
-                    console.log(err)
-                    reject(err);
-                } else {
-                    resolve(result);
-                }
-            });
-        })
-
-        return res
+        return distances
     }
 
-    // Удалить существующие записи
+// Удалить существующие записи
     async delExistig(distance: DistanceC) {
         let res: any
 
@@ -103,28 +77,4 @@ LIMIT ?`
         })
         return res
     }
-
-    // получить данные о расстоянии определенноого для нп
-    // async getDistances(distance: Distance) {
-    //     let res: any
-    //
-    //     // localities saved as end coords and start coords is some medical centers
-    //     const query: string = `SELECT * FROM distance
-    //     WHERE locality_id = ?
-    //     ORDER BY distance ASC`
-    //
-    //     res = await new Promise((resolve, reject) => {
-    //         connection.query(query, [
-    //             distance.locality_id], (err: any, result: any) => {
-    //             if (err) {
-    //                 reject(err);
-    //             } else {
-    //                 resolve(result);
-    //             }
-    //         });
-    //     })
-    //     return res
-    // }
-
-
 }

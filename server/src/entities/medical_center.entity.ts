@@ -57,7 +57,7 @@ export default class MedicalCenter {
 
     @ManyToOne(() => MedicalFacility, {onDelete: 'CASCADE'})
     @JoinColumn({ name: 'medical_facility_id' })
-    medicalFacility: MedicalFacility;
+    medical_facility: MedicalFacility;
 
     @ManyToOne(() => Type, {onDelete: 'CASCADE'})
     @JoinColumn({ name: 'type_id' })
