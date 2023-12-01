@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import './PointsPanel.scss'
+import '../ModalPanel.scss'
 import { CollapsibleItem, Collapsible, Button, ProgressBar } from "react-materialize"
-import { useHttp } from "../../hooks/http.hook"
-// import {ReportView} from "./ReportView"
+import { useHttp } from "../../../../hooks/http.hook"
 import { PointsCalculator } from "./PointsCalculator"
 import { Link } from 'react-router-dom'
 

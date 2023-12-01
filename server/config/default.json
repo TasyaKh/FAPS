@@ -1,5 +1,5 @@
 {
-  "port": 3000,
+  "port": 3001,
   "jwtSecret": "keyMapHospitals",
   "host": "127.0.0.1",
   "user": "root",

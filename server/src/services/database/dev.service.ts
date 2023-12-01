@@ -1,6 +1,6 @@
-import Distance from "../../enities/distance.entity.js";
 import {DistanceService} from "./distance.service.js";
 import {DistanceOpenRoute} from "../findDistandeOpenRoute.service.js";
+import Distance from "../../classes/distance.js";
 
 export class DevService {
 

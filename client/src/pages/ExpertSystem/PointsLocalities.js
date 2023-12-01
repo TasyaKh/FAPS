@@ -4,11 +4,11 @@ import { Button, ProgressBar } from 'react-materialize'
 import { FilterPointsLocalities } from 'components/ExpertSystem/FilterPointsLocalities'
 import './PointsLocalities.scss'
 import { TablePoints } from 'components/ExpertSystem/TablePoints'
-import { PointsPanel } from 'components/ExpertSystem/PointsPanel'
+import { PointsPanel } from 'components/ExpertSystem/Modals/MCPoints/PointsPanel'
 
 export const PointsLocalities = () => {
 
-    // contants ----------------------------------------------------------------
+    // constants ----------------------------------------------------------------
 
     const { loading, error, request, clearError } = useHttp()
 
@@ -120,7 +120,6 @@ export const PointsLocalities = () => {
                                     data={state.modified}
                                     isFaps={state.isFaps}
                                 />
-
                     }
 
                 </div>

@@ -1,6 +1,6 @@
 import express, {Router} from 'express'
-import Distance from "../../enities/distance.entity.js";
 import {DistanceService} from "../../services/database/distance.service.js";
+import Distance from "../../classes/distance.js";
 
 const router = Router()
 

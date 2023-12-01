@@ -1,5 +1,5 @@
-import Distance from "../../enities/distance.entity.js";
 import connection from "../../db.js";
+import Distance from "../../classes/distance.js";
 
 export class DistanceService {
 
