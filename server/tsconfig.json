@@ -1,22 +1,29 @@
 {
-    "compilerOptions": {
-      "target": "es6",
-      "module": "ESNext", // or ES2015, ES2020
-      "esModuleInterop": true,
-      "forceConsistentCasingInFileNames": true,
-      "strict": false,
-      "skipLibCheck": true,
-      "noImplicitAny": true,
-      "allowJs": true,
-      "outDir": "dist",
-      "rootDir": "src",
-      "sourceMap": true,
-      "allowSyntheticDefaultImports": true,
-      "moduleResolution": "nodenext"
-    },
-    "ts-node": {
-      "esm": true,
-      "experimentalSpecifierResolution": "node"
-    },
+  "compilerOptions": {
+    "module": "nodenext", // or ES2015, ES2020
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "dist",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+//        "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
 
+    "strict": false,
+
+    "allowJs": true,
+    "rootDir": "src",
+  },
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
   }
+}
