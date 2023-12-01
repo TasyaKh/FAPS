@@ -49,4 +49,4 @@ router.post('/medical-centers', [], (req, res) => __awaiter(void 0, void 0, void
     res.json(r);
 }));
 export default router;
-//# sourceMappingURL=points.routes.js.map
+//# sourceMappingURL=points.routes.ts.map

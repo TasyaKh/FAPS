@@ -74,4 +74,4 @@ router.post('/objects', [], (req, res) => __awaiter(void 0, void 0, void 0, func
     }
 }));
 export default router;
-//# sourceMappingURL=org.routes.js.map
+//# sourceMappingURL=org.routes.ts.map

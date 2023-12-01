@@ -110,4 +110,4 @@ router.post('/rate/delete', [], (req, res) => __awaiter(void 0, void 0, void 0, 
     }
 }));
 export default router;
-//# sourceMappingURL=edit.routes.js.map
+//# sourceMappingURL=edit.routes.ts.map

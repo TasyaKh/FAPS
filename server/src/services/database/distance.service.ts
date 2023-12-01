@@ -1,9 +1,12 @@
-import connection from "../../db.js";
-import Distance from "../../classes/distance.js";
+import DistanceC from "../../classes/distanceC";
+import AppDataSource from "../../typeorm.config";
+import connection from "../../db";
+import Distance from "../../entities/distance.entity";
 
 export class DistanceService {
 
-    async save(distance: Distance) {
+    async save(distance: DistanceC) {
+
         let res: any
 
         await this.delExistig(distance)
@@ -28,7 +31,14 @@ export class DistanceService {
     }
 
     // получить расстояния до мед учреждений по заданым параметрам
-    async getDistToMc(distance: Distance) {
+    async getDistToMc(distance: DistanceC) {
+
+        const distRepository = AppDataSource.getRepository(Distance);
+        const dist = await distRepository.find({where:{id:2}}).catch((err)=>{
+            console.log(err)
+        })
+        console.log('dddd', dist)
+
         let res: any
         let values: any[] = []
 
@@ -73,7 +83,7 @@ LIMIT ?`
     }
 
     // Удалить существующие записи
-    async delExistig(distance: Distance) {
+    async delExistig(distance: DistanceC) {
         let res: any
 
         // del Existig Localities

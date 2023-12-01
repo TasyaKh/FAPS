@@ -116,4 +116,4 @@ router.post('/images/delete', [], (req, res) => __awaiter(void 0, void 0, void 0
     }
 }));
 export default router;
-//# sourceMappingURL=upload.routes.js.map
+//# sourceMappingURL=upload.routes.ts.map

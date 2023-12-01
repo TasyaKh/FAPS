@@ -1,4 +1,4 @@
-import connection from "../../db.js";
+import connection from "../../db";
 
 export async function getLocalitiesByDistrictId(districtId: number) {
     let r: any

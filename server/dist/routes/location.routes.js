@@ -336,4 +336,4 @@ GROUP BY `locality`.`id`
 ORDER BY `locality`.`name`
 
  */ 
-//# sourceMappingURL=location.routes.js.map
+//# sourceMappingURL=location.routes.ts.map

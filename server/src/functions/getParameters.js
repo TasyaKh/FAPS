@@ -1,14 +1,5 @@
 import mysql from 'mysql2'
-import config from 'config'
-
-const configDB = {
-  host: config.get('host'),
-  user: config.get('user'),
-  password: config.get('password'),
-  port: config.get('portDB'),
-  database: config.get('database'),
-  charset: 'utf8'
-}
+import {configDB} from "../routes/faps/configDB";
 
 const population = [
   {

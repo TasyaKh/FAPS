@@ -1,5 +1,5 @@
-import connection from "../../db.js";
-import MC from "../../enities/medical_center.entity.js";
+import connection from "../../db";
+import MC from "../../entities/medical_center.entity";
 import express from "express";
 
 export async function getMedicalCenters(mc: MC, res: express.Response) {

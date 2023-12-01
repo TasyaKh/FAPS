@@ -178,4 +178,4 @@ router.post('/', [], (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 }));
 export default router;
-//# sourceMappingURL=word.routes.js.map
+//# sourceMappingURL=word.routes.ts.map

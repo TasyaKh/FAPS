@@ -1,5 +1,5 @@
-import PointsLocality from '../../enities/points_locality.entity.js'
-import connection from "../../db.js";
+import PointsLocality from '../../entities/points_locality.entity'
+import connection from "../../db";
 
 export async function getPointsLocalitiesOfDistrict(req:any, res:any) {
     let r

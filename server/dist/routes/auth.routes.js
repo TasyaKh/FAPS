@@ -64,4 +64,4 @@ router.post('/login', [
     }
 }));
 export default router;
-//# sourceMappingURL=auth.routes.js.map
+//# sourceMappingURL=auth.routes.ts.map

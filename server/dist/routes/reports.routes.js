@@ -161,4 +161,4 @@ router.post('/', [], (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 }));
 export default router;
-//# sourceMappingURL=reports.routes.js.map
+//# sourceMappingURL=reports.routes.ts.map

@@ -169,4 +169,4 @@ router.post('/add', [], (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 }));
 export default router;
-//# sourceMappingURL=detail.routes.js.map
+//# sourceMappingURL=detail.routes.ts.map

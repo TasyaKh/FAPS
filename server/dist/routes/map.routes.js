@@ -69,4 +69,4 @@ router.post('/organizations', [], (req, res) => __awaiter(void 0, void 0, void 0
     }
 }));
 export default router;
-//# sourceMappingURL=map.routes.js.map
+//# sourceMappingURL=map.routes.ts.map

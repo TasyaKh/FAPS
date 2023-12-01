@@ -1,70 +1,71 @@
 import express, {Router} from 'express'
-import {getMedicalCenters} from "../../services/database/medical_center.service.js";
-import MC from "../../enities/medical_center.entity.js";
-import {getLocalitiesByDistrictId} from "../../services/database/locality.service.js";
-import {DevService} from "../../services/database/dev.service.js";
-import {getOrganizationsByDistrictId} from "../../services/database/organization.service.js";
+import {getMedicalCenters} from "../../services/database/medical_center.service";
+import MC from "../../entities/medical_center.entity";
+import {getLocalitiesByDistrictId} from "../../services/database/locality.service";
+import {DevService} from "../../services/database/dev.service";
+import {getOrganizationsByDistrictId} from "../../services/database/organization.service";
 
 const router = Router()
-
+export default (app: Router) => {
+    app.use('/dev_fetch_data', router)
 // /api/cluster get distances from openrouteservice
-router.post(
-    '/openrouteservice_distances',
-    [],
-    async (req: express.Request, res: express.Response) => {
+    router.post(
+        '/openrouteservice_distances',
+        [],
+        async (req: express.Request, res: express.Response) => {
 
-        const dev = new DevService()
+            const dev = new DevService()
 
-        try {
-            const requestBody = req.body;
+            try {
+                const requestBody = req.body;
 
 
-            let localities: any = null  //населенные пункты
-            let mcs: any = null         //мед центры
-            let mcsDistrict = null    //районные больницы
+                let localities: any = null  //населенные пункты
+                let mcs: any = null         //мед центры
+                let mcsDistrict = null    //районные больницы
 
-            if (requestBody.district_id) {
-                // get localities of discrict
-                localities = await getLocalitiesByDistrictId(requestBody.district_id)
-                // get medical facilities
-                mcsDistrict = await getOrganizationsByDistrictId(requestBody.district_id)
+                if (requestBody.district_id) {
+                    // get localities of discrict
+                    localities = await getLocalitiesByDistrictId(requestBody.district_id)
+                    // get medical facilities
+                    mcsDistrict = await getOrganizationsByDistrictId(requestBody.district_id)
+                }
+
+                // get mc_centers by disctrict
+                if (requestBody.region_id) {
+                    const mc = new MC()
+                    mc.region_id = requestBody.region_id
+                    // mc.district_id = requestBody.district_id
+                    mcs = await getMedicalCenters(mc, res)
+                }
+
+
+                for (let i = 0; i < localities?.length; i++) {
+                    const l = localities[i]
+                    let localitiesCoords: number[] = [l["longitude"], l["latitude"]]
+
+                    // расстояние до районных больниц
+
+                    await dev.findAndSaveDistanceToOrg(l, mcsDistrict)
+
+                    // filter medical centers by circled distance
+                    const mcsFiltered = await dev.filterMCsHaversine(localitiesCoords, mcs, requestBody.distance)
+
+                    // if(l.id === 133)console.log(mcsFiltered)
+                    // найти расстояния от заданного нп до мед учреждений
+                    await dev.findAndSaveDistancesToLocality(l, mcsFiltered)
+                }
+
+                // await dev.findAndSaveDistances(localities, mcs)
+
+                res.json(mcs)
+
+            } catch (error) {
+                res.status(500).json({error: 'Internal server error'});
             }
-
-            // get mc_centers by disctrict
-            if (requestBody.region_id) {
-                const mc = new MC()
-                mc.region_id = requestBody.region_id
-                // mc.district_id = requestBody.district_id
-                mcs = await getMedicalCenters(mc, res)
-            }
-
-
-            for (let i = 0; i < localities?.length; i++) {
-                const l = localities[i]
-                let localitiesCoords: number[] = [l["longitude"], l["latitude"]]
-
-                // расстояние до районных больниц
-
-                await dev.findAndSaveDistanceToOrg(l, mcsDistrict)
-
-                // filter medical centers by circled distance
-                const mcsFiltered = await dev.filterMCsHaversine(localitiesCoords, mcs, requestBody.distance)
-
-                // if(l.id === 133)console.log(mcsFiltered)
-                // найти расстояния от заданного нп до мед учреждений
-                await dev.findAndSaveDistancesToLocality(l, mcsFiltered)
-            }
-
-            // await dev.findAndSaveDistances(localities, mcs)
-
-            res.json(mcs)
-
-        } catch (error) {
-            res.status(500).json({error: 'Internal server error'});
+            //res.json(r)
         }
-        //res.json(r)
-    }
-)
+    )
 
-export default router
+}
 

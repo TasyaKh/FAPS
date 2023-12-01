@@ -1,4 +1,4 @@
-import config from 'config'
+import * as config from 'config'
 import axios, {AxiosResponse} from 'axios';
 
 export class DistanceOpenRoute {

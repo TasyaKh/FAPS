@@ -72,4 +72,4 @@ router.post('/rates', [], (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 }));
 export default router;
-//# sourceMappingURL=single.routes.js.map
+//# sourceMappingURL=single.routes.ts.map

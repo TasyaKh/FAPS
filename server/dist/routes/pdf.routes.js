@@ -69,4 +69,4 @@ router.post('/', [], (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 }));
 export default router;
-//# sourceMappingURL=pdf.routes.js.map
+//# sourceMappingURL=pdf.routes.ts.map

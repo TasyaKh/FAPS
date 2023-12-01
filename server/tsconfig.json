@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "module": "nodenext", // or ES2015, ES2020
+    "module": "commonjs",
+    // or ES2015, ES2020
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "target": "es6",
     "sourceMap": true,
     "outDir": "dist",
     "incremental": true,
@@ -13,14 +14,12 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-//        "esModuleInterop": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-
     "strict": false,
-
     "allowJs": true,
-    "rootDir": "src",
+    "rootDir": "src"
   },
   "ts-node": {
     "esm": true,

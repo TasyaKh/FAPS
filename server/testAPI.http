@@ -40,7 +40,7 @@ content-type: application/json
 }
 
 
-###points/locality
+### points/locality
 POST http://localhost:3000/api/points/localities
 content-type: application/json
 
@@ -48,7 +48,7 @@ content-type: application/json
  "district_id":2
 }
 
-###points/localities-with-faps
+### points/localities-with-faps
 POST http://localhost:3000/api/location/localities-with-faps
 content-type: application/json
 
@@ -97,5 +97,14 @@ content-type: application/json
 {
   "locations":[[105.2175, 52.94611111],[ 105.217522, 52.946095]],
   "metrics":["distance","duration"]
+}
+
+### distance
+POST http://localhost:3002/api/distance/mc
+content-type: application/json
+
+{
+  "locality_id":73
+
 }
 

@@ -1,6 +1,6 @@
-import {DistanceService} from "./distance.service.js";
-import {DistanceOpenRoute} from "../findDistandeOpenRoute.service.js";
-import Distance from "../../classes/distance.js";
+import {DistanceService} from "./distance.service";
+import {DistanceOpenRoute} from "../findDistandeOpenRoute.service";
+import DistanceC from "../../classes/distanceC";
 
 export class DevService {
 
@@ -37,7 +37,7 @@ export class DevService {
             await dist.findDist2Points(localitiyCoords, fapCoords)
                 .then(async (result) => {
                     // prepare dist object
-                    const distance = new Distance()
+                    const distance = new DistanceC()
                     distance.distance = result.distance
                     distance.duration = result.duration
                     distance.locality_id = locality.id
@@ -55,7 +55,7 @@ export class DevService {
         const dist = new DistanceOpenRoute()
 
         let localitiyCoords: number[] = [locality["longitude"], locality["latitude"]]
-        let minDist: Distance
+        let minDist: DistanceC
         for (let k = 0; k < orgs?.length; k++) {
             const org = orgs[k]
             let orgCoords: number[] = [org["longitude"], org["latitude"]]
@@ -65,7 +65,7 @@ export class DevService {
                     // prepare dist object
 
                     if (minDist == null || minDist.distance > result.distance) {
-                        const distance = new Distance()
+                        const distance = new DistanceC()
                         distance.distance = result.distance
                         distance.duration = result.duration
                         distance.locality_id = locality.id
