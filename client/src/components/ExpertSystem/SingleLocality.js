@@ -1,10 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react'
 import "./SingleLocality.scss"
 import {ReactComponent as ArrowBack} from '../../img/arrow-back.svg'
-import {useHttp} from "../../hooks/http.hook";
 import {DistanceMcElem} from "../Elements/DistanceMcElem";
 import {MapContext} from "../../context/MapContext";
-
+import {useHttp} from "../../hooks/http.hook";
 
 export const SingleLocality = (props) => {
 
@@ -42,8 +41,8 @@ export const SingleLocality = (props) => {
     }, [props.id])
 
     function handleOnMcClick(e, lon, lat) {
-        
-        if(lon && lat)
+
+        if (lon && lat)
             setMapState({
                 ...mapState,
                 zoom: 12,
@@ -53,7 +52,6 @@ export const SingleLocality = (props) => {
 
 
     return (
-
         <div className="single-locality">
 
             <div className={"single-locality__wrapper"}>
@@ -69,7 +67,7 @@ export const SingleLocality = (props) => {
                     <span className={"single-locality__title"}> {locality.name}</span>
 
                     <div className={"mt-2"}>
-                        <p>{locality.district_name} </p>
+                        <p>{locality.district?.name} </p>
                         <span className={"single-locality__coords"}> ({locality.longitude}, {locality.latitude})</span>
                         <p><b> население (взрос./дет.):</b> {locality.population_adult}/{locality.population_child}</p>
 
@@ -86,15 +84,15 @@ export const SingleLocality = (props) => {
 
                     }} className="single-locality__link">
 
-                        {!loading ? mcs && mcs.length > 0 ? mcs.map((mc, i) => (
+                        {!loading ? mcs && mcs.length > 0 ? mcs.map((dist, i) => (
 
                                     <div>
                                         <DistanceMcElem
-                                            name={mc.mc_name}
-                                            distance={mc.distance}
-                                            duration={mc.duration}
-                                            longitude={mc.mc_longitude}
-                                            latitude={mc.mc_latitude}
+                                            name={dist.medical_center?.name}
+                                            distance={dist.distance}
+                                            duration={dist.duration}
+                                            longitude={dist.medical_center?.longitude}
+                                            latitude={dist.medical_center?.latitude}
                                             onMcClick={handleOnMcClick}
                                             key={i}
                                         />
