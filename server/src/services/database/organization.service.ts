@@ -1,21 +1,17 @@
-import connection from "../../db";
+import AppDataSource from "../../typeorm.config";
 
-export async function getOrganizationsByDistrictId(districtId:number){
+export async function getOrganizationsByDistrictId(districtId: number) {
     let r: any
+
+    const entityManager = AppDataSource.createEntityManager()
 
     const query = `SELECT * FROM medical_facility WHERE district_id = ?`
 
-
-    r = await new Promise((resolve, reject) => {
-        connection.query(query, [districtId], (err: any, result: any) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(result);
-            }
-        });
-    })
-
+    try {
+        r = await entityManager.query(query, [districtId])
+    } catch (err) {
+        return false
+    }
 
     return r
 }

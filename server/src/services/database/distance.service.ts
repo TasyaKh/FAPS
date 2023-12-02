@@ -1,6 +1,5 @@
 import DistanceC from "../../classes/distanceC";
 import AppDataSource from "../../typeorm.config";
-import connection from "../../db";
 import Distance from "../../entities/distance.entity";
 import express from "express";
 
@@ -8,7 +7,7 @@ export class DistanceService {
 
     async save(distance: DistanceC) {
 
-        let res: any
+        const entityManager = AppDataSource.createEntityManager()
 
         await this.delExistig(distance)
 
@@ -16,19 +15,12 @@ export class DistanceService {
         distance, duration, locality_id, mc_id, mc_facility_id) 
         VALUES (?, ?, ?, ?, ?)`
 
-        // insert distances
-        res = await new Promise((resolve, reject) => {
-            connection.query(query, distance.getArray(), (err: any, result: any) => {
+        try {
+            return await entityManager.query(query, distance.getArray())
+        } catch (err) {
+            return false
+        }
 
-                if (err) {
-                    console.log(err)
-                    reject(err);
-                } else {
-                    resolve(result);
-                }
-            });
-        })
-        return res
     }
 
     // получить расстояния до мед учреждений по заданым параметрам
@@ -38,7 +30,7 @@ export class DistanceService {
         let distances: Distance[]
         try {
             let query = distRepository.createQueryBuilder('distance')
-                .select(['distance.id', 'mc.id', 'mc.name', 'mc.staffing',
+                .select(['distance.id', 'distance.duration', 'distance.distance', 'mc.id', 'mc.name', 'mc.staffing',
                     'mc.longitude', 'mc.latitude'])
                 .leftJoin('distance.medical_center', 'mc')
                 .where('distance.mc_id IS NOT NULL')
@@ -59,22 +51,20 @@ export class DistanceService {
 // Удалить существующие записи
     async delExistig(distance: DistanceC) {
         let res: any
+        const entityManager = AppDataSource.createEntityManager()
 
         // del Existig Localities
         const query: string = `DELETE FROM distance
         WHERE locality_id = ? and ((mc_id = ? and mc_id is not null)
          or (mc_facility_id = ? and mc_facility_id is not null))`
 
-        res = await new Promise((resolve, reject) => {
-            connection.query(query, [
-                distance.locality_id, distance.mc_id, distance.mc_facility_id], (err: any, result: any) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(result);
-                }
-            });
-        })
+        try {
+            res = await entityManager.query(query, [
+                distance.locality_id, distance.mc_id, distance.mc_facility_id])
+        } catch (err) {
+            return false
+        }
+
         return res
     }
 }

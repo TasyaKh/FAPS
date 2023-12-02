@@ -1,4 +1,4 @@
-import * as config from 'config'
+import config from 'config'
 
 export class Distance {
 

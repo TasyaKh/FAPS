@@ -1,9 +1,12 @@
-import connection from "../../db";
 import MC from "../../entities/medical_center.entity";
 import express from "express";
+import AppDataSource from "../../typeorm.config";
 
 export async function getMedicalCenters(mc: MC, res: express.Response) {
     let r
+
+    const entityManager = AppDataSource.createEntityManager()
+
 
     try {
 
@@ -27,18 +30,7 @@ export async function getMedicalCenters(mc: MC, res: express.Response) {
             values.push(mc.region_id)
         }
 
-
-        // console.log(query, values)
-        r = await new Promise((resolve, reject) => {
-            connection.query(query, values, (err: any, result: any) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(result);
-                }
-            });
-        })
-
+        r = await entityManager.query(query, values)
 
     } catch (e) {
         console.log(e)

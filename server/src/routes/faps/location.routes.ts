@@ -1,5 +1,6 @@
 import {Router} from 'express'
 import AppDataSource from "../../typeorm.config";
+import Locality from "../../entities/locality.entity";
 
 const router = Router()
 export default (app: Router) => {
@@ -106,29 +107,45 @@ export default (app: Router) => {
         async (req, res) => {
             try {
 
-                const entityManager = AppDataSource.createEntityManager()
+                const entityManager = AppDataSource.getRepository(Locality)
+                let query = entityManager.createQueryBuilder('locality')
+                    .select(['locality.id', 'locality.district_id', 'locality.longitude', 'locality.latitude',
+                        'locality.name', 'population.population_adult', 'population.population_child',
+                        'district.name'])
+                    .leftJoin('locality.population', 'population')
+                    .leftJoin('locality.district', 'district')
+                    .groupBy('locality.id')
+                    .orderBy('locality.name', 'DESC')
 
-                let query = `
-SELECT locality.id, locality.district_id, locality.longitude, locality.latitude, 
-locality.name, (population.population_adult) AS population_adult, (population.population_child) AS population_child,
-district.name as district_name
-FROM locality
-                LEFT JOIN population
-                ON locality.id = population.locality_id
-                LEFT JOIN district
-                ON district.id = locality.district_id`
 
-                if (req.params.id) {
-                    query += ` WHERE locality.id  = ?`
-                }
+                req.params.id ?
+                    query.where('locality.id = :locality_id', {locality_id: req.params.id}) : query
 
-                query += `  
-            GROUP BY locality.id
-            ORDER BY locality.name`
+                //     query += `
+                // GROUP BY locality.id
+                // ORDER BY locality.name`
 
-                const result = await entityManager.query(query)
-                res.json(result)
+//                 let query = `
+// SELECT locality.id, locality.district_id, locality.longitude, locality.latitude,
+// locality.name, (population.population_adult) AS population_adult, (population.population_child) AS population_child,
+// district.name as district_name
+// FROM locality
+//                 LEFT JOIN population
+//                 ON locality.id = population.locality_id
+//                 LEFT JOIN district
+//                 ON district.id = locality.district_id`
+//
+//                 if (req.params.id) {
+//                     query += ` WHERE locality.id  = ?`
+//                 }
+//
+//                 query += `
+//             GROUP BY locality.id
+//             ORDER BY locality.name`
 
+                // const result = await entityManager.query(query)
+                // res.json(result)
+                 res.json(await query.getOne())
             } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
@@ -337,7 +354,8 @@ FROM
                 const result = await entityManager.query(query)
                 res.json({
                     success: true
-                })            } catch (e) {
+                })
+            } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
             }
@@ -358,7 +376,8 @@ FROM
                 const result = await entityManager.query(query)
                 res.json({
                     success: true
-                })            } catch (e) {
+                })
+            } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
             }
@@ -404,7 +423,8 @@ FROM
                 const result = await entityManager.query(query)
                 res.json({
                     success: true
-                })            } catch (e) {
+                })
+            } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
             }
@@ -425,7 +445,8 @@ FROM
                 const result = await entityManager.query(query)
                 res.json({
                     success: true
-                })            } catch (e) {
+                })
+            } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
             }

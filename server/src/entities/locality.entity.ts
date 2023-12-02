@@ -3,9 +3,10 @@ import {
     PrimaryGeneratedColumn,
     Column,
     ManyToOne,
-    JoinColumn,
+    JoinColumn, OneToOne, OneToMany,
 } from 'typeorm';
 import District from "./district.entity";
+import {Population} from "./population.entity";
 
 @Entity('locality')
 export default class Locality {
@@ -27,4 +28,12 @@ export default class Locality {
     @ManyToOne(() => District, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'district_id' })
     district: District;
+
+    @OneToOne(() => Population, (population) => population.locality)
+    population: Population;
+
+    // @OneToMany(() => Population, (population) => population.locality, {
+    //     onDelete: 'CASCADE',
+    // })
+    // population: Population[];
 }

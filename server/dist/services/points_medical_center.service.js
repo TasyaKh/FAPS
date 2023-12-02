@@ -193,4 +193,4 @@ function setDeteroation(deteroation, values) {
     }
     return points;
 }
-//# sourceMappingURL=points_medical_center.service.js.map
+//# sourceMappingURL=points_medical_center.services.js.map

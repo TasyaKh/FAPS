@@ -193,4 +193,4 @@ function calculatePointsL(values, conditions, locality) {
     }
     return pointsLocaity;
 }
-//# sourceMappingURL=points_locality.service.js.map
+//# sourceMappingURL=points_locality.services.js.map

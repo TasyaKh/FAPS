@@ -46,4 +46,4 @@ export class Distance {
         });
     }
 }
-//# sourceMappingURL=findDistanceGraphopper.service.ts.map
+//# sourceMappingURL=findDistanceGraphopper.services.ts.map

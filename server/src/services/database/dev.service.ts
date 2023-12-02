@@ -44,8 +44,7 @@ export class DevService {
                     distance.mc_id = mc.id
                     // save distances
                     const dS = new DistanceService()
-                    let r = await dS.save(distance).catch(console.log)
-
+                    return await dS.save(distance).catch(console.log)
                 }).catch(console.log)
         }
     }
