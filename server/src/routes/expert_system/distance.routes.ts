@@ -26,4 +26,17 @@ export default (app: Router) => {
             }
         }
     )
+
+
+// /api/distance/localities-nearest-faps
+    router.post(
+        '/localities-nearest-faps',
+        [],
+        async (req, res) => {
+
+            const dS = new DistanceService()
+            const lMc = await  dS.getLocalitiesAndNearMcs(req.body.district_id)
+            return res.json(lMc)
+        }
+    )
 }

@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import District from "./district.entity";
 import {Population} from "./population.entity";
+import Distance from "./distance.entity";
 
 @Entity('locality')
 export default class Locality {
@@ -32,8 +33,15 @@ export default class Locality {
     @OneToOne(() => Population, (population) => population.locality)
     population: Population;
 
-    // @OneToMany(() => Population, (population) => population.locality, {
-    //     onDelete: 'CASCADE',
-    // })
-    // population: Population[];
+    // med center
+    @OneToMany(() => Distance, (dist) => dist.locality, {
+        onDelete: 'CASCADE',
+    })
+    distances_mc: Distance[];
+
+    // medical facility (org)
+    @OneToMany(() => Distance, (dist) => dist.locality, {
+        onDelete: 'CASCADE',
+    })
+    distances_mf: Distance[];
 }

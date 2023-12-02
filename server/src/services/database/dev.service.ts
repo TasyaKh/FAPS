@@ -1,5 +1,5 @@
 import {DistanceService} from "./distance.service";
-import {DistanceOpenRoute} from "../findDistandeOpenRoute.service";
+import {DistanceOpenRoute} from "../outside/findDistandeOpenRoute.service";
 import DistanceC from "../../classes/distanceC";
 
 export class DevService {
@@ -44,7 +44,7 @@ export class DevService {
                     distance.mc_id = mc.id
                     // save distances
                     const dS = new DistanceService()
-                    return await dS.save(distance).catch(console.log)
+                    return await dS.saveDistance(distance).catch(console.log)
                 }).catch(console.log)
         }
     }
@@ -77,7 +77,7 @@ export class DevService {
 
         // save distances
         const dS = new DistanceService()
-        let r = await dS.save(minDist).catch(console.log)
+        let r = await dS.saveDistance(minDist).catch(console.log)
         // med_centers
 
 
@@ -96,8 +96,6 @@ export class DevService {
 
     async filterMCsHaversine(locality: number[], mcs: any, rangeKm: number) {
         let medicalCenters = []
-        //localities
-
 
         // med_centers
         for (let k = 0; k < mcs?.length; k++) {
@@ -112,7 +110,6 @@ export class DevService {
         }
 
         return medicalCenters
-
     }
 
 }

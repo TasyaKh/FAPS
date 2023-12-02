@@ -58,11 +58,11 @@ export const LocalityItem = (props) => {
             <div className="item__title" onClick={(e) => {
                 props.onLocalityTitleClick(e, props.locality)
             }}>
-                <div className="item__link">{props.locality.name}</div>
+                <div className="item__link">{props.locality.locality_name}</div>
             </div>
 
             <div className="mt-1">
-                {props.locality.population} чел.
+                {props.locality.population_population_adult} чел.
             </div>
             <div className="item__body">
 

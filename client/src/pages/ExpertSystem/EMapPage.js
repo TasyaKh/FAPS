@@ -48,19 +48,12 @@ export const EMapPage = () => {
 
     const fetchLocalities = async (districtId) => {
         try {
-            const localities = await request('/api/location/localities-with-faps', 'POST', {district_id: districtId})
+            const localities = await request('/api/distance/localities-nearest-faps', 'POST', {district_id: districtId})
 
             setLocalities(localities)
         } catch (e) {
         }
     }
-    // useEffect(() => {
-    //     if (error) {
-    //         console.log('Ошибка: ' + error)
-    //     }
-    //     clearError()
-    // }, [clearError, error])
-
 
     const [mapState, setMapState] = useState({
         center: [52.287054, 104.281047],

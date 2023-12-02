@@ -2,14 +2,18 @@ import DistanceC from "../../classes/distanceC";
 import AppDataSource from "../../typeorm.config";
 import Distance from "../../entities/distance.entity";
 import express from "express";
+import Locality from "../../entities/locality.entity";
+import MedicalCenter from "../../entities/medical_center.entity";
+import {MedicalFacility} from "../../entities/medical_facility.entity";
+import {Type} from "../../entities/types.entity";
 
 export class DistanceService {
 
-    async save(distance: DistanceC) {
+    async saveDistance(distance: DistanceC) {
 
         const entityManager = AppDataSource.createEntityManager()
 
-        await this.delExistig(distance)
+        await this.delDistance(distance)
 
         const query: string = `INSERT INTO distance (
         distance, duration, locality_id, mc_id, mc_facility_id) 
@@ -49,7 +53,7 @@ export class DistanceService {
     }
 
 // Удалить существующие записи
-    async delExistig(distance: DistanceC) {
+    async delDistance(distance: DistanceC) {
         let res: any
         const entityManager = AppDataSource.createEntityManager()
 
@@ -67,4 +71,86 @@ export class DistanceService {
 
         return res
     }
+
+    async getLocalitiesAndNearMcs(district_id: number) {
+        try {
+            const localityRepository = AppDataSource.getRepository(Locality);
+            const query = localityRepository
+                .createQueryBuilder('locality')
+                .select([
+                    'locality.id',
+                    'locality.district_id',
+                    'locality.longitude',
+                    'locality.latitude',
+                    'locality.name',
+                    'population.id',
+                    'population.population_adult',
+                    'COALESCE(dtmc.distance, 0) AS min_distance',
+                    'dtmc.duration AS min_duration',
+
+                    'mc.id AS mc_id',
+                    'mc.longitude AS mc_longitude',
+                    'mc.latitude AS mc_latitude',
+                    'mc.name AS medical_center_name',
+                    'mc.staffing AS mc_staffing',
+                    'type_mc.name',
+                    'locality_mc.id',
+
+
+                    'mcf.id AS mcf_id',
+                    'mcf.longitude AS mcf_longitude',
+                    'mcf.latitude AS mcf_latitude',
+                    'mcf.name AS mcf_name',
+                    'type_mcf.name',
+
+                    'dtmcf.distance AS min_facility_distance',
+                    'dtmcf.duration AS min_facility_duration',
+                ])
+                .leftJoin('locality.population', 'population')
+                .leftJoin(
+                    subQuery => {
+                        return subQuery
+                            .select(['locality_id', 'MIN(distance) AS min_distance'])
+                            .from(Distance, 'distance')
+                            .where('mc_id IS NOT NULL AND mc_facility_id IS NULL')
+                            .groupBy('locality_id');
+                    },
+                    'md',
+                    'md.locality_id = locality.id'
+                )
+                // medical center
+                .leftJoin(Distance, 'dtmc', 'dtmc.locality_id = locality.id AND dtmc.distance = md.min_distance')
+                .leftJoin(MedicalCenter, 'mc', 'mc.id = dtmc.mc_id')
+                .leftJoin(Type, 'type_mc', 'type_mc.id = mc.type_id')
+                .leftJoin(Locality, 'locality_mc', 'locality_mc.id = mc.locality_id')
+                .leftJoin(
+                    subQuery => {
+                        return subQuery
+                            .select(['locality_id', 'MIN(distance) AS min_distance'])
+                            .from(Distance, 'distance')
+                            .where('mc_facility_id IS NOT NULL AND mc_id IS NULL')
+                            .groupBy('locality_id');
+                    },
+                    'mfd',
+                    'mfd.locality_id = locality.id'
+                )
+                // medical organization
+                .leftJoin(
+                    Distance,
+                    'dtmcf',
+                    'dtmcf.locality_id = locality.id AND dtmcf.distance = mfd.min_distance'
+                )
+                .leftJoin(MedicalFacility, 'mcf', 'mcf.id = dtmcf.mc_facility_id')
+                .leftJoin(Type, 'type_mcf', 'type_mcf.id = mcf.type_id')
+
+            district_id ? query.andWhere('locality.district_id = :district_id',
+                {district_id: district_id}) : query
+
+            return query.getRawMany()
+
+        } catch (e) {
+            return false
+        }
+    }
+
 }

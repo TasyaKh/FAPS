@@ -5,3 +5,19 @@ content-type: application/json
 {
 
 }
+
+### distance/localities-nearest-faps
+POST http://localhost:3002/api/distance/localities-nearest-faps
+content-type: application/json
+
+{
+  "district_id": 2
+}
+
+### points/application/json
+GET http://localhost:3002/api/points/assessment-localities
+content-type: application/json
+
+{
+  "district_id": 2
+}
