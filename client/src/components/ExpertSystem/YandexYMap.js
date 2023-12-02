@@ -50,7 +50,8 @@ export const EMap = (props) => {
             objects = props.data.default
         }
 
-        const elActive = objects.find(el => el.active === true)
+
+        const elActive = objects?.find(el => el.active === true)
 
         if (elActive)
             elActive.active = false
@@ -62,12 +63,6 @@ export const EMap = (props) => {
             zoom: 12,
             'center': [element.latitude, element.longitude]
         })
-
-        // props.setSingleView({
-        //     flag: true,
-        //     id: element.id,
-        //     typeId: element.type_id
-        // })
     }
 
     return (
@@ -104,7 +99,7 @@ export const EMap = (props) => {
                                 {/* medical centers */}
 
                                 {props.data && props.data.length > 0 ? props.data.map((el, i) => {
-                                    let type =getTypePointMedCenters(el)
+                                    let type = getTypePointMedCenters(el)
                                     if (props.showFaps || type.thisDistrict) {
                                         return (
                                             <Placemark
@@ -114,7 +109,7 @@ export const EMap = (props) => {
                                                 modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
                                                 onClick={e => handlePlacemarkClick(e, el)}
                                                 properties={{
-                                                    hintContent: [el.latitude, el.longitude, el.name],
+                                                    hintContent: `${el.name } ${el.latitude}, ${el.longitude}`,
                                                 }}
                                             />
                                         );
