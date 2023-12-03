@@ -61,7 +61,6 @@ export default (app: Router) => {
                         res.status(500).json({message: 'Ошибка при рендере .ejs файла ' + err})
 
                     const renderHtml = html?.replace(/img src=\//g, 'img src="file://' + __dirname + "/")
-
                     htmlPdf.create(renderHtml, pdfOptions).toBuffer((error, buffer) => {
                         if (error) {
                             res.status(500).json({message: 'Ошибка конвертации ' + error})
@@ -70,7 +69,6 @@ export default (app: Router) => {
                         const pdf = buffer.toString('base64')
                         res.send(pdf)
                     })
-
                 })
 
             } catch (e) {
