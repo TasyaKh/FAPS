@@ -1,16 +1,22 @@
 import {ENavigation} from 'components/ExpertSystem/Navigation/ENavigation'
 import {MapContext} from 'context/MapContext'
-import {useHttp} from 'hooks/http.hook'
 import React, {useCallback, useEffect, useState} from 'react'
-import {EMap} from "../../components/ExpertSystem/YandexYMap";
+import {EMap} from "../../components/ExpertSystem/YandexMaps/YandexYMap";
 import {ESidebar} from "../../components/ExpertSystem/ESidebar";
 import "../../scss/indents.scss"
+import {fetchLocalitiesWithDistMcs} from "../../store/slices/distance";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {useAppSelector} from "../../hooks/useAppSelector";
+import {useHttp} from "../../hooks/http.hook";
 
 export const EMapPage = () => {
 
+    const dispatch = useAppDispatch();
+    const { data:localities, loading:loadingL, error:errorL} = useAppSelector((state) => state.distance);
+
     const {loading, request} = useHttp()
     const [objects, setObjects] = useState([])
-    const [localities, setLocalities] = useState([])
+    // const [localities, setLocalities] = useState([])
     const [hiddenSidebar, setHiddenSidebar] = useState(false)
     const [hiddenNavigation, setHiddenNavigation] = useState(true)
     const [orgs, setOrgs] = useState([])
@@ -47,12 +53,15 @@ export const EMapPage = () => {
     }
 
     const fetchLocalities = async (districtId) => {
-        try {
-            const localities = await request('/api/distance/localities-nearest-faps', 'POST', {district_id: districtId})
+        // try {
 
-            setLocalities(localities)
-        } catch (e) {
-        }
+
+        dispatch(fetchLocalitiesWithDistMcs(districtId))
+        // = await request('/api/distance/localities-nearest-faps', 'POST', {district_id: districtId})
+
+        // setLocalities(localities)
+        // } catch (e) {
+        // }
     }
 
     const [mapState, setMapState] = useState({
@@ -71,11 +80,11 @@ export const EMapPage = () => {
 
     }
 
-    const handleCheckBoxShowFapsClick = (checked:boolean) => {
+    const handleCheckBoxShowFapsClick = (checked) => {
         setShowFaps(checked)
     }
 
-    const handleCheckBoxShowSettlementsClick = (checked:boolean) => {
+    const handleCheckBoxShowSettlementsClick = (checked) => {
         setShowSettlements(checked)
     }
 
@@ -104,15 +113,13 @@ export const EMapPage = () => {
     }, [request])
 
 
-
-
     return (
         <div className="map-page container--map">
             <MapContext.Provider value={{
                 mapState, setMapState
             }}>
                 <ESidebar
-                    loading={loading}
+                    loading={loadingL}
                     data={objects}
                     orgs={orgs}
 
@@ -128,12 +135,12 @@ export const EMapPage = () => {
                     filters={filters}
                     localities={localities}
 
-                    onCheckBoxShowFapsClick= {handleCheckBoxShowFapsClick}
-                    onCheckBoxShowSettlementsClick = { handleCheckBoxShowSettlementsClick}
+                    onCheckBoxShowFapsClick={handleCheckBoxShowFapsClick}
+                    onCheckBoxShowSettlementsClick={handleCheckBoxShowSettlementsClick}
                 />
 
                 <EMap
-                    loading={loading}
+                    loading={loadingL}
                     data={objects}
                     localities={localities}
                     orgs={orgs}

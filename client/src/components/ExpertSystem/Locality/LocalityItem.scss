@@ -1,4 +1,4 @@
-@import "../../scss/vars";
+@import "~scss/vars";
 
 .item {
   position: relative;
@@ -11,7 +11,6 @@
   &:hover {
     background-color: #f6f6f6;
     cursor: pointer;
-
   }
 
   &:last-of-type {
@@ -52,5 +51,4 @@
     border: none;
     border-top: 2px dashed #ddd;
   }
-
 }

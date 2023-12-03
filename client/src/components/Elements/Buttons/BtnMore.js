@@ -20,11 +20,9 @@ export const BtnMore = (props) => {
                 больше <Icon className={"material-icons"}>{expanded ? "arrow_drop_up" : "arrow_drop_down"}</Icon>
             </div>
             {/*body*/}
-
                     <div className={"see-more__body " + ( expanded ?"is-visible":" ")}>
                         {props.children}
                     </div>
-
         </div>
     )
 }

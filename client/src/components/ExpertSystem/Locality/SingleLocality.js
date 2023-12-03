@@ -1,18 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react'
 import "./SingleLocality.scss"
-import {ReactComponent as ArrowBack} from '../../img/arrow-back.svg'
-import {DistanceMcElem} from "../Elements/DistanceMcElem";
-import {MapContext} from "../../context/MapContext";
-import {useHttp} from "../../hooks/http.hook";
+import {ReactComponent as ArrowBack} from '../../../img/arrow-back.svg'
+import {MapContext} from "../../../context/MapContext";
+import {useHttp} from "../../../hooks/http.hook";
+import {DistanceToMcElem} from "../DistanceToMC";
 
 export const SingleLocality = (props) => {
 
     const {loading, request} = useHttp()
-
     const [locality, setLocality] = useState({});
     const [mcs, setMcs] = useState({});
     const {mapState, setMapState} = useContext(MapContext)
-
 
     const fetchLocality = async () => {
         try {
@@ -21,7 +19,6 @@ export const SingleLocality = (props) => {
             setLocality(l)
         } catch (e) {
         }
-
     }
 
     const fetchMcs = async () => {
@@ -68,8 +65,10 @@ export const SingleLocality = (props) => {
 
                     <div className={"mt-2"}>
                         <p>{locality?.district?.name} </p>
-                        <span className={"single-locality__coords"}> ({locality?.longitude}, {locality?.latitude})</span>
-                        <p><b> население (взрос./дет.):</b> {locality?.population_adult}/{locality?.population_child}</p>
+                        <span
+                            className={"single-locality__coords"}> ({locality?.longitude}, {locality?.latitude})</span>
+                        <p><b> население (взрос./дет.):</b> {locality?.population?.population_adult}/{locality?.population?.population_child}
+                        </p>
 
                     </div>
 
@@ -87,10 +86,10 @@ export const SingleLocality = (props) => {
                         {!loading ? mcs && mcs.length > 0 ? mcs.map((dist, i) => (
 
                                     <div key={i}>
-                                        <DistanceMcElem
-                                            name={dist.medical_center?.name}
-                                            distance={dist.distance}
-                                            duration={dist.duration}
+                                        <DistanceToMcElem
+                                            nameMC={dist.medical_center?.name}
+                                            distM={dist.distance}
+                                            durationS={dist.duration}
                                             longitude={dist.medical_center?.longitude}
                                             latitude={dist.medical_center?.latitude}
                                             onMcClick={handleOnMcClick}

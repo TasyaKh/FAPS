@@ -5,6 +5,7 @@ import { useHttp } from "../../../../hooks/http.hook"
 import { PointsCalculator } from "./PointsCalculator"
 import { Link } from 'react-router-dom'
 
+
 export const PointsPanel = (/** @type {{ handleCalculateButton: (arg0: any) => void; hide: React.MouseEventHandler<HTMLButtonElement>; pointsButtonVisible: any; area: any; }} */ props) => {
 
   const [state, setState] = useState({

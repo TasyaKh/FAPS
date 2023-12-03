@@ -20,7 +20,6 @@ function TableL({ columns, data }) {
         useSortBy
     )
 
-    // Render the UI for your table
     return (
         <div>
 

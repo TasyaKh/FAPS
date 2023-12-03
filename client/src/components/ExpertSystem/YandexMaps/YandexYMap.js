@@ -1,7 +1,7 @@
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
-import '../FAPS/Maps.scss'
+import '../../FAPS/Maps.scss'
 import {Preloader} from "react-materialize";
-import {MapContext} from "../../context/MapContext";
+import {MapContext} from "../../../context/MapContext";
 import {useContext} from "react";
 
 export const EMap = (props) => {
@@ -10,7 +10,7 @@ export const EMap = (props) => {
 
     const getTypePointMedCenters = (mc) => {
         let color
-        let thisDistrict: boolean = false
+        let thisDistrict = false
 
         if (mc.district_id === props.districtId) {
             color = '#0d47a1'
@@ -42,6 +42,7 @@ export const EMap = (props) => {
     }
 
     const handlePlacemarkClick = (e, element) => {
+        console.log(props.showSettlements, props.localities)
         let objects
         //Проверяем организация или ФАП
         if (element.type_id === 3) {
@@ -150,7 +151,7 @@ export const EMap = (props) => {
                                 {props.localities && props.localities.length > 0 ? props.localities.map((el, i) => (
                                     <Placemark
                                         key={i}
-                                        geometry={[el.latitude, el.longitude]}
+                                        geometry={[el.locality_latitude, el.locality_longitude]}
                                         options={getPointOptionsLocalities()}
                                         modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
                                         onClick={e => handlePlacemarkClick(e, el)}

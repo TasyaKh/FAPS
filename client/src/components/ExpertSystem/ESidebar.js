@@ -1,12 +1,11 @@
-import React, {useContext, useState} from 'react'
-
 import './ESidebar.scss'
+import React, {useContext, useState} from 'react'
 import {Skeleton} from "../FAPS/Skeleton";
 import {MapContext} from "../../context/MapContext";
 import {ESearch} from "./Search/ESearch";
-import {ListViewLocalities} from "./ListViewLocalities";
+import {ListViewLocalities} from "./Locality/ListViewLocalities";
 import CustomScrollbars from "../FAPS/CustomScrollbar";
-import {SingleLocality} from "./SingleLocality";
+import {SingleLocality} from "./Locality/SingleLocality";
 
 export const ESidebar = (props) => {
 

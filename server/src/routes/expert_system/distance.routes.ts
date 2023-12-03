@@ -1,6 +1,7 @@
 import express, {NextFunction, Router} from 'express'
 import {DistanceService} from "../../services/database/distance.service";
 import DistanceC from "../../classes/distanceC";
+import {celebrate, Joi} from "celebrate";
 
 const router = Router()
 export default (app: Router) => {
@@ -29,13 +30,18 @@ export default (app: Router) => {
 
 
 // /api/distance/localities-nearest-faps
-    router.post(
+    router.get(
         '/localities-nearest-faps',
-        [],
+        celebrate({
+            params: Joi.object({
+                district_id: Joi.number(),
+            }),
+        }),
         async (req, res) => {
 
+            const params = req.query
             const dS = new DistanceService()
-            const lMc = await  dS.getLocalitiesAndNearMcs(req.body.district_id)
+            const lMc = await  dS.getLocalitiesAndNearMcs(Number(params.district_id))
             return res.json(lMc)
         }
     )
