@@ -99,7 +99,7 @@ export const ENavigation = (props) => {
                             Калькулятор
                         </Button>}
                     >
-                        <a href="#!">Калькулятор НП (простой) <i className="material-icons right">arrow_forward</i></a>
+                        <a href="/expert-system/solution-localities">Калькулятор НП (простой) <i className="material-icons right">arrow_forward</i></a>
                         <a href="#!">Калькулятор баллов МП <i className="material-icons right">arrow_forward</i></a>
                     </Dropdown>
 

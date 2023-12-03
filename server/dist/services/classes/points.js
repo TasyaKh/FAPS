@@ -37,4 +37,4 @@ export class PointsConditions {
         this.ageYears = ageYears;
     }
 }
-//# sourceMappingURL=points.js.map
+//# sourceMappingURL=points.ts.js.map

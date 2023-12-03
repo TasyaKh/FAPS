@@ -7,20 +7,20 @@ const router = Router()
 
 export default (app: Router) => {
     app.use('/points', router)
-// /api/points
+// /api/points.ts
     router.get(
-        '/assessment-localities',
+        '/solutions-localities',
         celebrate({
             params: Joi.object({
                 district_id: Joi.number(),
             }),
         }),
         async (req, res) => {
-            const body = req.body
+            const body = req.query
             // const condLocRepo = AppDataSource.getRepository(ConditionsLocality)
             // condLocRepo.createQueryBuilder('conditions_locality')
             const dS = new DistanceService()
-            const lMcs = await dS.getLocalitiesAndNearMcs(body.district_id)
+            const lMcs = await dS.getLocalitiesAndNearMcs(Number(body.district_id))
 
             const rE = new RuleEngine()
             rE.initializeRules()
@@ -36,7 +36,7 @@ export default (app: Router) => {
                         distanceMc:el.min_distance / 1000 // convert to km
                     }
                     const reEvents = await rE.runEngine()
-                    result.push({el, enents: reEvents})
+                    result.push({data:el, solutions: reEvents})
                 }
 
             res.json(result)

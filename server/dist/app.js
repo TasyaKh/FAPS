@@ -40,7 +40,7 @@ app.use('/api/reports/area', apiReportsArea);
 app.use('/api/reports/pdf', apiReportsPDF);
 app.use('/api/reports/word', apiReportsWord);
 // expert system
-app.use('/api/points', apiPoints);
+app.use('/api/points.ts', apiPoints);
 // app.use('/api/clusterize', apiCluster)
 if (process.env.NODE_ENV === 'production') {
     console.log('Production mode');

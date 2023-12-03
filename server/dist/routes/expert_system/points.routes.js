@@ -12,7 +12,7 @@ import { PointsConditions, PointsValues } from "../../services/classes/points.js
 import { getPointsMedicalCentersOfDistrict, setPointsMedicalCenters } from "../../services/points_medical_center.service.js";
 import { getPointsLocalitiesOfDistrict, setPointsLocalities } from '../../services/points_locality.service.js';
 const router = Router();
-// /api/points
+// /api/points.ts
 router.post('/', [], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
     const values = new PointsValues();
@@ -49,4 +49,4 @@ router.post('/medical-centers', [], (req, res) => __awaiter(void 0, void 0, void
     res.json(r);
 }));
 export default router;
-//# sourceMappingURL=points.routes.ts.map
+//# sourceMappingURL=points.ts.routes.ts.map

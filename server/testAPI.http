@@ -9,7 +9,7 @@ POST http://localhost:3002/api/location/localities
 
 POST http://localhost:3002/api/location/regions
 
-# points
+# points.ts
 ###
 POST http://localhost:3000/api/points
 content-type: application/json

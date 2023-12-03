@@ -39,7 +39,7 @@ export const PointsPanel = (/** @type {{ handleCalculateButton: (arg0: any) => v
   const setPoints = useCallback(async (body) => {
     try {
 
-      await request('/api/points', 'POST', body)
+      await request('/api/points.ts', 'POST', body)
       if(body.district_id &&  props.handleCalculateButton != null)
          props.handleCalculateButton(body)
     } catch (e) { }

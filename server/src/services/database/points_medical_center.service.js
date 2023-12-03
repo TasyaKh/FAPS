@@ -198,20 +198,20 @@
 // // начислить баллы за изношенность
 // function setDeteroation(deteroation, values) {
 //
-//     let points = 0
+//     let points.ts = 0
 //     if (deteroation) {
 //         if (deteroation <= 20) {
-//             points = values.deteroationGood
+//             points.ts = values.deteroationGood
 //         } else if (deteroation <= 40) {
-//             points = values.deteroationMedium
+//             points.ts = values.deteroationMedium
 //         } else if (deteroation <= 60) {
-//             points = values.deteroationBad
+//             points.ts = values.deteroationBad
 //         } else if (deteroation <= 80) {
-//             points = values.deteroationOld
+//             points.ts = values.deteroationOld
 //         } else if (deteroation <= 100) {
-//             points = values.pointsUnfit
+//             points.ts = values.pointsUnfit
 //         }
 //     }
 //
-//     return points
+//     return points.ts
 // }

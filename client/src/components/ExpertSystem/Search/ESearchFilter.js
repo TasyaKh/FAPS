@@ -23,7 +23,7 @@ export const ESearchFilter = (props) => {
         props.onFilterChanged({[name]: !isNaN(value) ? value !== 0 ? value : null : null})
     }
 
-    const handleCheckBoxFilterClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCheckBoxFilterClick = (e) => {
         const {target} = e
         const {value, checked} = target
         if (target.value === 'faps')
@@ -32,29 +32,6 @@ export const ESearchFilter = (props) => {
             props.onCheckBoxShowSettlementsClick(checked)
 
     }
-
-
-    // const fetchDataFilter = useCallback(async (body) => {
-    //     try {
-    //
-    //         if (props.source === 'table') {
-    //             body = {
-    //                 ...body,
-    //                 source: 'table'
-    //             }
-    //         }
-    //
-    //         const fetched = await request('/api/filter', 'POST', body)
-    //
-    //         props.updateData(fetched.data, true)
-    //
-    //     } catch (e) {
-    //     }
-    // }, [request])
-    //
-    // useEffect(() => {
-    //     fetchDataFilter(filters)
-    // }, [filters])
 
     return (
 

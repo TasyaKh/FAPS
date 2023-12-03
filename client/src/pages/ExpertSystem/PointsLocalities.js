@@ -71,7 +71,7 @@
 //
 //         setFilters(body)
 //         try {
-//             let req =  '/api/points/localities'
+//             let req =  '/api/points.ts/localities'
 //             const fetched = await request(req, 'POST', body)
 //            // console.log(fetched)
 //             updateData(fetched, faps)

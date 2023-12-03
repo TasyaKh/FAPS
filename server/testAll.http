@@ -14,10 +14,6 @@ content-type: application/json
   "district_id": 2
 }
 
-### points/application/json
-GET http://localhost:3002/api/points/assessment-localities
+### points/solutions-localities
+GET http://localhost:3002/api/points/solutions-localities?district_id=2
 content-type: application/json
-
-{
-  "district_id": 3
-}
