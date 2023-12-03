@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import './InlineGallery.scss'
 import './Gallery.scss'
-import {useHttp} from "../hooks/http.hook"
+import {useHttp} from "../../hooks/http.hook"
 import {UploaderImage} from "./UploaderImage"
 import {ModalDelete} from "./ModalDelete"
 import {GalleryEditItem} from "./GalleryEditItem"

@@ -1,5 +1,5 @@
 import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
-import '../Maps.scss'
+import '../FAPS/Maps.scss'
 import {Preloader} from "react-materialize";
 import {MapContext} from "../../context/MapContext";
 import {useContext} from "react";

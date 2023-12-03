@@ -1,7 +1,7 @@
 import {Icon, Preloader} from "react-materialize";
 import React, {useCallback, useEffect} from "react";
 import './UploaderImage.scss'
-import {useHttp} from "../hooks/http.hook";
+import {useHttp} from "../../hooks/http.hook";
 
 export const UploaderImage = (props) => {
 

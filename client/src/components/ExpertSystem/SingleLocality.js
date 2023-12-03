@@ -64,12 +64,12 @@ export const SingleLocality = (props) => {
                         <ArrowBack/>
                     </button>
 
-                    <span className={"single-locality__title"}> {locality.name}</span>
+                    <span className={"single-locality__title"}> {locality?.name}</span>
 
                     <div className={"mt-2"}>
-                        <p>{locality.district?.name} </p>
-                        <span className={"single-locality__coords"}> ({locality.longitude}, {locality.latitude})</span>
-                        <p><b> население (взрос./дет.):</b> {locality.population_adult}/{locality.population_child}</p>
+                        <p>{locality?.district?.name} </p>
+                        <span className={"single-locality__coords"}> ({locality?.longitude}, {locality?.latitude})</span>
+                        <p><b> население (взрос./дет.):</b> {locality?.population_adult}/{locality?.population_child}</p>
 
                     </div>
 
@@ -86,7 +86,7 @@ export const SingleLocality = (props) => {
 
                         {!loading ? mcs && mcs.length > 0 ? mcs.map((dist, i) => (
 
-                                    <div>
+                                    <div key={i}>
                                         <DistanceMcElem
                                             name={dist.medical_center?.name}
                                             distance={dist.distance}

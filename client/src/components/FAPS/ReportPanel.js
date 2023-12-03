@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import './ReportPanel.scss'
 import {CollapsibleItem, Collapsible, Button, Select} from "react-materialize"
-import {useHttp} from "../hooks/http.hook"
+import {useHttp} from "../../hooks/http.hook"
 import {ReportView} from "./ReportView"
 import {ReportBuilder} from "./ReportBuilder"
 

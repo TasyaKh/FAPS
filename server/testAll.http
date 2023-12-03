@@ -19,5 +19,5 @@ GET http://localhost:3002/api/points/assessment-localities
 content-type: application/json
 
 {
-  "district_id": 2
+  "district_id": 3
 }

@@ -1,4 +1,4 @@
-import { SelectArea } from 'components/SelectArea'
+import { SelectArea } from 'components/FAPS/SelectArea'
 import { useHttp } from 'hooks/http.hook'
 import React, {  useEffect, useState } from 'react'
 import './Item.scss'

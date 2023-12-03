@@ -1,6 +1,6 @@
 import React from 'react'
 import './SingleViewCard.scss'
-import getAddress from "../functions/getAddress"
+import getAddress from "../../functions/getAddress"
 
 export const SingleViewCard = (props) => {
 

@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import './Gallery.scss'
 import {Carousel} from "react-materialize";
-import {useHttp} from "../hooks/http.hook";
+import {useHttp} from "../../hooks/http.hook";
 export const Gallery = (props) => {
 
   const [state, setState] = useState({

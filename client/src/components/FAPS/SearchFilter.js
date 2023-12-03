@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import './SearchFilter.scss'
 import {TextInput, Checkbox, CardPanel} from "react-materialize"
-import {useHttp} from "../hooks/http.hook"
+import {useHttp} from "../../hooks/http.hook"
 import {SelectArea} from "./SelectArea"
 
 export const SearchFilter = (props) => {

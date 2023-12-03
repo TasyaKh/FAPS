@@ -9,7 +9,10 @@ export class RuleEngine {
     FAP: string = "ФАП"
     Ambulance: string = "Амбулатория"
     Hospital: string = "Больница"
-    facts: { population: number; staffComposition: number; facilityType: string, distanceMc: number }
+    facts: {
+        staffComposition: number; facilityType: string, distanceMc: number, populationMC: number,
+        populationNP: number,
+    }
 
     // Initialize the rules engine
     engine: Engine;
@@ -32,7 +35,7 @@ export class RuleEngine {
                             value: this.minDistanceKm,
                         },
                         {
-                            fact: "population",
+                            fact: "populationNP",
                             operator: "greaterThanInclusive",
                             value: this.minPopulationForFAP,
                         },
@@ -48,7 +51,7 @@ export class RuleEngine {
                 conditions: {
                     all: [
                         {
-                            fact: "population",
+                            fact: "populationNP",
                             operator: "greaterThanInclusive",
                             value: this.minPopulationForFAP,
                         },
@@ -60,8 +63,7 @@ export class RuleEngine {
                     ],
                 },
                 event: {
-                    type: `Нам нужен доктор в медицинском учреждении, так как население > 
-            ${this.minPopulationForFAP}, а состав персонала = ${this.staffCompositionForDoctor}`,
+                    type: `Нам нужен доктор в медицинском учреждении, так как население > ${this.minPopulationForFAP}, а состав персонала = ${this.staffCompositionForDoctor}`,
                 },
             },
             //  ****************************************************************************************************
@@ -70,7 +72,7 @@ export class RuleEngine {
                 conditions: {
                     all: [
                         {
-                            fact: "population",
+                            fact: "populationMC",
                             operator: "greaterThan",
                             value: this.maxPopulationForFAP,
                         },
@@ -82,7 +84,7 @@ export class RuleEngine {
                     ],
                 },
                 event: {
-                    type: `Необходимо улучшить тип МП до Амбулатории или больницы, так как население > 
+                    type: `Необходимо улучшить тип МП до Амбулатории или больницы, так как население в НП-е МП-а > 
             ${this.maxPopulationForFAP} и стоит ${this.FAP}`,
                 },
             },
@@ -92,7 +94,7 @@ export class RuleEngine {
                 conditions: {
                     all: [
                         {
-                            fact: "population",
+                            fact: "populationMC",
                             operator: "greaterThan",
                             value: this.maxPopulationForFAP,
                         },
@@ -113,7 +115,7 @@ export class RuleEngine {
                 conditions: {
                     all: [
                         {
-                            fact: "population",
+                            fact: "populationMC",
                             operator: "lessThanInclusive",
                             value: this.maxPopulationForFAP,
                         },
@@ -134,19 +136,19 @@ export class RuleEngine {
                 conditions: {
                     all: [
                         {
-                            fact: "population",
+                            fact: "populationNP",
                             operator: "lessThanInclusive",
                             value: this.minPopulationForFAP,
                         },
-                        {
-                            fact: "facilityType",
-                            operator: "equal",
-                            value: this.FAP,
-                        },
+                        // {
+                        //     fact: "facilityType",
+                        //     operator: "equal",
+                        //     value: this.FAP,
+                        // },
                     ],
                 },
                 event: {
-                    type: `МП не требуется так как число людей в НП <= ${this.minPopulationForFAP} (ФАП есть)`,
+                    type: `МП не требуется так как число людей в НП <= ${this.minPopulationForFAP}`,
                 },
             },
         ];

@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useCallback} from 'react'
 import './RatesEditItem.scss'
 import {Button, Modal, TextInput} from "react-materialize"
-import {useHttp} from "../hooks/http.hook";
+import {useHttp} from "../../hooks/http.hook";
 
 export const RatesEditItem = (props) => {
 

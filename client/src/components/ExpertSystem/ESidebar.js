@@ -1,11 +1,11 @@
 import React, {useContext, useState} from 'react'
 
 import './ESidebar.scss'
-import {Skeleton} from "../Skeleton";
+import {Skeleton} from "../FAPS/Skeleton";
 import {MapContext} from "../../context/MapContext";
-import {ESearch} from "./ESearch";
+import {ESearch} from "./Search/ESearch";
 import {ListViewLocalities} from "./ListViewLocalities";
-import CustomScrollbars from "../CustomScrollbar";
+import CustomScrollbars from "../FAPS/CustomScrollbar";
 import {SingleLocality} from "./SingleLocality";
 
 export const ESidebar = (props) => {
@@ -62,7 +62,7 @@ export const ESidebar = (props) => {
 
         setSingleLocality({
             flag: true,
-            id: localityAndMc.id
+            id: localityAndMc.locality_id
         })
 
         if (localityAndMc && localityAndMc.latitude && localityAndMc.longitude)

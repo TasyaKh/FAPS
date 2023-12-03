@@ -29,9 +29,10 @@ export default (app: Router) => {
                 for (let i = 0; i < lMcs.length; i++) {
                     const el = lMcs[i]
                     rE.facts = {
-                        population: el.population_population_adult,
+                        populationMC: el.mc_population_population_adult,
+                        populationNP:el.population_population_adult,
                         staffComposition: el.mc_staffing,
-                        facilityType: el.type_mc_name,
+                        facilityType: el.mc_type_name,
                         distanceMc:el.min_distance / 1000 // convert to km
                     }
                     const reEvents = await rE.runEngine()

@@ -3,8 +3,8 @@ import 'materialize-css'
 import { Button } from 'react-materialize'
 import './Navigation.scss'
 import { ReportPanel } from "./ReportPanel"
-import { PointsPanel } from "./ExpertSystem/Modals/MCPoints/PointsPanel"
-import { useHttp } from "../hooks/http.hook"
+import { PointsPanel } from "../ExpertSystem/Modals/MCPoints/PointsPanel"
+import { useHttp } from "../../hooks/http.hook"
 import { Link } from "react-router-dom"
 import { Legend } from "./Legend"
 

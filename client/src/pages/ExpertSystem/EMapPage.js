@@ -1,4 +1,4 @@
-import {ENavigation} from 'components/ExpertSystem/ENavigation'
+import {ENavigation} from 'components/ExpertSystem/Navigation/ENavigation'
 import {MapContext} from 'context/MapContext'
 import {useHttp} from 'hooks/http.hook'
 import React, {useCallback, useEffect, useState} from 'react'

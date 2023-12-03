@@ -1,11 +1,11 @@
 import React, {useCallback, useEffect, useState, Component, useRef} from 'react'
 import {useHttp} from "../hooks/http.hook"
 import './ViewPage.scss'
-import {PageHeader} from "../components/PageHeader"
-import {TableView} from "../components/TableView"
+import {PageHeader} from "../components/FAPS/PageHeader"
+import {TableView} from "../components/FAPS/TableView"
 import {ProgressBar} from "react-materialize"
 import {Scrollbars} from 'react-custom-scrollbars'
-import {ReportPanel} from "../components/ReportPanel"
+import {ReportPanel} from "../components/FAPS/ReportPanel"
 
 export const ViewPage = () => {
 

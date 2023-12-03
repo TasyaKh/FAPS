@@ -1,7 +1,7 @@
 import React from 'react'
 import {CardPanel, TextInput} from "react-materialize";
-import magnifer from "../../img/magnifier.svg";
-import {ReactComponent as Filter} from "../../img/filter.svg";
+import magnifer from "../../../img/magnifier.svg";
+import {ReactComponent as Filter} from "../../../img/filter.svg";
 import './ESearch.scss'
 import {ESearchFilter} from "./ESearchFilter";
 

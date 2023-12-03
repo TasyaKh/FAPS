@@ -3,13 +3,13 @@ import {useHttp} from "../hooks/http.hook"
 import {useHistory, useParams} from "react-router-dom"
 import './DetailPage.scss'
 import getAddress from "../functions/getAddress";
-import {InlineGallery} from "../components/InlineGallery"
+import {InlineGallery} from "../components/FAPS/InlineGallery"
 import {Map, Placemark, YMaps} from "react-yandex-maps"
 import {ReactComponent as ArrowBack} from '../img/arrow-back.svg'
 import { Scrollbars } from 'react-custom-scrollbars'
 import {Button, Modal, Preloader} from "react-materialize"
-import {Box} from "../components/Skeleton"
-import {InlineRates} from "../components/InlineRates";
+import {Box} from "../components/FAPS/Skeleton"
+import {InlineRates} from "../components/FAPS/InlineRates";
 
 export const DetailPage = () => {
   const {loading, error, request, clearError} = useHttp()

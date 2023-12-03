@@ -11,10 +11,10 @@ export const PointsPanel = (/** @type {{ handleCalculateButton: (arg0: any) => v
     columns: [],
     conditions: []
   })
-  const [data, setData] = useState({
-    headers: [],
-    objects: []
-  })
+  // const [data, setData] = useState({
+  //   headers: [],
+  //   objects: []
+  // })
 
   const { loading, error, request, clearError } = useHttp()
 
@@ -27,10 +27,10 @@ export const PointsPanel = (/** @type {{ handleCalculateButton: (arg0: any) => v
 
 
   const handleCalculateButton = () => {
-    setData({
-      ...state,
-      objects: []
-    })
+    // setData({
+    //   ...state,
+    //   objects: []
+    // })
 
     setPoints(state)
   }

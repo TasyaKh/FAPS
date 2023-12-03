@@ -6,6 +6,7 @@ import Locality from "../../entities/locality.entity";
 import MedicalCenter from "../../entities/medical_center.entity";
 import {MedicalFacility} from "../../entities/medical_facility.entity";
 import {Type} from "../../entities/types.entity";
+import {Population} from "../../entities/population.entity";
 
 export class DistanceService {
 
@@ -93,15 +94,16 @@ export class DistanceService {
                     'mc.latitude AS mc_latitude',
                     'mc.name AS medical_center_name',
                     'mc.staffing AS mc_staffing',
-                    'type_mc.name',
-                    'locality_mc.id',
+                    'mc_type.name',
+                    'mc_locality.id',
+                    'mc_population.population_adult',
 
 
                     'mcf.id AS mcf_id',
                     'mcf.longitude AS mcf_longitude',
                     'mcf.latitude AS mcf_latitude',
                     'mcf.name AS mcf_name',
-                    'type_mcf.name',
+                    'mcf_type.name',
 
                     'dtmcf.distance AS min_facility_distance',
                     'dtmcf.duration AS min_facility_duration',
@@ -121,8 +123,9 @@ export class DistanceService {
                 // medical center
                 .leftJoin(Distance, 'dtmc', 'dtmc.locality_id = locality.id AND dtmc.distance = md.min_distance')
                 .leftJoin(MedicalCenter, 'mc', 'mc.id = dtmc.mc_id')
-                .leftJoin(Type, 'type_mc', 'type_mc.id = mc.type_id')
-                .leftJoin(Locality, 'locality_mc', 'locality_mc.id = mc.locality_id')
+                .leftJoin(Type, 'mc_type', 'mc_type.id = mc.type_id')
+                .leftJoin(Locality, 'mc_locality', 'mc_locality.id = mc.locality_id')
+                .leftJoin(Population, 'mc_population', 'mc_locality.id = mc_population.locality_id')
                 .leftJoin(
                     subQuery => {
                         return subQuery
@@ -141,7 +144,7 @@ export class DistanceService {
                     'dtmcf.locality_id = locality.id AND dtmcf.distance = mfd.min_distance'
                 )
                 .leftJoin(MedicalFacility, 'mcf', 'mcf.id = dtmcf.mc_facility_id')
-                .leftJoin(Type, 'type_mcf', 'type_mcf.id = mcf.type_id')
+                .leftJoin(Type, 'mcf_type', 'mcf_type.id = mcf.type_id')
 
             district_id ? query.andWhere('locality.district_id = :district_id',
                 {district_id: district_id}) : query

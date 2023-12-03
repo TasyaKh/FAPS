@@ -6,7 +6,7 @@ import {Map, Placemark, YMaps} from "react-yandex-maps"
 import {ReactComponent as ArrowBack} from '../img/arrow-back.svg'
 import {Scrollbars} from 'react-custom-scrollbars'
 import {Button, Preloader, Switch, TextInput} from "react-materialize"
-import {SelectArea} from "../components/SelectArea"
+import {SelectArea} from "../components/FAPS/SelectArea"
 
 export const AddPage = () => {
 

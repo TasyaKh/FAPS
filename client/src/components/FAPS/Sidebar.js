@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {ListView} from './ListView'
 import './Sidebar.scss'
-import {MapContext} from "../context/MapContext"
+import {MapContext} from "../../context/MapContext"
 import {SingleView} from "./SingleView"
 import {Search} from "./Search"
 import {Skeleton} from "./Skeleton"

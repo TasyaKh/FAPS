@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 import { Table } from "react-materialize"
-import '../TableView.scss'
+import '../FAPS/TableView.scss'
 import { useTable, useSortBy } from 'react-table'
 import { columnsPointsLocalities, columnsPointsMedicalCenters } from "./AdditionData/ColumnsTables"
 

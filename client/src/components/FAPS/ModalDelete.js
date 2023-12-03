@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react'
-import {useHttp} from "../hooks/http.hook"
+import {useHttp} from "../../hooks/http.hook"
 import {Button, Modal} from "react-materialize"
 
 export const ModalDelete = (props) => {

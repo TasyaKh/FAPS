@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react'
 import './ESearchFilter.scss'
 import {CardPanel, Checkbox} from "react-materialize"
-import {useHttp} from "../../hooks/http.hook";
-import {SelectArea} from "../SelectArea";
+import {useHttp} from "../../../hooks/http.hook";
+import {SelectArea} from "../../FAPS/SelectArea";
 
 export const ESearchFilter = (props) => {
     const {loading, error, request, clearError} = useHttp()

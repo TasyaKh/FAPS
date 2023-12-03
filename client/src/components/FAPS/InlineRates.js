@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react'
-import {useHttp} from "../hooks/http.hook"
+import {useHttp} from "../../hooks/http.hook"
 import './InlineRates.scss'
 import {RatesItem} from "./RatesItem"
 import {RatesEditItem} from "./RatesEditItem"

@@ -1,7 +1,7 @@
 import React from 'react'
 import './ListView.scss'
 import {SearchView} from "./SearchView";
-import getAddress from "../functions/getAddress"
+import getAddress from "../../functions/getAddress"
 
 export const ListView = (props) => {
   return (

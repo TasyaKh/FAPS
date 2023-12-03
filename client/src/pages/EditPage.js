@@ -2,13 +2,13 @@ import React, {useCallback, useEffect, useState} from 'react'
 import {useHttp} from "../hooks/http.hook"
 import {useHistory, useParams} from "react-router-dom"
 import './EditPage.scss'
-import {InlineGallery} from "../components/InlineGallery"
+import {InlineGallery} from "../components/FAPS/InlineGallery"
 import {Map, Placemark, YMaps} from "react-yandex-maps"
 import {ReactComponent as ArrowBack} from '../img/arrow-back.svg'
 import { Scrollbars } from 'react-custom-scrollbars'
 import {Button, Modal, Preloader, Switch, TextInput} from "react-materialize"
-import {SelectArea} from "../components/SelectArea"
-import {InlineRates} from "../components/InlineRates";
+import {SelectArea} from "../components/FAPS/SelectArea"
+import {InlineRates} from "../components/FAPS/InlineRates";
 
 export const EditPage = () => {
   const {loading, error, request, clearError} = useHttp()

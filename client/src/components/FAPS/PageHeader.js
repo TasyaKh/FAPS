@@ -1,6 +1,6 @@
 import {Button, TextInput} from "react-materialize"
-import magnifer from "../img/magnifier.svg"
-import {ReactComponent as Filter} from "../img/filter.svg"
+import magnifer from "../../img/magnifier.svg"
+import {ReactComponent as Filter} from "../../img/filter.svg"
 import {SearchFilter} from "./SearchFilter"
 import React, {useState} from "react"
 import './PageHeader.scss'

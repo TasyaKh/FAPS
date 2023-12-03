@@ -25,9 +25,6 @@ export const BtnMore = (props) => {
                         {props.children}
                     </div>
 
-
-
         </div>
-
     )
 }

@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import './Maps.scss'
 import { YMaps, Map, Clusterer, Placemark } from "react-yandex-maps"
-import {MapContext} from "../context/MapContext"
+import {MapContext} from "../../context/MapContext"
 import {Preloader} from "react-materialize";
 
 export const Maps = (props) => {

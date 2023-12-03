@@ -6,7 +6,7 @@ import AppDataSource from "../../typeorm.config";
 const router = Router()
 
 export default (app: Router) => {
-    app.use('/views', router)
+    app.use('/view', router)
 // /api/view/
     router.post(
         '/',

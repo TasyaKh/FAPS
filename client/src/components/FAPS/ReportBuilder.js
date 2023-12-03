@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import './ReportPanel.scss'
 import {Select, Button, Checkbox, TextInput} from "react-materialize"
-import {useHttp} from "../hooks/http.hook"
+import {useHttp} from "../../hooks/http.hook"
 
 export const ReportBuilder = (props) => {
 

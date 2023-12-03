@@ -3,7 +3,7 @@ import 'materialize-css'
 import {Button, Dropdown} from 'react-materialize'
 import './ENavigation.scss'
 import {useHttp} from 'hooks/http.hook'
-import {PointsPanel} from './Modals/MCPoints/PointsPanel'
+import {PointsPanel} from '../Modals/MCPoints/PointsPanel'
 
 export const ENavigation = (props) => {
 
