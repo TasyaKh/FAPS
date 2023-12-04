@@ -1,4 +1,4 @@
-export default class DistanceC {
+export default class DistanceDto {
     distance?:number
     // start_lon?:number
     // start_lat?:number

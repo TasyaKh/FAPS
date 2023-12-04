@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, Index, ManyToOne, JoinColumn } from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, Index, ManyToOne, JoinColumn, OneToOne} from 'typeorm';
 import {User} from "./user.entity";
 @Entity('conditions_locality')
 export class ConditionsLocality {
@@ -6,15 +6,15 @@ export class ConditionsLocality {
     id: number;
 
     @Column({ type: 'double', nullable: true })
-    minDistMc: number | null;
+    min_dist_mc: number | null;
 
     @Column({ type: 'int', nullable: true })
-    populationFAP: number | null;
+    population_FAP: number | null;
 
     @Column({ type: 'int', nullable: true })
-    populationAmbulatory: number | null;
+    population_Ambulatory: number | null;
 
-    @ManyToOne(() => User, {onDelete:"CASCADE"})
+    @OneToOne(() => User, (user)=>user.conditions_locality)
     @JoinColumn({ name: 'user_id' })
     user: User;
 }

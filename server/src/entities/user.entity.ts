@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne} from 'typeorm';
 import {Role} from "./roles.entity";
+import {ConditionsLocality} from "./conditions_locality.entity";
 
 @Entity('users')
 export class User {
@@ -24,4 +25,7 @@ export class User {
     @ManyToOne(() => Role, { nullable: false, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'role_id' })
     role: Role;
+
+    @OneToOne(() => ConditionsLocality, (cL)=>cL.user)
+    conditions_locality: ConditionsLocality;
 }

@@ -1,4 +1,4 @@
-import DistanceC from "../../classes/distanceC";
+import DistanceDto from "../../classes/distanceDto";
 import AppDataSource from "../../typeorm.config";
 import Distance from "../../entities/distance.entity";
 import express from "express";
@@ -10,7 +10,7 @@ import {Population} from "../../entities/population.entity";
 
 export class DistanceService {
 
-    async saveDistance(distance: DistanceC) {
+    async saveDistance(distance: DistanceDto) {
 
         const entityManager = AppDataSource.createEntityManager()
 
@@ -29,7 +29,7 @@ export class DistanceService {
     }
 
     // получить расстояния до мед учреждений по заданым параметрам
-    async getDistToMc(res: express.Response, distance: DistanceC) {
+    async getDistToMc(res: express.Response, distance: DistanceDto) {
 
         const distRepository = AppDataSource.getRepository(Distance);
         let distances: Distance[]
@@ -54,7 +54,7 @@ export class DistanceService {
     }
 
 // Удалить существующие записи
-    async delDistance(distance: DistanceC) {
+    async delDistance(distance: DistanceDto) {
         let res: any
         const entityManager = AppDataSource.createEntityManager()
 
