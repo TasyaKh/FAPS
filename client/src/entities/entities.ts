@@ -29,3 +29,9 @@ export interface ICustomSolutionsLocalities{
     data?:ILocalitiDistToNearectMC,
     solutions?:string[]
 }
+
+export interface IConditionsLocality{
+    min_dist_mc?: number;
+    population_FAP?: number;
+    population_Ambulatory?: number;
+}

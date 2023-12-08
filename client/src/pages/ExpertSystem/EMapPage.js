@@ -8,11 +8,11 @@ import {fetchLocalitiesWithDistMcs} from "../../store/slices/distance";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {useHttp} from "../../hooks/http.hook";
+import {useQuery} from "react-query";
+import {getSolutionsLocalities} from "../../api/points";
+import {getLocalitiesWithDistMcs} from "../../api/distances";
 
 export const EMapPage = () => {
-
-    const dispatch = useAppDispatch();
-    const { data:localities, loading:loadingL, error:errorL} = useAppSelector((state) => state.distance);
 
     const {loading, request} = useHttp()
     const [objects, setObjects] = useState([])
@@ -36,6 +36,12 @@ export const EMapPage = () => {
         return storedVal ? JSON.parse(storedVal) : true;
     })
 
+    const {
+        data: localitiesWithDistMcs,
+        error: localitiesWithDistMcsError,
+        isLoading: localitiesWithDistMcsLoading,
+        refetch: localitiesWithDistMcsRefetch
+    } = useQuery(['getLocalitiesWithDistMcs', filters.district_id], () => getLocalitiesWithDistMcs(filters.district_id));
 
     const fetchMedicalCenters = async () => {
         try {
@@ -50,18 +56,6 @@ export const EMapPage = () => {
         } catch (e) {
         }
 
-    }
-
-    const fetchLocalities = async (districtId) => {
-        // try {
-
-
-        dispatch(fetchLocalitiesWithDistMcs(districtId))
-        // = await request('/api/distance/localities-nearest-faps', 'POST', {district_id: districtId})
-
-        // setLocalities(localities)
-        // } catch (e) {
-        // }
     }
 
     const [mapState, setMapState] = useState({
@@ -99,18 +93,10 @@ export const EMapPage = () => {
 
     // effects
     // ----------------------------------------------------------------------------------------------------
-    useEffect(() => {
-        fetchData(filters)
-    }, [filters])
 
     useEffect(() => {
         fetchMedicalCenters()
     }, []); // Empty dependency array means it will run only on mount
-
-    const fetchData = useCallback(async (filters) => {
-        await fetchLocalities(filters.district_id)
-        // eslint-disable-next-line
-    }, [request])
 
 
     return (
@@ -119,10 +105,8 @@ export const EMapPage = () => {
                 mapState, setMapState
             }}>
                 <ESidebar
-                    loading={loadingL}
-                    data={objects}
+                    loading={localitiesWithDistMcsLoading}
                     orgs={orgs}
-
                     showSettlements={showSettlements}
                     showFaps={showFaps}
 
@@ -133,16 +117,16 @@ export const EMapPage = () => {
                     setHiddenNavigation={setHiddenNavigation}
                     onFilterChanged={handleFilterChanged}
                     filters={filters}
-                    localities={localities}
+                    localities={localitiesWithDistMcs}
 
                     onCheckBoxShowFapsClick={handleCheckBoxShowFapsClick}
                     onCheckBoxShowSettlementsClick={handleCheckBoxShowSettlementsClick}
                 />
 
                 <EMap
-                    loading={loadingL}
+                    loading={localitiesWithDistMcsLoading}
                     data={objects}
-                    localities={localities}
+                    localities={localitiesWithDistMcs}
                     orgs={orgs}
                     districtId={filters.district_id}
                     showFaps={showFaps}

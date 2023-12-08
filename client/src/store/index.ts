@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import {distanceReducer} from "./slices/distance";
-import {pointsReducer} from "./slices/points";
 
 const store = configureStore({
     reducer: {
         distance: distanceReducer,
-        points: pointsReducer,
     },
 });
 

@@ -1,10 +1,11 @@
 import {Engine, RuleProperties} from "json-rules-engine";
+import {ConditionsLocalityDto} from "../../classes/conditions_locality.dto";
 
 export class RuleEngine {
-    // default params for rules
+    // default conditions for rules
     minDistanceKm: number = 10
     minPopulationForFAP: number = 100
-    maxPopulationForFAP: number = 2000
+    minPopulationForAmbulance: number = 2000
     staffCompositionForDoctor: number = 0
     FAP: string = "ФАП"
     Ambulance: string = "Амбулатория"
@@ -18,6 +19,12 @@ export class RuleEngine {
     engine: Engine;
     // Some error occurred
     err: any;
+
+    public setConditions(cLD:ConditionsLocalityDto): void {
+        this.minDistanceKm = cLD.min_dist_mc ?? this.minDistanceKm
+        this.minPopulationForFAP = cLD.population_FAP ?? this.minPopulationForFAP
+        this.minPopulationForAmbulance = cLD.population_Ambulatory ?? this.minPopulationForAmbulance
+    }
 
     // create rules and conditions
     public initializeRules(): void {
@@ -39,6 +46,7 @@ export class RuleEngine {
                             operator: "greaterThanInclusive",
                             value: this.minPopulationForFAP,
                         },
+
                     ],
                 },
                 event: {
@@ -74,7 +82,7 @@ export class RuleEngine {
                         {
                             fact: "populationMC",
                             operator: "greaterThan",
-                            value: this.maxPopulationForFAP,
+                            value: this.minPopulationForAmbulance,
                         },
                         {
                             fact: "facilityType",
@@ -85,7 +93,7 @@ export class RuleEngine {
                 },
                 event: {
                     type: `Необходимо улучшить тип МП до Амбулатории или больницы, так как население в НП-е МП-а > 
-            ${this.maxPopulationForFAP} и стоит ${this.FAP}`,
+            ${this.minPopulationForAmbulance} и стоит ${this.FAP}`,
                 },
             },
             //  ****************************************************************************************************
@@ -96,7 +104,7 @@ export class RuleEngine {
                         {
                             fact: "populationMC",
                             operator: "greaterThan",
-                            value: this.maxPopulationForFAP,
+                            value: this.minPopulationForAmbulance,
                         },
                         {
                             fact: "facilityType",
@@ -106,7 +114,7 @@ export class RuleEngine {
                     ],
                 },
                 event: {
-                    type: `Необходимо построить МП (Амбулатория или больница), так как население > ${this.maxPopulationForFAP} и нет МП`,
+                    type: `Необходимо построить МП (Амбулатория или больница), так как население > ${this.minPopulationForAmbulance} и нет МП`,
                 },
             },
             //  ****************************************************************************************************
@@ -117,7 +125,7 @@ export class RuleEngine {
                         {
                             fact: "populationMC",
                             operator: "lessThanInclusive",
-                            value: this.maxPopulationForFAP,
+                            value: this.minPopulationForAmbulance,
                         },
                         {
                             fact: "facilityType",
@@ -127,7 +135,7 @@ export class RuleEngine {
                     ],
                 },
                 event: {
-                    type: `Необходимо понизить тип МП до ФАПА т.к население < ${this.maxPopulationForFAP}`,
+                    type: `Необходимо понизить тип МП до ФАПА т.к население < ${this.minPopulationForAmbulance}`,
                 },
             },
             //  ****************************************************************************************************

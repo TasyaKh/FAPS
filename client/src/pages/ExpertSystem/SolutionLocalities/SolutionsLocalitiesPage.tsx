@@ -1,29 +1,30 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {Button, Icon, ProgressBar} from 'react-materialize'
 import './SolutionsLocalitiesPage.scss'
 import {TableSolutions} from 'components/ExpertSystem/TableSolutions'
-import {useAppDispatch} from "../../../hooks/useAppDispatch";
-import {useAppSelector} from "../../../hooks/useAppSelector";
-import {fetchSolutionsLocalities} from "../../../store/slices/points";
 import {SelectArea} from "../../../components/FAPS/SelectArea";
-import {ICustomSolutionsLocalities} from "../../../entities/entities";
+import {ConditionsLocality} from "../../../components/ExpertSystem/Modals/Calculators/ConditionsLocality";
+import {DefaultModal} from "../../../components/ExpertSystem/Modals/TemplateModal";
+import {useQuery} from "react-query";
+import {getSolutionsLocalities} from "../../../api/points";
 
 export const SolutionsLocalitiesPage = () => {
-
-    const dispatch = useAppDispatch();
-    const {data: solutions, loading: loadingS, error: errorS} = useAppSelector((state) => state.points);
 
     const [filters, setFilters] = useState({
         district_id: 1
     })
 
-    useEffect(() => {
-        getSolutionsLocalities()
-    }, [filters]);
+    const [conditionsModalState, setConditionsModalState] = useState({
+        show: false
+    })
 
-    const getSolutionsLocalities = () => {
-        dispatch(fetchSolutionsLocalities(filters.district_id))
-    }
+    const {
+        data: solutions,
+        error: solutionsError,
+        isLoading: solutionsLoading,
+        refetch: refetchSolutions
+    } = useQuery(['getSolutionsLocalities', filters.district_id], () => getSolutionsLocalities(filters.district_id));
+
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const {target} = e
@@ -33,12 +34,17 @@ export const SolutionsLocalitiesPage = () => {
         setFilters({...filters, [name]: !isNaN(value) ? value !== 0 ? value : null : null})
     }
 
-    const handleSetRulesConditions = () => {
+    const handleInstallExcel = () => {
 
     }
 
-    const handleInstallExcel = () => {
+    const handleSetConditionsLocalities = () => {
+        refetchSolutions()
+    }
 
+
+    const handleConditionsModalHide = (show: boolean) => {
+        setConditionsModalState({show: show})
     }
 
     return (
@@ -54,7 +60,7 @@ export const SolutionsLocalitiesPage = () => {
                                 value={filters.district_id}
                                 name="district_id"
                                 onChange={handleSelectChange}
-                                disabled={loadingS}
+                                disabled={solutionsLoading}
                                 label="Район:"
                                 query="district"
                             />
@@ -73,31 +79,31 @@ export const SolutionsLocalitiesPage = () => {
                     <Button
                         className="btn-floating"
                         icon={<Icon className=''>settings</Icon>}
-                        onClick={handleSetRulesConditions}
+                        onClick={() => handleConditionsModalHide(!conditionsModalState.show)}
+                        tooltip={"Настроить условия"}
+                        tooltipOptions={{position: "top"}}
                     />
                 </div>
                 <div className="mt-4"><b>НП-ы, рекомендации</b></div>
                 <div className="table-container">
                     {/* TablePoints */}
                     {
-                        loadingS ? <ProgressBar/> :
-                            errorS ? errorS :
-                                <TableSolutions
-                                    data={solutions as ICustomSolutionsLocalities[]}
-                                />
+                        solutionsLoading ? <ProgressBar/> :
+                            // errorS ? errorS :
+                            <TableSolutions
+                                data={solutions??[]}
+                            />
                     }
 
                 </div>
+                {/*modal ConditionsLocality */}
+                {conditionsModalState.show &&
+                    <DefaultModal header={"Условия для НП-ов"}
+                                  child={<ConditionsLocality onSaveConditionsData={handleSetConditionsLocalities}/>}
+                                  onHide={handleConditionsModalHide}>
 
-                {/*{pointsCalculatorState.show &&*/}
-                {/*    <PointsPanel*/}
-                {/*        hide={handlePointsCalculatorHide}*/}
-                {/*        // closeModal={handlePointsCalculatorButtonClick}*/}
-                {/*        pointsButtonVisible={false}*/}
-                {/*        area={undefined}*/}
-                {/*        handleCalculateButton = {handleCalculateButton}*/}
-                {/*    />*/}
-                {/*}*/}
+                    </DefaultModal>
+                }
             </div>
 
         </div>

@@ -1,7 +1,6 @@
-import {ConditionsLocalityDto} from "../../classes/conditions_locality";
+import {ConditionsLocalityDto} from "../../classes/conditions_locality.dto";
 import AppDataSource from "../../typeorm.config";
 import {ConditionsLocality} from "../../entities/conditions_locality.entity";
-import {UserService} from "./user.service";
 import {User} from "../../entities/user.entity";
 
 export class PointsService {
@@ -27,5 +26,12 @@ export class PointsService {
     async updateConditionsLocality(id: number, conditionsLocalityDto: ConditionsLocalityDto) {
         const cLRepo = AppDataSource.getRepository(ConditionsLocality)
         return await cLRepo.update(id, {...conditionsLocalityDto})
+    }
+
+    async getConditionsLocality(userId: number) {
+        const cLRepo = AppDataSource.getRepository(ConditionsLocality)
+        const query = cLRepo.createQueryBuilder("conditions_locality")
+            .where("conditions_locality.user_id = :user_id", {user_id: userId});
+        return await query.getOne()
     }
 }

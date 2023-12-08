@@ -1,6 +1,6 @@
 import express, {NextFunction, Router} from 'express'
 import {DistanceService} from "../../services/database/distance.service";
-import DistanceDto from "../../classes/distanceDto";
+import DistanceDto from "../../classes/distance.dto";
 import {celebrate, Joi} from "celebrate";
 
 const router = Router()

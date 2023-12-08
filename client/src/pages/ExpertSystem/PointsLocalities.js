@@ -4,7 +4,7 @@
 // import { FilterPointsLocalities } from 'components/ExpertSystem/FilterPointsLocalities'
 // import './PointsLocalities.scss'
 // import { TablePoints } from 'components/ExpertSystem/TablePoints'
-// import { PointsPanel } from 'components/ExpertSystem/Modals/MCPoints/PointsPanel'
+// import { TemplateModal } from 'components/ExpertSystem/Modals/MCPoints/TemplateModal'
 //
 // export const PointsLocalities = () => {
 //
@@ -118,7 +118,7 @@
 //                 </div>
 //
 //                 {pointsCalculatorState.show &&
-//                     <PointsPanel
+//                     <TemplateModal
 //                         hide={handlePointsCalculatorHide}
 //                         // closeModal={handlePointsCalculatorButtonClick}
 //                         pointsButtonVisible={false}

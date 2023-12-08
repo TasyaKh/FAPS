@@ -1,4 +1,4 @@
-import DistanceDto from "../../classes/distanceDto";
+import DistanceDto from "../../classes/distance.dto";
 import AppDataSource from "../../typeorm.config";
 import Distance from "../../entities/distance.entity";
 import express from "express";

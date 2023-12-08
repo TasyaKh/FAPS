@@ -12,10 +12,6 @@ export const PointsPanel = (/** @type {{ handleCalculateButton: (arg0: any) => v
     columns: [],
     conditions: []
   })
-  // const [data, setData] = useState({
-  //   headers: [],
-  //   objects: []
-  // })
 
   const { loading, error, request, clearError } = useHttp()
 
@@ -46,7 +42,7 @@ export const PointsPanel = (/** @type {{ handleCalculateButton: (arg0: any) => v
   }, [request])
 
   return (
-    <div className={`points-panel shadow `}>
+    <div className={`modal-panel shadow `}>
 
       <button
         className="points-panel__close"

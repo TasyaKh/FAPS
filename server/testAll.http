@@ -19,6 +19,10 @@ GET http://localhost:3002/api/points/solutions-localities?district_id=2
 content-type: application/json
 
 ### points/conditions-localities
+GET http://localhost:3002/api/points/conditions-localities
+content-type: application/json
+
+### points/conditions-localities
 POST http://localhost:3002/api/points/conditions-localities
 content-type: application/json
 

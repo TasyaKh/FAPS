@@ -38,9 +38,7 @@ export const PointsCalculator = (/** @type {{ params: any; setParams: (arg0: any
 
 
   return (
-    <div className="points-builder points-panel__builder">
-
-
+    <div className="">
       <div className="points-panel__wrapper">
 
         <SelectArea

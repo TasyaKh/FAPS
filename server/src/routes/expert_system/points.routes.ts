@@ -2,7 +2,7 @@ import {Router} from 'express'
 import {celebrate, Joi} from "celebrate";
 import {RuleEngine} from "../../services/database/rules.service";
 import {DistanceService} from "../../services/database/distance.service";
-import {ConditionsLocalityDto} from "../../classes/conditions_locality";
+import {ConditionsLocalityDto} from "../../classes/conditions_locality.dto";
 import {PointsService} from "../../services/database/points.service";
 import {UserService} from "../../services/database/user.service";
 
@@ -20,13 +20,22 @@ export default (app: Router) => {
         }),
         async (req, res) => {
             const body = req.query
-            // const condLocRepo = AppDataSource.getRepository(ConditionsLocality)
-            // condLocRepo.createQueryBuilder('conditions_locality')
+
+            // get localities and nearest faps
             const dS = new DistanceService()
             const lMcs = await dS.getLocalitiesAndNearMcs(Number(body.district_id))
 
+            // get conditions from database
+            const pointsService = new PointsService()
+            // TODO: default user 1
+            const existingConditions = await pointsService.getConditionsLocality(1)
+
+            // init rules
             const rE = new RuleEngine()
+            if(existingConditions)
+                rE.setConditions(existingConditions)
             rE.initializeRules()
+
             const result = []
             if (lMcs)
                 for (let i = 0; i < lMcs.length; i++) {
@@ -59,14 +68,34 @@ export default (app: Router) => {
             const pointsService = new PointsService()
             try {
                 const uS = new UserService()
+                // TODO: default user 1
                 const user = await uS.getUser(1)
                 await pointsService.createOrUpdateConditionsLocality(user, req.body as ConditionsLocalityDto);
             }catch (err){
                 res.status(500).json({message: err})
+                console.log(err)
             }
-            res.status(200)
+            res.status(200).json({message:"saved"})
         }
     )
+
+    router.get(
+        '/conditions-localities',
+       [],
+        async (req, res) => {
+            const pointsService = new PointsService()
+            try {
+                // TODO: default user 1
+               const data =  await pointsService.getConditionsLocality(1);
+               return  res.status(200).json(data)
+            } catch (err) {
+                res.status(500).json({message: err})
+                console.log(err)
+            }
+
+        }
+    )
+
 
 // getPointsLocalitiesOfDistrict
 //     router.post(
