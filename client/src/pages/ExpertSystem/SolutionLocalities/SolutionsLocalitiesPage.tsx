@@ -7,11 +7,19 @@ import {ConditionsLocality} from "../../../components/ExpertSystem/Modals/Calcul
 import {DefaultModal} from "../../../components/ExpertSystem/Modals/TemplateModal";
 import {useQuery} from "react-query";
 import {getSolutionsLocalities} from "../../../api/points";
+import {Order} from "../../../enums";
 
 export const SolutionsLocalitiesPage = () => {
 
     const [filters, setFilters] = useState({
-        district_id: 1
+        district_id: 1,
+        locality_name: Order.DEFAULT,
+        population_population_adult: Order.DEFAULT,
+        medical_center_name: Order.DEFAULT,
+        mc_staffing: Order.DEFAULT,
+        mc_type_name: Order.DEFAULT,
+        min_distance: Order.DEFAULT,
+        min_duration: Order.DEFAULT
     })
 
     const [conditionsModalState, setConditionsModalState] = useState({
@@ -47,9 +55,23 @@ export const SolutionsLocalitiesPage = () => {
         setConditionsModalState({show: show})
     }
 
+    const handleFilterStateChanged = (orderState: Order, filterName: string, prevFilterName:string) => {
+        // console.log(filters)
+        // console.log("defa ", filterName, orderState)
+        // drop prev if needed
+        let newFilters = {...filters, [filterName]:orderState}
+        if (prevFilterName != filterName) {
+            newFilters= {...newFilters, [prevFilterName]:Order.DEFAULT}
+        }
+        setFilters(newFilters)
+    }
     return (
         <div className="view">
-
+            {/*{Object.entries(filters).map(([key, value]) => (*/}
+            {/*    <li key={key}>*/}
+            {/*        <strong>{key}:</strong> {value}*/}
+            {/*    </li>*/}
+            {/*))}*/}
             <div className="container">
 
                 <div className="container__filter">
@@ -91,8 +113,8 @@ export const SolutionsLocalitiesPage = () => {
                         solutionsLoading ? <ProgressBar/> :
                             // errorS ? errorS :
                             <TableSolutions
-                                data={solutions??[]}
-                            />
+                                data={solutions ?? []}
+                                onFilterStateChanged={handleFilterStateChanged}/>
                     }
 
                 </div>

@@ -1,18 +1,45 @@
-import React, {FC} from "react"
+import React, {FC, useState} from "react"
 import '../FAPS/TableView.scss'
 import {ICustomSolutionsLocalities} from "../../entities/entities";
+import {FilterBtn} from "../Elements/Buttons/BtnFilter/FilterBtn";
+import {Order} from "../../enums";
 
 interface TableSolutionsProps {
-    data: ICustomSolutionsLocalities[]
+    data: ICustomSolutionsLocalities[],
+    onFilterStateChanged: (orderState: Order, filterName: string, prevFilterName:string) => void,
 }
 
 export const TableSolutions:
-    FC<TableSolutionsProps> = ({data}) => {
+    FC<TableSolutionsProps> = ({data, onFilterStateChanged}) => {
 
     const columns = [
-        {col: 'НП'}, {col: 'Взрослое население'}, {col: 'Детское население'}, {col: 'МП',}, {col: 'Медик'},
-        {col: 'тип МП'}, {col: 'МП, км'}, {col: 'МП, время'}, {col: 'Результат'},
+        {col: 'НП', filterName: "locality_name", hasFilter: true},
+        {col: 'Взрослое население', filterName: "population_population_adult", hasFilter: true},
+        {col: 'Детское население', filterName: "population_population_child", hasFilter: false},
+        {col: 'МП', filterName: "medical_center_name", hasFilter: true},
+        {col: 'Медик', filterName: "mc_staffing", hasFilter: true},
+        {col: 'тип МП', filterName: "mc_type_name", hasFilter: true},
+        {col: 'МП, км', filterName: "min_distance", hasFilter: true},
+        {col: 'МП, время', filterName: "min_duration", hasFilter: true}, {
+            col: 'Результат',
+            filterName: "locality_name",
+            hasFilter: false
+        },
     ]
+
+    const [selectedFilter, setSelectedFilter] = useState({
+        filterName: columns[0].filterName,
+        state: Order.DEFAULT,
+    })
+
+    const handleFilterStateChanged = (orderState: Order, filterName: string) => {
+        // alert("state new" + orderState + " " + filterName)
+
+        const prevFilterName = selectedFilter.filterName
+        // set filter
+        setSelectedFilter({ state: orderState, filterName: filterName})
+        onFilterStateChanged(orderState, filterName, prevFilterName)
+    }
 
     return (
 
@@ -20,15 +47,21 @@ export const TableSolutions:
             <thead>
             <tr>
                 {columns.map((el, i) => (
-                    <th key={i} className="table-view__header">{el.col}</th>
+                    <th key={i} className="table-view__header">{el.col}
+                        {el.hasFilter ?
+                            <FilterBtn name={el.filterName} onStateChanged={handleFilterStateChanged}
+                                       stateDefault={el.filterName == selectedFilter.filterName ? selectedFilter.state : Order.DEFAULT}/>
+                            : null}
+                  {/*{el.filterName  +  " " +  selectedFilter.filterName } state {el.filterName === selectedFilter.filterName ? selectedFilter.state : Order.DEFAULT}*/}
+                    </th>
                 ))}
             </tr>
             </thead>
 
             <tbody>
             {data ? data.map((dataEl, i) => (
-                <tr  className='table-view__row' key={i}>
-                    <td>{dataEl.data?.locality_name}</td>
+                <tr className='table-view__row ' key={i}>
+                    <td data-label={columns[i]}>{dataEl.data?.locality_name} </td>
                     <td>{dataEl.data?.population_population_adult}</td>
                     <td>-</td>
                     <td>{dataEl.data?.medical_center_name}</td>

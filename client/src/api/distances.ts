@@ -1,4 +1,4 @@
-import axiosInstance from "../store/axiosInstance";
+import axiosInstance from "./axiosInstance";
 import {ILocalitiDistToNearectMC} from "../entities/entities";
 
 export const getLocalitiesWithDistMcs = async (district_id: number) => {

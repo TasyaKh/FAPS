@@ -1,15 +1,11 @@
 import {ENavigation} from 'components/ExpertSystem/Navigation/ENavigation'
 import {MapContext} from 'context/MapContext'
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {EMap} from "../../components/ExpertSystem/YandexMaps/YandexYMap";
 import {ESidebar} from "../../components/ExpertSystem/ESidebar";
 import "../../scss/indents.scss"
-import {fetchLocalitiesWithDistMcs} from "../../store/slices/distance";
-import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {useAppSelector} from "../../hooks/useAppSelector";
 import {useHttp} from "../../hooks/http.hook";
 import {useQuery} from "react-query";
-import {getSolutionsLocalities} from "../../api/points";
 import {getLocalitiesWithDistMcs} from "../../api/distances";
 
 export const EMapPage = () => {
@@ -110,8 +106,6 @@ export const EMapPage = () => {
                     showSettlements={showSettlements}
                     showFaps={showFaps}
 
-                    // singleView={singleView}
-                    // setSingleView={setSingleView}
                     hiddenSidebar={hiddenSidebar}
                     setHiddenSidebar={setHiddenSidebar}
                     setHiddenNavigation={setHiddenNavigation}

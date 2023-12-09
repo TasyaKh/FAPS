@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {formatTimeDifference} from "../../../functions/locality";
-import {BtnMore} from "../../Elements/Buttons/BtnMore";
+import {BtnMore} from "../../Elements/Buttons/BtnMore/BtnMore";
 import "./LocalityItem.scss"
 export const LocalityItem = (props) => {
 

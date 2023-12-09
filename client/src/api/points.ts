@@ -1,4 +1,4 @@
-import axiosInstance from "../store/axiosInstance";
+import axiosInstance from "./axiosInstance";
 import {IConditionsLocality, ICustomSolutionsLocalities} from "../entities/entities";
 
 export const getSolutionsLocalities = async (district_id: number)  => {
