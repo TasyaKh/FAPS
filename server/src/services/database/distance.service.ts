@@ -1,4 +1,4 @@
-import DistanceDto from "../../classes/distance.dto";
+import {DistanceDto, LocalitiDistToNearectMC, LocalitiesAndNearMcsDto} from "../../classes/distance.dto";
 import AppDataSource from "../../typeorm.config";
 import Distance from "../../entities/distance.entity";
 import express from "express";
@@ -7,6 +7,7 @@ import MedicalCenter from "../../entities/medical_center.entity";
 import {MedicalFacility} from "../../entities/medical_facility.entity";
 import {Type} from "../../entities/types.entity";
 import {Population} from "../../entities/population.entity";
+import {SelectQueryBuilder} from "typeorm";
 
 export class DistanceService {
 
@@ -73,10 +74,11 @@ export class DistanceService {
         return res
     }
 
-    async getLocalitiesAndNearMcs(district_id: number) {
+    async getLocalitiesAndNearMcs(locsAndNearMcsDto: LocalitiesAndNearMcsDto) {
+
         try {
             const localityRepository = AppDataSource.getRepository(Locality);
-            const query = localityRepository
+            let query = localityRepository
                 .createQueryBuilder('locality')
                 .select([
                     'locality.id',
@@ -86,6 +88,7 @@ export class DistanceService {
                     'locality.name',
                     'population.id',
                     'population.population_adult',
+                    'population.population_child',
                     'COALESCE(dtmc.distance, 0) AS min_distance',
                     'dtmc.duration AS min_duration',
 
@@ -146,14 +149,51 @@ export class DistanceService {
                 .leftJoin(MedicalFacility, 'mcf', 'mcf.id = dtmcf.mc_facility_id')
                 .leftJoin(Type, 'mcf_type', 'mcf_type.id = mcf.type_id')
 
-            district_id ? query.andWhere('locality.district_id = :district_id',
-                {district_id: district_id}) : query
 
-            return query.getRawMany()
+            query = this.filterLocalitiesAndNearMcs(query, locsAndNearMcsDto)
+            return query.getRawMany<LocalitiDistToNearectMC>()
 
         } catch (e) {
             return false
         }
+    }
+
+    private filterLocalitiesAndNearMcs(query: SelectQueryBuilder<Locality>, locsAndNearMcsDto: LocalitiesAndNearMcsDto) {
+
+        // district_id
+        if (locsAndNearMcsDto.district_id) {
+            query.andWhere('locality.district_id = :district_id',
+                {district_id: locsAndNearMcsDto.district_id})
+            // region_id
+        } else if (locsAndNearMcsDto.region_id) {
+            query.leftJoin('locality.district', 'district')
+                .andWhere('district.region_id = :region_id', {region_id: locsAndNearMcsDto.region_id})
+        }
+
+        // ORDERS
+        // population_population_adult_order
+        locsAndNearMcsDto.locality_name_order ? query.orderBy('locality.name',
+            locsAndNearMcsDto.locality_name_order) : query
+        // population_population_adult_order
+        locsAndNearMcsDto.population_population_adult_order ? query.orderBy('population.population_adult',
+            locsAndNearMcsDto.population_population_adult_order) : query
+        // medical_center_name_order
+        locsAndNearMcsDto.medical_center_name_order ? query.orderBy('mc.name',
+            locsAndNearMcsDto.medical_center_name_order) : query
+        // mc_staffing_order
+        locsAndNearMcsDto.mc_staffing_order ? query.orderBy('mc.staffing',
+            locsAndNearMcsDto.mc_staffing_order) : query
+        // mc_type_name_order
+        locsAndNearMcsDto.mc_type_name_order ? query.orderBy('mc_type.name',
+            locsAndNearMcsDto.mc_type_name_order) : query
+        // min_distance_order
+        locsAndNearMcsDto.min_distance_order ? query.orderBy('dtmc.distance',
+            locsAndNearMcsDto.min_distance_order) : query
+        // min_duration_order
+        locsAndNearMcsDto.min_duration_order ? query.orderBy('dtmc.duration',
+            locsAndNearMcsDto.min_duration_order) : query
+
+        return query
     }
 
 }

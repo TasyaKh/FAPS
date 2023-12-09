@@ -1,7 +1,7 @@
 import express, {NextFunction, Router} from 'express'
 import {DistanceService} from "../../services/database/distance.service";
-import DistanceDto from "../../classes/distance.dto";
 import {celebrate, Joi} from "celebrate";
+import {DistanceDto, LocalitiesAndNearMcsDto} from "../../classes/distance.dto";
 
 const router = Router()
 export default (app: Router) => {
@@ -39,9 +39,9 @@ export default (app: Router) => {
         }),
         async (req, res) => {
 
-            const params = req.query
+            const dto:LocalitiesAndNearMcsDto = req.query as LocalitiesAndNearMcsDto
             const dS = new DistanceService()
-            const lMc = await  dS.getLocalitiesAndNearMcs(Number(params.district_id))
+            const lMc = await  dS.getLocalitiesAndNearMcs(dto)
             return res.json(lMc)
         }
     )
