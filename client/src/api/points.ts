@@ -1,8 +1,8 @@
 import axiosInstance from "./axiosInstance";
-import {IConditionsLocality, ICustomSolutionsLocalities} from "../entities/entities";
+import {IConditionsLocality, ICustomSolutionsLocalities, ILocalitiDistToNearectMC} from "../entities/entities";
 
-export const getSolutionsLocalities = async (district_id: number)  => {
-    const {data}  = await axiosInstance.get<ICustomSolutionsLocalities[]>(`/api/points/solutions-localities`, {params: {district_id: district_id}});
+export const getSolutionsLocalities = async (filters: ILocalitiDistToNearectMC)  => {
+    const {data}  = await axiosInstance.get<ICustomSolutionsLocalities[]>(`/api/points/solutions-localities`, {params: {...filters}});
     return data;
 };
 
