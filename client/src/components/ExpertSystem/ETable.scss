@@ -1,0 +1,64 @@
+@import "~scss/vars";
+
+.scrollable-table {
+
+  margin: 10px 0px;
+  padding: 10px;
+  border: 1px solid $border;
+  overflow: auto;
+  display: block;
+  border-radius: $radius;
+
+  th {
+    white-space: nowrap;
+  }
+
+  &__header {
+    line-height: 1.3;
+  }
+
+  &__row {
+    transition: .2s;
+
+    &:hover,
+    &:focus {
+      background-color: rgba(#cccccc, .2);
+      cursor: pointer;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  //.table-view {
+  //
+  //	thead {
+  //		display: none;
+  //	}
+  //
+  //	tr {
+  //		display: block;
+  //		margin-bottom: 15px;
+  //		border: 1px solid #ccc;
+  //	}
+  //
+  //	td {
+  //		display: block;
+  //		text-align: right;
+  //		font-size: 15px;
+  //		border-bottom: 1px dotted #ccc;
+  //		padding: 15px;
+  //
+  //		&:before {
+  //			content: attr(data-label);
+  //			float: left;
+  //			text-transform: uppercase;
+  //			font-weight: bold;
+  //			margin-right: 20px;
+  //		}
+  //	}
+  //}
+}
+
+@media only screen and (max-width: 425px) {
+
+}

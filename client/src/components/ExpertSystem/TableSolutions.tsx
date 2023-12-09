@@ -1,28 +1,30 @@
 import React, {FC, useState} from "react"
-import '../FAPS/TableView.scss'
+import './ETable.scss'
 import {ICustomSolutionsLocalities} from "../../entities/entities";
 import {FilterBtn} from "../Elements/Buttons/BtnFilter/FilterBtn";
 import {Order} from "../../enums";
+import {ProgressBar} from "react-materialize";
 
 interface TableSolutionsProps {
+    dataIsLoading: boolean,
     data: ICustomSolutionsLocalities[],
-    onFilterStateChanged: (orderState: Order, filterName: string, prevFilterName:string) => void,
+    onFilterStateChanged: (orderState: Order, filterName: string, prevFilterName: string) => void,
 }
 
 export const TableSolutions:
-    FC<TableSolutionsProps> = ({data, onFilterStateChanged}) => {
+    FC<TableSolutionsProps> = ({data, onFilterStateChanged, dataIsLoading}) => {
 
     const columns = [
-        {col: 'НП', filterName: "locality_name", hasFilter: true},
-        {col: 'Взрослое население', filterName: "population_population_adult", hasFilter: true},
-        {col: 'Детское население', filterName: "population_population_child", hasFilter: false},
-        {col: 'МП', filterName: "medical_center_name", hasFilter: true},
-        {col: 'Медик', filterName: "mc_staffing", hasFilter: true},
-        {col: 'тип МП', filterName: "mc_type_name", hasFilter: true},
-        {col: 'МП, км', filterName: "min_distance", hasFilter: true},
-        {col: 'МП, время', filterName: "min_duration", hasFilter: true}, {
-            col: 'Результат',
-            filterName: "locality_name",
+        {col: 'НП', filterName: "locality_name_order", hasFilter: true},
+        {col: 'Взрослое насел.', filterName: "population_population_adult_order", hasFilter: true},
+        {col: 'Детское насел.', filterName: "population_population_child_order", hasFilter: false},
+        {col: 'МП', filterName: "medical_center_name_order", hasFilter: true},
+        {col: 'Медик', filterName: "mc_staffing_order", hasFilter: true},
+        {col: 'Тип МП', filterName: "mc_type_name_order", hasFilter: true},
+        {col: 'МП, км', filterName: "min_distance_order", hasFilter: true},
+        {col: 'МП, время', filterName: "min_duration_order", hasFilter: true}, {
+            col: 'Результат (Рекомендации)',
+            filterName: "locality_name_order",
             hasFilter: false
         },
     ]
@@ -37,43 +39,55 @@ export const TableSolutions:
 
         const prevFilterName = selectedFilter.filterName
         // set filter
-        setSelectedFilter({ state: orderState, filterName: filterName})
+        setSelectedFilter({state: orderState, filterName: filterName})
         onFilterStateChanged(orderState, filterName, prevFilterName)
     }
 
     return (
+        <div className={"my-4"}>
+            <table className="highlight scrollable-table">
+                <thead>
+                <tr>
+                    {columns.map((el, i) => (
+                        <th key={i} className="table-view__header" style={{alignItems: "end"}}>
+                            <div className={"row"}>
+                                <div style={{display:"inline-block"}}> {el.col}</div>
+                                <div style={{display:"inline-block"}}>
+                                    {el.hasFilter ?
+                                        <FilterBtn name={el.filterName} onStateChanged={handleFilterStateChanged}
+                                                   stateDefault={el.filterName == selectedFilter.filterName ? selectedFilter.state : Order.DEFAULT}/>
+                                        : null}
+                                    {/*{el.filterName  +  " " +  selectedFilter.filterName } state {el.filterName === selectedFilter.filterName ? selectedFilter.state : Order.DEFAULT}*/}
+                                </div>
+                            </div>
 
-        <table className="highlight table-view">
-            <thead>
-            <tr>
-                {columns.map((el, i) => (
-                    <th key={i} className="table-view__header">{el.col}
-                        {el.hasFilter ?
-                            <FilterBtn name={el.filterName} onStateChanged={handleFilterStateChanged}
-                                       stateDefault={el.filterName == selectedFilter.filterName ? selectedFilter.state : Order.DEFAULT}/>
-                            : null}
-                  {/*{el.filterName  +  " " +  selectedFilter.filterName } state {el.filterName === selectedFilter.filterName ? selectedFilter.state : Order.DEFAULT}*/}
-                    </th>
-                ))}
-            </tr>
-            </thead>
 
-            <tbody>
-            {data ? data.map((dataEl, i) => (
-                <tr className='table-view__row ' key={i}>
-                    <td data-label={columns[i]}>{dataEl.data?.locality_name} </td>
-                    <td>{dataEl.data?.population_population_adult}</td>
-                    <td>-</td>
-                    <td>{dataEl.data?.medical_center_name}</td>
-                    <td>{dataEl.data?.mc_staffing ? (dataEl.data?.mc_staffing > 0 ? 'да' : 'нет') : '-'}</td>
-                    <td>{dataEl.data?.mc_type_name ?? '-'}</td>
-                    <td>{dataEl.data?.min_distance ? (dataEl.data?.min_distance / 1000).toFixed(2) : '-'}</td>
-                    <td>{dataEl.data?.min_duration ? (dataEl.data.min_duration / 1000).toFixed(2) : '-'}</td>
-
-                    <td>{dataEl.solutions && dataEl.solutions?.length > 0 ? dataEl.solutions.join(', \n') : '-'}</td>
+                        </th>
+                    ))}
                 </tr>
-            )) : null}
-            </tbody>
-        </table>
+                </thead>
+
+                <tbody>
+                {data ? data.map((dataEl, i) => (
+                    <tr className='table-view__row ' key={i}>
+                        <td>{dataEl.data?.locality_name} </td>
+                        <td>{dataEl.data?.population_population_adult}</td>
+                        <td>{dataEl.data?.population_population_child}</td>
+                        <td>{dataEl.data?.medical_center_name}</td>
+                        <td>{dataEl.data?.mc_staffing ? (dataEl.data?.mc_staffing > 0 ? 'да' : 'нет') : '-'}</td>
+                        <td>{dataEl.data?.mc_type_name ?? '-'}</td>
+                        <td>{dataEl.data?.min_distance ? (dataEl.data?.min_distance / 1000).toFixed(2) : '-'}</td>
+                        <td>{dataEl.data?.min_duration ? (dataEl.data.min_duration / 1000).toFixed(2) : '-'}</td>
+
+                        <td>{dataEl.solutions && dataEl.solutions?.length > 0 ? dataEl.solutions.join(', \n') : '-'}</td>
+                    </tr>
+                )) : null
+                }
+
+                </tbody>
+            </table>
+
+            {dataIsLoading ? <ProgressBar/> : null}
+        </div>
     )
 }

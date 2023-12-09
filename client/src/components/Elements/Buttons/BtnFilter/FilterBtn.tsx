@@ -1,4 +1,4 @@
-import {Icon} from "react-materialize";
+import {Button, Icon} from "react-materialize";
 import React, {FC, useEffect, useState} from 'react'
 import './FilterBtn.scss'
 import {Order} from "../../../../enums";
@@ -39,15 +39,12 @@ export const FilterBtn: FC<FilterBtnProps> = ({
     }
 
     return (
-        <div className={""}>
-            <div className={""}
-                 onClick={(e) => {
-                     onStateChangeClick()
-                 }}
-            >
-                <Icon
-                    className={"material-icons"}>{state == Order.DEFAULT ? "filter_list" : (state == Order.ASC ? "arrow_upward" : "arrow_downward")}</Icon>
-            </div>
-        </div>
+        <Button onClick={(e) => {
+            onStateChangeClick()
+        }} className={"blue darken-4"}>
+            <Icon
+                className={"material-icons"}>{state == Order.DEFAULT ? "filter_list" : (state == Order.ASC ? "arrow_upward" : "arrow_downward")}</Icon>
+
+        </Button>
     )
 }
