@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import {Router} from 'express';
 
 import apiMap from '../routes/faps/map.routes'
 import apiMapFilter from '../routes/faps/filter.routes'
@@ -20,6 +20,9 @@ import apiDist from '../routes/expert_system/distance.routes'
 
 import apiEdit from '../routes/faps/edit.routes'
 import apiPoints from '../routes/expert_system/points.routes'
+
+import apiUploads from '../routes/expert_system/uploads.routes'
+
 // guaranteed to get dependencies
 export default () => {
     const app = Router();
@@ -41,5 +44,7 @@ export default () => {
     apiDev(app);
     apiDist(app);
     apiPoints(app);
+    // reports
+    apiUploads(app);
     return app
 }

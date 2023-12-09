@@ -31,3 +31,9 @@ content-type: application/json
   "population_FAP": 1000,
   "population_Ambulatory": 2000
 }
+
+###
+GET http://localhost:3002/api/uploads/excel/solutions-localities
+content-type: application/json
+
+

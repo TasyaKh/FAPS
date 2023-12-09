@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Button, Icon, ProgressBar} from 'react-materialize'
+import {Button, Icon, Preloader, ProgressBar, Spinner} from 'react-materialize'
 import './SolutionsLocalitiesPage.scss'
 import {TableSolutions} from 'components/ExpertSystem/TableSolutions'
 import {SelectArea} from "../../../components/FAPS/SelectArea";
@@ -9,6 +9,7 @@ import {useQuery} from "react-query";
 import {getSolutionsLocalities} from "../../../api/points";
 import {Order} from "../../../enums";
 import {ILocalitiDistToNearectMC} from "../../../entities/entities";
+import {getExcelSolutionsLocalities} from "../../../api/uploads";
 
 export const SolutionsLocalitiesPage = () => {
 
@@ -35,6 +36,15 @@ export const SolutionsLocalitiesPage = () => {
         refetch: refetchSolutions
     } = useQuery(['getSolutionsLocalities', filters], () => getSolutionsLocalities(filters));
 
+    const {
+        // data: excelSolutions,
+        error: excelSolutionsError,
+        isLoading: excelSolutionsLoading,
+        refetch: refetchExcelSolutions
+    } = useQuery(['getExcelSolutionsLocalities'], () => getExcelSolutionsLocalities(filters), {
+        enabled: false,
+    });
+
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const {target} = e
@@ -45,8 +55,23 @@ export const SolutionsLocalitiesPage = () => {
     }
 
     const handleInstallExcel = () => {
-
+        refetchExcelSolutions()
     }
+
+//     async function getReport() {
+//         if (props.team != null && props.team.id > 0) {
+//             await getReportEventsOfTeam();
+//         } else {
+//             await getReportEventsOfDirection();
+//         }
+//     }
+// // скачать файл
+//     async function downloadFile() {
+//         const file = new Blob([resFile.value], {
+//             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+//         });
+//         fileURL.value = URL.createObjectURL(file);
+//     }
 
     const handleSetConditionsLocalities = () => {
         refetchSolutions()
@@ -90,10 +115,12 @@ export const SolutionsLocalitiesPage = () => {
                             />
                         </div>
                         <div className='col s12 m6 right-align'>
+                            {excelSolutionsLoading ? <Preloader color={"blue"} size={"small"}/> : null}
+
                             <Button
                                 className=""
                                 onClick={handleInstallExcel}
-                            >скачать Excel</Button>
+                            >Скачать Excel</Button>
                         </div>
                     </div>
 
@@ -109,12 +136,12 @@ export const SolutionsLocalitiesPage = () => {
                     />
                 </div>
                 <div className="mt-4"><b>НП-ы, рекомендации</b></div>
-                    {/* TablePoints */}
+                {/* TablePoints */}
 
-                    <TableSolutions
-                        dataIsLoading={solutionsLoading}
-                        data={solutions ?? []}
-                        onFilterStateChanged={handleFilterStateChanged}/>
+                <TableSolutions
+                    dataIsLoading={solutionsLoading}
+                    data={solutions ?? []}
+                    onFilterStateChanged={handleFilterStateChanged}/>
 
                 {/*modal ConditionsLocality */}
                 {conditionsModalState.show &&
