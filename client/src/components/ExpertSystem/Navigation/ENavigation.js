@@ -3,15 +3,11 @@ import 'materialize-css'
 import {Button, Dropdown} from 'react-materialize'
 import './ENavigation.scss'
 import {useHttp} from 'hooks/http.hook'
-import {PointsPanel} from '../Modals/MCPoints/PointsPanel'
+import {ELegend} from "../Legend/ELegend";
 
 export const ENavigation = (props) => {
 
     const {error, request, clearError} = useHttp()
-
-    const [state, setState] = useState({
-        area: []
-    })
 
     const [reportState, setReportState] = useState({
         show: false
@@ -20,24 +16,6 @@ export const ENavigation = (props) => {
     const [legendState, setLegendState] = useState({
         show: false
     })
-
-    const [pointsCalculatorState, setPointsCalculatorState] = useState({
-        show: false
-    })
-
-
-    const handlePointsCalculatorButtonClick = () => {
-        setPointsCalculatorState({...pointsCalculatorState, 'show': !pointsCalculatorState.show})
-
-        if (legendState.show) {
-            setLegendState({...legendState, show: !legendState.show})
-        }
-
-        if (reportState.show) {
-            setReportState({...reportState, show: !reportState.show})
-        }
-
-    }
 
     useEffect(() => {
         if (error) {
@@ -52,15 +30,23 @@ export const ENavigation = (props) => {
     }, [request])
 
 
-    const handlePointsCalculatorHide = () => {
-        setPointsCalculatorState({...pointsCalculatorState, 'show': !pointsCalculatorState.show})
-    }
-
     const handleButtonCloseClick = () => {
         props.setHiddenNavigation(!props.hiddenNavigation)
 
         if (props.hiddenNavigation)
             props.setHiddenSidebar(true)
+    }
+
+    const setLegendShowHandle = () => {
+        setLegendState({ ...legendState, show: !legendState.show })
+    }
+
+    const handleLegendButtonClick = () => {
+        setLegendState({ ...legendState, show: !legendState.show })
+
+        if (reportState.show) {
+            setReportState({ ...reportState, 'show': !reportState.show })
+        }
     }
 
     useEffect(() => {
@@ -103,34 +89,26 @@ export const ENavigation = (props) => {
                         <a href="#!">Калькулятор баллов МП <i className="material-icons right">arrow_forward</i></a>
                     </Dropdown>
 
-                    <Button
-                        className="navigation__button blue darken-4 btn navigation__link"
-                        node="button"
-                        waves="light"
-                        onClick={handlePointsCalculatorButtonClick}
-                    ><i className="material-icons right">settings</i>
-                        Калькулятор баллов
-                    </Button>
-
                 </div>
 
                 <div className="navigation__nav navigation__nav--bottom">
 
 
                     <div className="navigation__controls">
-
-                        {/* empty */}
+                        <Button
+                            className=""
+                            node="button"
+                            waves="light"
+                            onClick={handleLegendButtonClick}
+                        >
+                            Легенда
+                        </Button>
 
                     </div>
 
-                    {pointsCalculatorState.show &&
-                        <PointsPanel
-                            hide={handlePointsCalculatorHide}
-                            // area={state.area}
-                            closeModal={handlePointsCalculatorButtonClick}
-                            pointsButtonVisible={true}
-                            area={state.area}
-                            handleCalculateButton={null}
+                    {legendState.show &&
+                        <ELegend
+                            setShow={setLegendShowHandle}
                         />
                     }
                 </div>

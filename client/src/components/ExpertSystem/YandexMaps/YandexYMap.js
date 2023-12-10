@@ -62,7 +62,7 @@ export const EMap = (props) => {
         setMapState({
             ...mapState,
             zoom: 12,
-            'center': [element.latitude, element.longitude]
+            'center': [element.locality_latitude, element.locality_longitude]
         })
     }
 

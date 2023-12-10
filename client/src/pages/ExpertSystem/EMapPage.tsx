@@ -1,12 +1,13 @@
 import {ENavigation} from 'components/ExpertSystem/Navigation/ENavigation'
 import {MapContext} from 'context/MapContext'
-import React, {useEffect, useState} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import {EMap} from "../../components/ExpertSystem/YandexMaps/YandexYMap";
 import {ESidebar} from "../../components/ExpertSystem/ESidebar";
 import "../../scss/indents.scss"
 import {useHttp} from "../../hooks/http.hook";
 import {useQuery} from "react-query";
 import {getLocalitiesWithDistMcs} from "../../api/distances";
+
 
 export const EMapPage = () => {
 
@@ -61,7 +62,7 @@ export const EMapPage = () => {
         controls: [],
     });
 
-    const handleFilterChanged = (fieldChanged) => {
+    const handleFilterChanged = (fieldChanged: any) => {
 
         setFilters({
             ...filters,
@@ -70,11 +71,11 @@ export const EMapPage = () => {
 
     }
 
-    const handleCheckBoxShowFapsClick = (checked) => {
+    const handleCheckBoxShowFapsClick = (checked: boolean) => {
         setShowFaps(checked)
     }
 
-    const handleCheckBoxShowSettlementsClick = (checked) => {
+    const handleCheckBoxShowSettlementsClick = (checked: boolean) => {
         setShowSettlements(checked)
     }
 
@@ -98,6 +99,7 @@ export const EMapPage = () => {
     return (
         <div className="map-page container--map">
             <MapContext.Provider value={{
+                // @ts-ignore
                 mapState, setMapState
             }}>
                 <ESidebar
