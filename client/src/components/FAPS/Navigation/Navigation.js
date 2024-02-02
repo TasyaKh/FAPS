@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react'
+import React, {useEffect, useState, useCallback, useContext} from 'react'
 import 'materialize-css'
 import {Button} from 'react-materialize'
 import './Navigation.scss'
@@ -6,9 +6,11 @@ import {ReportPanel} from "../Report/ReportPanel"
 import {useHttp} from "../../../hooks/http.hook"
 import {Link} from "react-router-dom"
 import {Legend} from "../Legend/Legend"
-import {isTokenExpired, logout} from "../../../api/auth";
+import {isTokenExpired} from "../../../api/auth";
+import {AuthContext} from "../../../context/AuthContext";
 
 export const Navigation = (props) => {
+    const {logout} = useContext(AuthContext)
 
     const {error, request, clearError} = useHttp()
     const [tokenExpired, setTokenExpired] = useState(isTokenExpired())
@@ -86,11 +88,9 @@ export const Navigation = (props) => {
             props.setHiddenSidebar(true)
     }
 
-    const onLogout = async ()=>{
-
-       await logout().then(()=>{
-           setTokenExpired(isTokenExpired())
-       })
+    const onLogout = async () => {
+        logout()
+        setTokenExpired(isTokenExpired())
     }
 
     useEffect(() => {

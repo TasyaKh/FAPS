@@ -6,7 +6,7 @@ import config from "config";
 import {roleHierarchy, Roles} from "../../roles";
 import express from "express";
 
-export const signup = async (newUser: { password: string; name: string, email:string}) => {
+export const signup = async (newUser: { password: string; name: string, email: string }) => {
 
     if (newUser.name?.length >= 3 && newUser.password?.length >= 6) {
         //Hash password
@@ -40,10 +40,12 @@ export const login = async (findUser: { nameEmail?: string, password: string; })
 
     const userRepository = AppDataSource.getRepository(User);
     let existingUser: User = null;
-    if (findUser.nameEmail) existingUser = await userRepository.findOne({where: [
-            { name: findUser.nameEmail },
-            { email: findUser.nameEmail },
-        ],})
+    if (findUser.nameEmail) existingUser = await userRepository.findOne({
+        where: [
+            {name: findUser.nameEmail},
+            {email: findUser.nameEmail},
+        ],
+    })
 
     let validPass = false
     if (existingUser)
@@ -79,7 +81,13 @@ export const verifyUserToken = (req, res, next) => {
     } catch (error) {
         res.status(400).send("Invalid Token");
     }
+}
 
+
+export const getUser = async (id: number) => {
+    const userRepository = AppDataSource.getRepository(User);
+
+    return await userRepository.findOne({where: {id: id}})
 }
 
 export const checkUserRoleOrErr = (req: express.Request, res: express.Response, requiredRole: Roles) => {

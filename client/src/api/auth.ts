@@ -11,6 +11,11 @@ export const signUp = async (user: IUser) => {
     return data;
 };
 
+export const getUserByToken = async () => {
+    const {data} = await axiosInstance.get(`/api/auth`);
+    return data;
+};
+
 export const isTokenExpired = () => {
 
     const parseJwt = (token: string) => {

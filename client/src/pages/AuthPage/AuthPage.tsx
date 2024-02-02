@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import {login, signUp} from "../../api/auth";
 import {ProgressBar} from "react-materialize";
 import "./AuthPage.scss"
@@ -6,8 +6,11 @@ import {Redirect} from "react-router-dom";
 import {toast} from "../../components/Elements/Toast/ToastManager";
 import {Login} from "../../components/FAPS/Auth/Login";
 import {SignUp} from "../../components/FAPS/Auth/SignUp";
+import {AuthContext} from "../../context/AuthContext";
 
 export const AuthPage = () => {
+    const {login:loginContext} = useContext(AuthContext)
+
     const tabsNames = ["Вход", "Регистрация"]
 
     const [isLoading, setIsLoading] = useState(false)
@@ -27,6 +30,7 @@ export const AuthPage = () => {
         await login({...form}).then((res) => {
             setShouldRedirect(true)
             localStorage.setItem('authToken', res?.token);
+            loginContext()
         }).catch((err) => {
             showToast(err?.response?.data || 'An error occurred during login.', "error")
         }).finally(() => {

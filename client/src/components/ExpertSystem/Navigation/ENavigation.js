@@ -1,11 +1,14 @@
-import React, {useEffect, useState, useCallback} from 'react'
+import React, {useEffect, useState, useCallback, useContext} from 'react'
 import 'materialize-css'
 import {Button, Dropdown} from 'react-materialize'
 import './ENavigation.scss'
 import {useHttp} from 'hooks/http.hook'
 import {ELegend} from "../Legend/ELegend";
+import {AuthContext} from "../../../context/AuthContext";
+import {roleHierarchy, Roles} from "../../../roles";
 
 export const ENavigation = (props) => {
+    const {role} = useContext(AuthContext)
 
     const {error, request, clearError} = useHttp()
 
@@ -38,14 +41,14 @@ export const ENavigation = (props) => {
     }
 
     const setLegendShowHandle = () => {
-        setLegendState({ ...legendState, show: !legendState.show })
+        setLegendState({...legendState, show: !legendState.show})
     }
 
     const handleLegendButtonClick = () => {
-        setLegendState({ ...legendState, show: !legendState.show })
+        setLegendState({...legendState, show: !legendState.show})
 
         if (reportState.show) {
-            setReportState({ ...reportState, 'show': !reportState.show })
+            setReportState({...reportState, 'show': !reportState.show})
         }
     }
 
@@ -72,22 +75,25 @@ export const ENavigation = (props) => {
 
                 <div className="navigation__nav navigation__nav--top">
 
-                    <Dropdown
-                        options={{
-                            alignment: 'right',
-                            coverTrigger: false,
-                        }}
-                        trigger={<Button
-                            className="navigation__button blue darken-4 btn navigation__link"
-                            node="button"
-                            waves="light"
-                        ><i className="material-icons right">settings</i>
-                            Калькулятор
-                        </Button>}
-                    >
-                        <a href="/expert-system/solution-localities">Калькулятор НП (простой) <i className="material-icons right">arrow_forward</i></a>
-                        <a href="#!">Калькулятор баллов МП <i className="material-icons right">arrow_forward</i></a>
-                    </Dropdown>
+                    {roleHierarchy[role]?.includes(Roles.EXPERT) ?
+                        <Dropdown
+                            options={{
+                                alignment: 'right',
+                                coverTrigger: false,
+                            }}
+                            trigger={<Button
+                                className="navigation__button blue darken-4 btn navigation__link"
+                                node="button"
+                                waves="light"
+                            ><i className="material-icons right">settings</i>
+                                Калькулятор
+                            </Button>}
+                        >
+                            <a href="/expert-system/solution-localities">Калькулятор НП (простой) <i
+                                className="material-icons right">arrow_forward</i></a>
+                            <a href="#!">Калькулятор баллов МП <i className="material-icons right">arrow_forward</i></a>
+                        </Dropdown> : null
+                    }
 
                 </div>
 
