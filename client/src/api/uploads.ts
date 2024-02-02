@@ -1,5 +1,5 @@
 import axiosInstance from "./axiosInstance";
-import {ILocalitiDistToNearectMC} from "../entities/entities";
+import {ILocalitiDistToNearectMC} from "../types/types";
 
 export const getExcelSolutionsLocalities = async (filters: ILocalitiDistToNearectMC) => {
     const {data} = await axiosInstance.get(`/api/uploads/excel/solutions-localities`, {

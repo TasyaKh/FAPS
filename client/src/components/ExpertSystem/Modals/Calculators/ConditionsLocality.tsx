@@ -1,5 +1,5 @@
 import React, {type FC, useEffect, useState} from 'react'
-import {IConditionsLocality} from "../../../../entities/entities";
+import {IConditionsLocality} from "../../../../types/types";
 import './ConditionsLocality.scss'
 import {useMutation, useQuery} from "react-query";
 import {getConditionsLocalities, setConditionsLocalities} from "../../../../api/points";
@@ -19,7 +19,7 @@ export const ConditionsLocality:
         error: condLocError,
         isLoading: condLocLoading,
         refetch: refetchSolutions
-    } = useQuery(['conditionsLocalities'], () => getConditionsLocalities());
+    } = useQuery(['conditionsLocalities'], () => getConditionsLocalities(),);
 
     const {
         mutateAsync,
@@ -31,7 +31,7 @@ export const ConditionsLocality:
             },
             onError: (error) => {
 
-            }
+            },
         }
     );
 

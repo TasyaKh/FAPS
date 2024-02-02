@@ -1,4 +1,4 @@
-import connection from "../../db.js";
+import connection from "../../test/db.js";
 import data from "../data/localityGeoportal.json" assert { type: "json" };
 
 

@@ -1,5 +1,5 @@
 import axiosInstance from "./axiosInstance";
-import {IConditionsLocality, ICustomSolutionsLocalities, ILocalitiDistToNearectMC} from "../entities/entities";
+import {IConditionsLocality, ICustomSolutionsLocalities, ILocalitiDistToNearectMC} from "../types/types";
 
 export const getSolutionsLocalities = async (filters: ILocalitiDistToNearectMC)  => {
     const {data}  = await axiosInstance.get<ICustomSolutionsLocalities[]>(`/api/points/solutions-localities`, {params: {...filters}});

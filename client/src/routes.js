@@ -1,15 +1,16 @@
 import React from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {MapPage} from "./pages/MapPage"
-import {ViewPage} from "./pages/ViewPage"
-import {DetailPage} from "./pages/DetailPage"
-import {EditPage} from "./pages/EditPage"
-import {ErrorPage} from "./pages/ErrorPage"
-import {AdminPage} from "./pages/AdminPage"
+import {ViewPage} from "./pages/ViewPage/ViewPage"
+import {DetailPage} from "./pages/DetailPage/DetailPage"
+import {EditPage} from "./pages/EditPage/EditPage"
+import {ErrorPage} from "./pages/ErrorPage/ErrorPage"
+import {AdminPage} from "./pages/AdminPage/AdminPage"
 import {AddPage} from "./pages/AddPage"
 // import {PointsLocalities} from 'pages/ExpertSystem/PointsLocalities'
 import {EMapPage} from 'pages/ExpertSystem/EMapPage'
-import {SolutionsLocalitiesPage} from "./pages/ExpertSystem/SolutionLocalities/SolutionsLocalitiesPage";
+import {SolutionsLocalitiesPage} from "./pages/ExpertSystem/SolutionLocalities";
+import {AuthPage} from "./pages/AuthPage/AuthPage";
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
@@ -51,6 +52,10 @@ export const useRoutes = isAuthenticated => {
 
             <Route path="/management">
                 <AdminPage/>
+            </Route>
+
+            <Route path="/auth">
+                <AuthPage/>
             </Route>
 
             <Route path="/error">

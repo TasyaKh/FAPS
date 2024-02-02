@@ -9,5 +9,7 @@
 
   "api_graphopper": "b47cc4e2-4892-48a4-a263-3229c968b6ce",
   "url_graphopper": "https://graphhopper.com/api/1/",
-  "url_openservice": "http://localhost:8080/ors/v2/"
+  "url_openservice": "http://localhost:8080/ors/v2/",
+
+  "secret":"akiinu85"
 }

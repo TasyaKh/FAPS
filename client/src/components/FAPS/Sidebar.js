@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {ListView} from './ListView'
+import {ListView} from './ListView/ListView'
 import './Sidebar.scss'
 import {MapContext} from "../../context/MapContext"
 import {SingleView} from "./SingleView"
-import {Search} from "./Search"
+import {Search} from "./Search/Search"
 import {Skeleton} from "./Skeleton"
 import CustomScrollbars from "./CustomScrollbar";
 import {SingleViewOrg} from "./SingleViewOrg";

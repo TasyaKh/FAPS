@@ -1,25 +1,25 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryColumn} from "typeorm"
+import {Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm"
 import MedicalCenter from "./medical_center.entity";
 
 @Entity("building_condition")
 export default class BuildingCondition {
 
-   @PrimaryColumn()
-   id: number
+    @PrimaryGeneratedColumn()
+    id: number
 
-   @Column({
-       type: "enum",
-       enum: ['строится','реконструкция',
-          'действующее'],
-       default: null,
-       nullable: true
-   })
-   state: string
+    @Column({
+        type: "enum",
+        enum: ['строится', 'реконструкция',
+            'действующее'],
+        default: null,
+        nullable: true
+    })
+    state: string
 
-   @Column()
-   deteroation:number
+    @Column()
+    deteroation: number
 
-   @ManyToOne(() => MedicalCenter, (mc) => mc.id, { onDelete: 'CASCADE' })
-   @JoinColumn([{ name: 'medical_center_id' }])
-   medical_center:MedicalCenter
+    @ManyToOne(() => MedicalCenter, (mc) => mc.id, {onDelete: 'CASCADE'})
+    @JoinColumn([{name: 'medical_center_id'}])
+    medical_center: MedicalCenter
 }

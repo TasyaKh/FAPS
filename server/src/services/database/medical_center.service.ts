@@ -7,7 +7,6 @@ export async function getMedicalCenters(mc: MC, res: express.Response) {
 
     const entityManager = AppDataSource.createEntityManager()
 
-
     try {
 
         let values: any[] = []

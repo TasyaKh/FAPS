@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../FAPS/ListView.scss'
+import '../../FAPS/ListView/ListView.scss'
 import {LocalityItem} from "./LocalityItem";
 
 export const ListViewLocalities = (props) => {

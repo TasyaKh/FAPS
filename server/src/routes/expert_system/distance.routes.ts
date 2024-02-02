@@ -9,7 +9,6 @@ export default (app: Router) => {
 // /api/distance/mc
     router.post(
         '/mc',
-        [],
         async (req: express.Request, res: express.Response,  next: NextFunction) => {
 
             const distService = new DistanceService()

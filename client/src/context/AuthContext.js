@@ -1,7 +1,7 @@
 import {createContext} from 'react'
 
 function noop() {}
-
+// TODO: DELETE
 export const AuthContext = createContext({
   token: null,
   userId: null,

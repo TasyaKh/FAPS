@@ -8,13 +8,13 @@ export default class MedicalCenter {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ nullable: true, unsigned: true })
+    @Column({ nullable: true })
     locality_id: number;
 
-    @Column({ nullable: true, unsigned: true })
+    @Column({ nullable: true})
     medical_facility_id: number;
 
-    @Column({ nullable: true, unsigned: true })
+    @Column({ nullable: true})
     type_id: number;
 
     @Column({ nullable: true })

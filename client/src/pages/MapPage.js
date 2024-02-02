@@ -3,7 +3,7 @@ import {Sidebar} from "../components/FAPS/Sidebar"
 import {Maps} from "../components/FAPS/Maps"
 import {useHttp} from "../hooks/http.hook"
 import {MapContext} from "../context/MapContext"
-import {Navigation} from "../components/FAPS/Navigation"
+import {Navigation} from "../components/FAPS/Navigation/Navigation"
 
 export const MapPage = () => {
 

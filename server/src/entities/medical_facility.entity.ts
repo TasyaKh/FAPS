@@ -7,11 +7,12 @@ import {
 } from 'typeorm';
 import Locality from "./locality.entity";
 import {Type} from "./types.entity";
+import District from "./district.entity";
 
 @Entity('medical_facility')
 export class MedicalFacility {
 
-    @PrimaryGeneratedColumn({ unsigned: true })
+    @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
@@ -43,6 +44,10 @@ export class MedicalFacility {
 
     @Column({ length: 9, nullable: true })
     kpp: string;
+
+    @ManyToOne(() => District, { nullable: true, onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'district_id' })
+    district: District;
 
     @ManyToOne(() => Locality, { nullable: true, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'locality_id' })

@@ -1,7 +1,7 @@
 import {Button, TextInput} from "react-materialize"
 import magnifer from "../../img/magnifier.svg"
 import {ReactComponent as Filter} from "../../img/filter.svg"
-import {SearchFilter} from "./SearchFilter"
+import {SearchFilter} from "./Search/SearchFilter"
 import React, {useState} from "react"
 import './PageHeader.scss'
 import {Link} from "react-router-dom";

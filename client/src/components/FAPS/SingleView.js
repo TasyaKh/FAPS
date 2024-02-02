@@ -5,7 +5,7 @@ import getAddress from "../../functions/getAddress"
 import {useHttp} from "../../hooks/http.hook"
 import {Button, Preloader} from "react-materialize"
 import {Link} from "react-router-dom"
-import {SingleViewRateCard} from "./SingleViewRateCard";
+import {SingleViewRateCard} from "./Rates/SingleViewRateCard";
 
 export const SingleView = (props) => {
 

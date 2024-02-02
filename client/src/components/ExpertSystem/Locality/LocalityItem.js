@@ -94,7 +94,7 @@ export const LocalityItem = (props) => {
                         <div onClick={(e) => {
                             props.onMedicalCenterClick(e, props.locality, false)
                         }} className="item__link">
-                            <b>РБЦ: </b>
+                            <b>ЦРБ: </b>
                             {/* информация о км и времени до ближайшего мед учреждения */}
                             <span
                                 className={"accent-4 white-text crumb " + (minDistKmMcf < 20 ? "teal" : (minDistKmMcf < 30 ? "yellow" : "red"))}>

@@ -22,10 +22,12 @@ import apiEdit from '../routes/faps/edit.routes'
 import apiPoints from '../routes/expert_system/points.routes'
 
 import apiUploads from '../routes/expert_system/uploads.routes'
+import apiAuth from './auth.routes'
 
 // guaranteed to get dependencies
 export default () => {
     const app = Router();
+    apiAuth(app);
     apiMap(app);
     apiMapFilter(app);
     apiMapSingle(app);

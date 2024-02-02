@@ -156,7 +156,7 @@ export const EMap = (props) => {
                                         modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
                                         onClick={e => handlePlacemarkClick(e, el)}
                                         properties={{
-                                            hintContent: el.name,
+                                            hintContent: el.locality_name,
                                         }}
                                     />
                                 )) : null}

@@ -68,6 +68,7 @@ export class DistanceService {
             res = await entityManager.query(query, [
                 distance.locality_id, distance.mc_id, distance.mc_facility_id])
         } catch (err) {
+            console.log(err, distance)
             return false
         }
 
@@ -153,7 +154,8 @@ export class DistanceService {
             query = this.filterLocalitiesAndNearMcs(query, locsAndNearMcsDto)
             return query.getRawMany<LocalitiDistToNearectMC>()
 
-        } catch (e) {
+        } catch (err) {
+            console.log(err)
             return false
         }
     }

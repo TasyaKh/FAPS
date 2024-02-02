@@ -1,6 +1,6 @@
 import React, {FC, useState} from "react"
 import './ETable.scss'
-import {ICustomSolutionsLocalities} from "../../entities/entities";
+import {ICustomSolutionsLocalities} from "../../types/types";
 import {FilterBtn} from "../Elements/Buttons/BtnFilter/FilterBtn";
 import {Order} from "../../enums";
 import {ProgressBar} from "react-materialize";

@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import {useHttp} from "../hooks/http.hook"
 import {useHistory} from "react-router-dom"
-import './EditPage.scss'
+import './EditPage/EditPage.scss'
 import {Map, Placemark, YMaps} from "react-yandex-maps"
 import {ReactComponent as ArrowBack} from '../img/arrow-back.svg'
 import {Scrollbars} from 'react-custom-scrollbars'

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Button, Icon, Preloader, ProgressBar, Spinner} from 'react-materialize'
+import {Button, Icon, Preloader} from 'react-materialize'
 import './SolutionsLocalitiesPage.scss'
 import {TableSolutions} from 'components/ExpertSystem/TableSolutions'
 import {SelectArea} from "../../../components/FAPS/SelectArea";
@@ -8,7 +8,7 @@ import {DefaultModal} from "../../../components/ExpertSystem/Modals/TemplateModa
 import {useQuery} from "react-query";
 import {getSolutionsLocalities} from "../../../api/points";
 import {Order} from "../../../enums";
-import {ILocalitiDistToNearectMC} from "../../../entities/entities";
+import {ILocalitiDistToNearectMC} from "../../../types/types";
 import {getExcelSolutionsLocalities} from "../../../api/uploads";
 
 export const SolutionsLocalitiesPage = () => {
@@ -34,7 +34,9 @@ export const SolutionsLocalitiesPage = () => {
         error: solutionsError,
         isLoading: solutionsLoading,
         refetch: refetchSolutions
-    } = useQuery(['getSolutionsLocalities', filters], () => getSolutionsLocalities(filters));
+    } = useQuery(['getSolutionsLocalities', filters],
+        () => getSolutionsLocalities(filters),
+    );
 
     const {
         // data: excelSolutions,
@@ -58,22 +60,9 @@ export const SolutionsLocalitiesPage = () => {
         refetchExcelSolutions()
     }
 
-//     async function getReport() {
-//         if (props.team != null && props.team.id > 0) {
-//             await getReportEventsOfTeam();
-//         } else {
-//             await getReportEventsOfDirection();
-//         }
-//     }
-// // скачать файл
-//     async function downloadFile() {
-//         const file = new Blob([resFile.value], {
-//             type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-//         });
-//         fileURL.value = URL.createObjectURL(file);
-//     }
 
     const handleSetConditionsLocalities = () => {
+        setConditionsModalState({show: false})
         refetchSolutions()
     }
 
@@ -83,8 +72,6 @@ export const SolutionsLocalitiesPage = () => {
     }
 
     const handleFilterStateChanged = (orderState: Order, filterName: string, prevFilterName: string) => {
-        // console.log(filters)
-        // console.log("defa ", filterName, orderState)
         // drop prev if needed
         let newFilters = {...filters, [filterName]: orderState}
         if (prevFilterName != filterName) {
@@ -144,13 +131,12 @@ export const SolutionsLocalitiesPage = () => {
                     onFilterStateChanged={handleFilterStateChanged}/>
 
                 {/*modal ConditionsLocality */}
-                {conditionsModalState.show &&
-                    <DefaultModal header={"Условия для НП-ов"}
-                                  child={<ConditionsLocality onSaveConditionsData={handleSetConditionsLocalities}/>}
-                                  onHide={handleConditionsModalHide}>
+                <DefaultModal header={"Условия для НП-ов"}
+                              child={<ConditionsLocality onSaveConditionsData={handleSetConditionsLocalities}/>}
+                              onHide={handleConditionsModalHide}
+                              show={conditionsModalState.show}
+                />
 
-                    </DefaultModal>
-                }
             </div>
 
         </div>

@@ -44,6 +44,7 @@ export class DevService {
                     distance.mc_id = mc.id
                     // save distances
                     const dS = new DistanceService()
+
                     return await dS.saveDistance(distance).catch(console.log)
                 }).catch(console.log)
         }
@@ -54,7 +55,8 @@ export class DevService {
         const dist = new DistanceOpenRoute()
 
         let localitiyCoords: number[] = [locality["longitude"], locality["latitude"]]
-        let minDist: DistanceDto
+
+        let minDistOrg: DistanceDto
         for (let k = 0; k < orgs?.length; k++) {
             const org = orgs[k]
             let orgCoords: number[] = [org["longitude"], org["latitude"]]
@@ -63,21 +65,20 @@ export class DevService {
                 .then((result) => {
                     // prepare dist object
 
-                    if (minDist == null || minDist.distance > result.distance) {
+                    if (minDistOrg == null || minDistOrg.distance > result.distance) {
                         const distance = new DistanceDto()
                         distance.distance = result.distance
                         distance.duration = result.duration
                         distance.locality_id = locality.id
                         distance.mc_facility_id = org.id
-                        minDist = distance
+                        minDistOrg = distance
                     }
 
                 }).catch(console.log)
         }
-
         // save distances
         const dS = new DistanceService()
-        let r = await dS.saveDistance(minDist).catch(console.log)
+        let r = await dS.saveDistance(minDistOrg).catch(console.log)
         // med_centers
 
 
