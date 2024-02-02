@@ -10,14 +10,14 @@ export default (app: Router) => {
         [],
         async (req: express.Request, res: express.Response) => {
             try {
-                const { name, password } = req.body;
-                const token = await signup({ name, password })
+                const { name, email, password } = req.body;
+                const token = await signup({ name:name, email:email, password:password })
                 if(token)
                     res.status(200).json({message:"Сохранено"})
                 else res.status(200).json("Что то пошло не так при создании")
             }catch (err){
                 console.log(err)
-                res.status(400).json({message: err.message})
+                res.status(400).json(err.message)
             }
         }
     )

@@ -1,10 +1,11 @@
 import React, {useState} from 'react'
-import {login} from "../../api/auth";
-import {ProgressBar, Tab, Tabs} from "react-materialize";
+import {login, signUp} from "../../api/auth";
+import {ProgressBar} from "react-materialize";
 import "./AuthPage.scss"
 import {Redirect} from "react-router-dom";
 import {toast} from "../../components/Elements/Toast/ToastManager";
 import {Login} from "../../components/FAPS/Auth/Login";
+import {SignUp} from "../../components/FAPS/Auth/SignUp";
 
 export const AuthPage = () => {
     const tabsNames = ["Вход", "Регистрация"]
@@ -14,10 +15,10 @@ export const AuthPage = () => {
     const [shouldRedirect, setShouldRedirect] = useState(false);
     const [tab, setTab] = useState(0);
 
-    const showToast = (msg: string) => {
+    const showToast = (msg: string, type: "error" | "info" | "save") => {
         toast.show({
             content: msg,
-            type: "error"
+            type: type
         });
     }
 
@@ -27,13 +28,27 @@ export const AuthPage = () => {
             setShouldRedirect(true)
             localStorage.setItem('authToken', res?.token);
         }).catch((err) => {
-            showToast(err?.response?.data || 'An error occurred during login.')
+            showToast(err?.response?.data || 'An error occurred during login.', "error")
         }).finally(() => {
             setIsLoading(false)
         })
-
     }
 
+    const handleOnSendReg = async (form: { name: string, password: string, repeatPassword: string, email:string }) => {
+
+        if (form.password === form.repeatPassword) {
+            setIsLoading(true)
+            await signUp({password: form.password, name: form.name, email:form.email}).then((res) => {
+                showToast('Создано', "save")
+            }).catch((err) => {
+                showToast(err?.response?.data || 'An error occurred during login.', "error")
+            }).finally(() => {
+                setIsLoading(false)
+            })
+        } else {
+            showToast("Пароли не совпадают", "error")
+        }
+    }
     return (
         <div className={"auth"}>
             {shouldRedirect && <Redirect to="/expert-system"/>}
@@ -48,9 +63,7 @@ export const AuthPage = () => {
                     ))}
                 </div>
                 {/*login*/}
-                {tab === 0 ?  <Login onSend={handleOnSendLogin}/> : null}
-
-                {/*    sighn up*/}
+                {tab === 0 ? <Login onSend={handleOnSendLogin}/> : <SignUp onSend={handleOnSendReg}/>}
 
             </div>
 

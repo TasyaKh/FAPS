@@ -6,7 +6,7 @@ import config from "config";
 import {roleHierarchy, Roles} from "../../roles";
 import express from "express";
 
-export const signup = async (newUser: { password: string; name: string; }) => {
+export const signup = async (newUser: { password: string; name: string, email:string}) => {
 
     if (newUser.name?.length >= 3 && newUser.password?.length >= 6) {
         //Hash password
@@ -18,11 +18,16 @@ export const signup = async (newUser: { password: string; name: string; }) => {
 
         user.name = newUser.name
         user.password = hasPassword
+        user.email = newUser.email
 
         const userRepository = AppDataSource.getRepository(User);
         // check username
-        const existingUser = await userRepository.findOne({where: {name: user.name}})
-        if (existingUser) throw new Error("Имя пользователя уже занято")
+        const existingUserByName = await userRepository.findOne({where: {name: user.name}})
+        if (existingUserByName) throw new Error("Имя пользователя уже занято")
+
+        // check email
+        const existingUserByEmail = await userRepository.findOne({where: {email: user.email}})
+        if (existingUserByEmail) throw new Error("Email уже занят")
 
         const createdUser = await userRepository.save({...user, role_name: Roles.USER})
 

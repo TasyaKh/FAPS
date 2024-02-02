@@ -3,14 +3,15 @@ import 'materialize-css'
 import {Button} from 'react-materialize'
 import './Navigation.scss'
 import {ReportPanel} from "../Report/ReportPanel"
-import {PointsPanel} from "../../ExpertSystem/Modals/MCPoints/PointsPanel"
 import {useHttp} from "../../../hooks/http.hook"
 import {Link} from "react-router-dom"
 import {Legend} from "../Legend/Legend"
+import {isTokenExpired, logout} from "../../../api/auth";
 
 export const Navigation = (props) => {
 
     const {error, request, clearError} = useHttp()
+    const [tokenExpired, setTokenExpired] = useState(isTokenExpired())
 
     const [state, setState] = useState({
         area: []
@@ -85,6 +86,13 @@ export const Navigation = (props) => {
             props.setHiddenSidebar(true)
     }
 
+    const onLogout = async ()=>{
+
+       await logout().then(()=>{
+           setTokenExpired(isTokenExpired())
+       })
+    }
+
     useEffect(() => {
         fetchData()
     }, [])
@@ -130,15 +138,25 @@ export const Navigation = (props) => {
                         </Button>
                     </Link>
 
-                    <Link to="/auth" className="navigation__link">
+                    {tokenExpired ?
+                        <Link to="/auth" className="navigation__link">
+                            <Button
+                                className="navigation__button grey darken-4 navigation__link"
+                                node="button"
+                                waves="light"
+                            >
+                                Войти
+                            </Button>
+                        </Link> :
                         <Button
-                            className="navigation__button grey darken-4 navigation__link"
+                            className="navigation__button red darken-4 navigation__link"
                             node="button"
                             waves="light"
+                            onClick={onLogout}
                         >
-                            Войти
+                            Выйти
                         </Button>
-                    </Link>
+                    }
 
 
                 </div>

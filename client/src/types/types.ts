@@ -54,5 +54,7 @@ export interface IConditionsLocality{
 
 export interface IUser{
     nameEmail?: string;
+    name?: string;
+    email?: string;
     password?: string;
 }
