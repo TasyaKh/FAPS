@@ -1,0 +1,18 @@
+### auth/sign-up
+POST http://localhost:3002/api/auth/sign-up
+content-type: application/json
+
+{
+  "name": "user1",
+  "password": "12345679"
+}
+
+### auth/login
+POST http://localhost:3002/api/auth/login
+content-type: application/json
+
+{
+  "name": "expert",
+  "password": "12345679"
+}
+
