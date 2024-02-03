@@ -11,13 +11,15 @@ export const signUp = async (user: IUser) => {
     return data;
 };
 
-export const getUserByToken = async () => {
-    const {data} = await axiosInstance.get(`/api/auth`);
-    return data;
-};
+//TODO: DELETE
+// export const getUserByToken = async () => {
+//     const {data} = await axiosInstance.get(`/api/auth`);
+//     return data;
+// };
 
-export const isTokenExpired = () => {
+export const getUserLocal = () => {
 
+    const usr = {role: "", name: "", isAuthenticated: false, id: -1}
     const parseJwt = (token: string) => {
         try {
             return JSON.parse(atob(token.split(".")[1]));
@@ -27,10 +29,12 @@ export const isTokenExpired = () => {
     };
 
     const decodedJwt = parseJwt(localStorage.getItem("authToken") ?? '');
-    if (decodedJwt) return decodedJwt.exp * 1000 < Date.now();
-    else return true
-};
+    if (decodedJwt) {
+        usr.isAuthenticated = decodedJwt.exp * 1000 > Date.now()
+        usr.id = decodedJwt.id
+        usr.role = decodedJwt.role
+        usr.name = decodedJwt.name
+    } else usr.isAuthenticated= false
 
-export const logout = async () => {
-    localStorage.setItem("authToken", "")
+    return usr
 };

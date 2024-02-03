@@ -6,14 +6,12 @@ import {ReportPanel} from "../Report/ReportPanel"
 import {useHttp} from "../../../hooks/http.hook"
 import {Link} from "react-router-dom"
 import {Legend} from "../Legend/Legend"
-import {isTokenExpired} from "../../../api/auth";
-import {AuthContext} from "../../../context/AuthContext";
+import {AuthContext} from "context/AuthContext";
 
 export const Navigation = (props) => {
-    const {logout} = useContext(AuthContext)
+    const {logout, isAuthenticated, role} = useContext(AuthContext)
 
     const {error, request, clearError} = useHttp()
-    const [tokenExpired, setTokenExpired] = useState(isTokenExpired())
 
     const [state, setState] = useState({
         area: []
@@ -90,7 +88,6 @@ export const Navigation = (props) => {
 
     const onLogout = async () => {
         logout()
-        setTokenExpired(isTokenExpired())
     }
 
     useEffect(() => {
@@ -138,7 +135,7 @@ export const Navigation = (props) => {
                         </Button>
                     </Link>
 
-                    {tokenExpired ?
+                    {!isAuthenticated ?
                         <Link to="/auth" className="navigation__link">
                             <Button
                                 className="navigation__button grey darken-4 navigation__link"
