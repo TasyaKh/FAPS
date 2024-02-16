@@ -12,7 +12,7 @@ POST http://localhost:3002/api/auth/login
 content-type: application/json
 
 {
-  "name": "expert",
+  "nameEmail": "admin",
   "password": "12345679"
 }
 

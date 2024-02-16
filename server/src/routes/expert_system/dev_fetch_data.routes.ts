@@ -4,6 +4,8 @@ import MC from "../../entities/medical_center.entity";
 import {getLocalitiesByDistrictId} from "../../services/database/locality.service";
 import {DevService} from "../../services/database/dev.service";
 import {getOrganizationsByDistrictId} from "../../services/database/organization.service";
+import {checkUserRoleOrErr, verifyUserToken} from "../../services/database/auth.service";
+import {Roles} from "../../roles";
 
 const router = Router()
 export default (app: Router) => {
@@ -11,9 +13,9 @@ export default (app: Router) => {
 // /api/cluster get distances from openrouteservice
     router.post(
         '/openrouteservice_distances',
-        [],
+        verifyUserToken,
         async (req: express.Request, res: express.Response) => {
-
+            checkUserRoleOrErr(req, res, Roles.ADMIN)
             const dev = new DevService()
 
             try {
@@ -61,9 +63,8 @@ export default (app: Router) => {
                 res.json(mcs)
 
             } catch (error) {
-                res.status(500).json({error: 'Internal server error'});
+                res.status(400).json({error: error});
             }
-            //res.json(r)
         }
     )
 

@@ -15,7 +15,7 @@ export class DistanceOpenRoute {
 
         const resp: AxiosResponse = await axios.post(`${this.url}matrix/driving-car`, data)
 
-        return {distance:resp.data?.distances[0][1], duration:resp.data?.durations[0][1]}
+        return {distance:resp?.data?.distances[0][1], duration:resp?.data?.durations[0][1]}
     }
 
 }

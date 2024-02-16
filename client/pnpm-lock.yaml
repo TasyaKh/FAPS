@@ -65,6 +65,9 @@ dependencies:
   web-vitals:
     specifier: ^0.2.4
     version: 0.2.4
+  yandex-maps:
+    specifier: ^0.0.1
+    version: 0.0.1
 
 devDependencies:
   '@babel/plugin-proposal-private-property-in-object':
@@ -11103,6 +11106,10 @@ packages:
   /yaml@2.3.4:
     resolution: {integrity: sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==}
     engines: {node: '>= 14'}
+    dev: false
+
+  /yandex-maps@0.0.1:
+    resolution: {integrity: sha512-7gW254ut4HEpSyQEaztSB4lZiuIz/DtS4jvfbJJWHxpuztMNZtYmSVBqhGRSaBgESe8f6T7/fAtEO/FkRHzdXQ==}
     dev: false
 
   /yargs-parser@20.2.9:

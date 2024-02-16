@@ -74,7 +74,7 @@ export class DevService {
                         minDistOrg = distance
                     }
 
-                }).catch(console.log)
+                }).catch((err)=>{console.log(err)})
         }
         // save distances
         const dS = new DistanceService()
