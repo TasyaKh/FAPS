@@ -1,14 +1,12 @@
 import {ENavigation} from 'components/ExpertSystem/Navigation/ENavigation'
 import {MapContext} from 'context/MapContext'
-import React, {FC, useContext, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {EMap} from "../../components/ExpertSystem/YandexMaps/YandexYMap";
 import {ESidebar} from "../../components/ExpertSystem/ESidebar";
 import "../../scss/indents.scss"
 import {useHttp} from "../../hooks/http.hook";
 import {useQuery} from "react-query";
 import {getLocalitiesWithDistMcs} from "../../api/distances";
-import {AuthContext} from "../../context/AuthContext";
-
 
 export const EMapPage = () => {
 
@@ -36,9 +34,9 @@ export const EMapPage = () => {
 
     const {
         data: localitiesWithDistMcs,
-        error: localitiesWithDistMcsError,
+        // error: localitiesWithDistMcsError,
         isLoading: localitiesWithDistMcsLoading,
-        refetch: localitiesWithDistMcsRefetch
+        // refetch: localitiesWithDistMcsRefetch
     } = useQuery(['getLocalitiesWithDistMcs', filters.district_id], () => getLocalitiesWithDistMcs(filters.district_id));
 
     const fetchMedicalCenters = async () => {
@@ -50,7 +48,6 @@ export const EMapPage = () => {
             const fetchedOrgs = await request('/api/map/organizations', 'POST')
 
             setOrgs(fetchedOrgs.data)
-
         } catch (e) {
         }
 

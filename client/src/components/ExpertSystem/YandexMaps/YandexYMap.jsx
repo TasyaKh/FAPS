@@ -1,4 +1,3 @@
-import {Clusterer, Map, Placemark, YMaps} from "react-yandex-maps";
 import '../../FAPS/Maps.scss'
 import {Preloader} from "react-materialize";
 import {MapContext} from "context/MapContext";
@@ -19,7 +18,6 @@ export const EMap = (props) => {
 
     async function onMapLoaded() {
         setMapLoaded(true)
-        await initMap()
     }
 
     const getTypePointMedCenters = (mc) => {
@@ -95,6 +93,7 @@ export const EMap = (props) => {
                 setMap(map)
                 // initHeatmap(map)
                 initLocalities(map)
+                initMedicalCenters(map)
             }
 
             loadScript(HEATMAP_Y)
@@ -136,7 +135,7 @@ export const EMap = (props) => {
     }
 
     function initLocalities(map) {
-        console.log(" props?.localities", props?.localities, Map)
+        // console.log("props?.localities", props?.localities, Map)
         let placemarks = [];
         if (props.showSettlements && props.localities && props.localities.length > 0) {
             for (let i = 0; i < props.localities.length; i++) {
@@ -149,7 +148,7 @@ export const EMap = (props) => {
                     getPointOptionsLocalities()
                 );
 
-                placemark.events.add('click', function(e) {
+                placemark.events.add('click', function (e) {
                     handlePlacemarkClick(e, locality);
                 });
 
@@ -175,14 +174,68 @@ export const EMap = (props) => {
         }
     }
 
+    function initMedicalCenters(map) {
+
+        // Create Clusterer instance
+        let clustererOptions = {
+            preset: 'islands#darkGreenClusterIcons',
+            groupByCoordinates: false,
+            clusterDisableClickZoom: false,
+            clusterHideIconOnBalloonOpen: true,
+            geoObjectHideIconOnBalloonOpen: true,
+            minClusterSize: props.data.length > 50 ? 3 : 10,
+            viewportMargin: props.data.length > 50 ? 128 : 12000,
+            maxZoom: 9
+        };
+        let clusterer = new window.ymaps.Clusterer(clustererOptions);
+        map.geoObjects.add(clusterer);
+
+        // Add medical centers
+        if (props.data && props.data.length > 0) {
+            props.data.forEach((el, i) => {
+                let type = getTypePointMedCenters(el);
+                if (props.showFaps || type.thisDistrict) {
+                    let placemark = new window.ymaps.Placemark(
+                        [el.latitude, el.longitude],
+                        {
+                            hintContent: `${el.name} ${el.latitude}, ${el.longitude}`
+                        },
+                        type
+                    );
+                    placemark.events.add('click', function (e) {
+                        handlePlacemarkClick(e, el);
+                    });
+                    clusterer.add(placemark);
+                }
+            });
+        }
+
+        // Add organizations
+        if (props.orgs && props.orgs.length > 0) {
+            props.orgs.forEach((el, i) => {
+                let placemark = new window.ymaps.Placemark(
+                    [el.latitude, el.longitude],
+                    {
+                        hintContent: el.name
+                    },
+                    getPointOptionsOrgs()
+                );
+                placemark.events.add('click', function (e) {
+                    handlePlacemarkClick(e, el);
+                });
+                clusterer.add(placemark);
+            });
+        }
+    }
+
     useEffect(() => {
-        initMap()
-    }, [props.localities]);
+        if (mapLoaded) initMap()
+    }, [props.localities, mapLoaded]);
 
     // center, zoom changed - update map
     useEffect(() => {
         if (mapLoaded && Map) {
-            Map.setCenter( [mapState.center[0], mapState.center[1]], mapState.zoom);
+            Map.setCenter([mapState.center[0], mapState.center[1]], mapState.zoom);
         }
     }, [mapState.zoom, mapState.center]);
 

@@ -68,7 +68,7 @@ export const TableSolutions:
                 </thead>
 
                 <tbody>
-                {data ? data.map((dataEl, i) => (
+                {data && data.map((dataEl, i) => (
                     <tr className='table-view__row ' key={i}>
                         <td>{dataEl.data?.locality_name} </td>
                         <td>{dataEl.data?.population_population_adult}</td>
@@ -81,13 +81,13 @@ export const TableSolutions:
 
                         <td>{dataEl.solutions && dataEl.solutions?.length > 0 ? dataEl.solutions.join(', \n') : '-'}</td>
                     </tr>
-                )) : null
+                ))
                 }
 
                 </tbody>
             </table>
 
-            {dataIsLoading ? <ProgressBar/> : null}
+            {dataIsLoading && <ProgressBar/> }
         </div>
     )
 }
