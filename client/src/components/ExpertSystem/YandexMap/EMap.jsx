@@ -4,12 +4,12 @@ import {MapContext} from "context/MapContext";
 import {useContext, useEffect, useRef, useState} from "react";
 import {useScript, loadScript} from "hooks/useScript";
 import {HEATMAP_Y, YMAP} from "constants";
+import {getPopulationWeight} from "./population-weight";
 
 export const EMap = (props) => {
-    const [mapLoaded, setMapLoaded] = useState(false)
-    const mapRef = useRef(null);
-    useScript(YMAP, onMapLoaded)
-    // useScript(HEATMAP_Y)
+    const [mapLoaded, setMapLoaded] = useState(false) //if map script was loaded
+    const mapRef = useRef(null); //map
+    useScript(YMAP, onMapLoaded)  // init ymap script
 
     const {mapState, setMapState} = useContext(MapContext)
 
@@ -81,66 +81,81 @@ export const EMap = (props) => {
     async function initMap() {
 
         if (window.ymaps && mapRef.current) {
-            window.ymaps.ready(init);
+            window.ymaps.ready(init); //create map
 
             function init() {
                 mapRef.current.innerHTML = ''; // Clear the map container before adding new placemarks
-
+                // set map settings
                 let map = new window.ymaps.Map(mapRef.current, {
                     center: [mapState.center[0], mapState.center[1]],
-                    zoom: mapState.zoom
+                    zoom: mapState.zoom,
+                    controls: []
                 });
                 setMap(map)
-                // initHeatmap(map)
+                initHeatmap(map, props.localities)
                 initLocalities(map)
                 initMedicalCenters(map)
+                // set map center
+                if(props.localities && props.localities.length > 0){
+                    setMapState({
+                        ...mapState,
+                        center: [props.localities[0]?.locality_latitude, props.localities[0]?.locality_longitude],
+                    })
+                }
             }
 
             loadScript(HEATMAP_Y)
         }
     }
 
-    function initHeatmap(map) {
+    // get heatmap points
+    function prepareFeaturesHeatmap(localities) {
+        let features = []
+        localities?.forEach((locality) => {
+            let weight = getPopulationWeight(locality.population_population_adult ?? 0)
+            features.push({
+                id: locality.id,
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [locality.locality_latitude, locality.locality_longitude]
+                },
+                properties: {
+                    weight: weight // set weight on base of population
+                }
+            })
+        })
+
+        return features
+    }
+
+    function initHeatmap(map, localities) {
+
+        let features = prepareFeaturesHeatmap(localities)
 
         // Промис `ymaps3.ready` будет зарезолвлен, когда загрузятся все компоненты основного модуля API
         window.ymaps.modules.require(['Heatmap'], function (Heatmap) {
                 const data = {
                         type: 'FeatureCollection',
-                        features: [{
-                            id: 'id1',
-                            type: 'Feature',
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [37.782551, -122.445368]
-                            },
-                            properties: {
-                                weight: 1
-                            }
-                        }, {
-                            id: 'id2',
-                            type: 'Feature',
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [37.782745, -122.444586]
-                            },
-                            properties: {
-                                weight: 10
-                            }
-                        }]
+                        features: features
                     },
                     heatmap = new Heatmap(data);
+                heatmap.options.set('radius', 23);
                 heatmap.setMap(map);
             }
         );
     }
 
     function initLocalities(map) {
+
         // console.log("props?.localities", props?.localities, Map)
         let placemarks = [];
         if (props.showSettlements && props.localities && props.localities.length > 0) {
+
+            // output localities
             for (let i = 0; i < props.localities.length; i++) {
-                let locality = props.localities[i];
-                let placemark = new window.ymaps.Placemark(
+                let locality = props.localities[i]; //get locality
+                let placemark = new window.ymaps.Placemark( //create place-mark
                     [locality.locality_latitude, locality.locality_longitude],
                     {
                         hintContent: locality.locality_name
@@ -230,11 +245,14 @@ export const EMap = (props) => {
 
     useEffect(() => {
         if (mapLoaded) initMap()
-    }, [props.localities, mapLoaded]);
+    }, [props.localities, mapLoaded,
+        // if filter values changed
+        props.showFaps, props.showSettlements]);
 
     // center, zoom changed - update map
     useEffect(() => {
         if (mapLoaded && Map) {
+            // console.log("ddd", [mapState.center[0], mapState.center[1]], mapState.zoom)
             Map.setCenter([mapState.center[0], mapState.center[1]], mapState.zoom);
         }
     }, [mapState.zoom, mapState.center]);
@@ -252,94 +270,6 @@ export const EMap = (props) => {
                         />
                     </div> :
                     <div ref={mapRef} className={"y-map"}></div>
-                // <YMaps>
-                //     <Map
-                //         state={mapState}
-                //         className="y-map"
-                //         instanceRef={mapState}
-                //     >
-                //
-                //         <Clusterer
-                //             options={{
-                //                 preset: 'islands#darkGreenClusterIcons',
-                //                 groupByCoordinates: false,
-                //                 clusterDisableClickZoom: false,
-                //                 clusterHideIconOnBalloonOpen: true,
-                //                 geoObjectHideIconOnBalloonOpen: true,
-                //                 minClusterSize: props.data.length > 50 ? 3 : 10,
-                //                 viewportMargin: props.data.length > 50 ? 128 : 12000,
-                //                 maxZoom: 9
-                //             }}
-                //         >
-                //             {/* medical centers */}
-                //
-                //             {props.data && props.data.length > 0 ? props.data.map((el, i) => {
-                //                 let type = getTypePointMedCenters(el)
-                //                 if (props.showFaps || type.thisDistrict) {
-                //                     return (
-                //                         <Placemark
-                //                             key={i}
-                //                             geometry={[el.latitude, el.longitude]}
-                //                             options={type}
-                //                             modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-                //                             onClick={e => handlePlacemarkClick(e, el)}
-                //                             properties={{
-                //                                 hintContent: `${el.name } ${el.latitude}, ${el.longitude}`,
-                //                             }}
-                //                         />
-                //                     );
-                //                 } else {
-                //                     return null;
-                //                 }
-                //             }) : null}
-                //
-                //             {/*organizations*/}
-                //             {props.orgs && props.orgs.length > 0 ? props.orgs.map((el, i) => (
-                //                 <Placemark
-                //                     key={i}
-                //                     geometry={[el.latitude, el.longitude]}
-                //                     options={getPointOptionsOrgs()}
-                //                     modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-                //                     onClick={e => handlePlacemarkClick(e, el)}
-                //                     properties={{
-                //                         hintContent: el.name,
-                //                     }}
-                //                 />
-                //             )) : null}
-                //
-                //         </Clusterer>
-                //
-                //         {/*localities*/}
-                //         {props.showSettlements ? <Clusterer
-                //             options={{
-                //                 preset: 'islands#invertedRedClusterIcons',
-                //                 groupByCoordinates: false,
-                //                 clusterDisableClickZoom: false,
-                //                 clusterHideIconOnBalloonOpen: true,
-                //                 geoObjectHideIconOnBalloonOpen: true,
-                //                 minClusterSize: props.data.length > 50 ? 3 : 10,
-                //                 viewportMargin: props.data.length > 50 ? 128 : 12000,
-                //                 maxZoom: 9
-                //             }}
-                //         >
-                //             {props.localities && props.localities.length > 0 ? props.localities.map((el, i) => (
-                //                 <Placemark
-                //                     key={i}
-                //                     geometry={[el.locality_latitude, el.locality_longitude]}
-                //                     options={getPointOptionsLocalities()}
-                //                     modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-                //                     onClick={e => handlePlacemarkClick(e, el)}
-                //                     properties={{
-                //                         hintContent: el.locality_name,
-                //                     }}
-                //                 />
-                //             )) : null}
-                //         </Clusterer> : null
-                //         }
-                //
-                //     </Map>
-                //
-                // </YMaps>
             }
 
         </div>

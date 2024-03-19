@@ -1,7 +1,7 @@
 import {ENavigation} from 'components/ExpertSystem/Navigation/ENavigation'
 import {MapContext} from 'context/MapContext'
 import React, {useEffect, useState} from 'react'
-import {EMap} from "../../components/ExpertSystem/YandexMaps/YandexYMap";
+import {EMap} from "../../components/ExpertSystem/YandexMap/EMap";
 import {ESidebar} from "../../components/ExpertSystem/ESidebar";
 import "../../scss/indents.scss"
 import {useHttp} from "../../hooks/http.hook";
