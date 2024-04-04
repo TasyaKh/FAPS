@@ -1,15 +1,37 @@
+// @ts-nocheck
 import '../../FAPS/Maps.scss'
 import {Preloader} from "react-materialize";
 import {MapContext} from "context/MapContext";
-import {useContext, useEffect, useRef, useState} from "react";
+import {FC, useContext, useEffect, useRef, useState} from "react";
 import {useScript, loadScript} from "hooks/useScript";
 import {HEATMAP_Y, YMAP} from "constants";
 import {getPopulationWeight} from "./population-weight";
+import {ILocalitiDistToNearectMC} from "../../../types/types";
+import {IFilterEMap} from "../../../pages/ExpertSystem/EMapPage";
 
-export const EMap = (props) => {
-    const [mapLoaded, setMapLoaded] = useState(false) //if map script was loaded
-    const mapRef = useRef(null); //map
-    useScript(YMAP, onMapLoaded)  // init ymap script
+interface EMapProps {
+    districtId: number,
+    orgs: any,
+    localities: ILocalitiDistToNearectMC[],
+    data: ILocalitiDistToNearectMC[],
+    filters: IFilterEMap,
+    isLoading: boolean
+}
+
+export const EMap: FC<EMapProps> = ({
+                                        districtId,
+                                        orgs,
+                                        localities,
+                                        data,
+                                        filters,
+                                        isLoading
+                                    }) => {
+    //if map script was loaded
+    const [mapLoaded, setMapLoaded] = useState(false)
+    //map
+    const mapRef = useRef(null);
+    // init ymap script
+    useScript(YMAP, onMapLoaded)
 
     const {mapState, setMapState} = useContext(MapContext)
 
@@ -24,7 +46,7 @@ export const EMap = (props) => {
         let color
         let thisDistrict = false
 
-        if (mc.district_id === props.districtId) {
+        if (mc.district_id === districtId) {
             color = '#0d47a1'
             thisDistrict = true
         } else {
@@ -54,13 +76,12 @@ export const EMap = (props) => {
     }
 
     const handlePlacemarkClick = (e, element) => {
-        // console.log(props.showSettlements, props.localities)
         let objects
         //Проверяем организация или ФАП
         if (element.type_id === 3) {
-            objects = props.orgs
+            objects = orgs
         } else {
-            objects = props.data.default
+            objects = data.default
         }
 
 
@@ -92,14 +113,14 @@ export const EMap = (props) => {
                     controls: []
                 });
                 setMap(map)
-                initHeatmap(map, props.localities)
+                initHeatmap(map, localities)
                 initLocalities(map)
                 initMedicalCenters(map)
                 // set map center
-                if(props.localities && props.localities.length > 0){
+                if (localities && localities.length > 0) {
                     setMapState({
                         ...mapState,
-                        center: [props.localities[0]?.locality_latitude, props.localities[0]?.locality_longitude],
+                        center: [localities[0]?.locality_latitude, localities[0]?.locality_longitude],
                     })
                 }
             }
@@ -148,13 +169,12 @@ export const EMap = (props) => {
 
     function initLocalities(map) {
 
-        // console.log("props?.localities", props?.localities, Map)
         let placemarks = [];
-        if (props.showSettlements && props.localities && props.localities.length > 0) {
+        if (filters.showSettlements && localities && localities.length > 0) {
 
             // output localities
-            for (let i = 0; i < props.localities.length; i++) {
-                let locality = props.localities[i]; //get locality
+            for (let i = 0; i < localities.length; i++) {
+                let locality = localities[i]; //get locality
                 let placemark = new window.ymaps.Placemark( //create place-mark
                     [locality.locality_latitude, locality.locality_longitude],
                     {
@@ -177,8 +197,8 @@ export const EMap = (props) => {
                 clusterDisableClickZoom: false,
                 clusterHideIconOnBalloonOpen: true,
                 geoObjectHideIconOnBalloonOpen: true,
-                minClusterSize: props.data.length > 50 ? 3 : 10,
-                viewportMargin: props.data.length > 50 ? 128 : 12000,
+                minClusterSize: data.length > 50 ? 3 : 10,
+                viewportMargin: data.length > 50 ? 128 : 12000,
                 maxZoom: 9
             };
 
@@ -198,18 +218,18 @@ export const EMap = (props) => {
             clusterDisableClickZoom: false,
             clusterHideIconOnBalloonOpen: true,
             geoObjectHideIconOnBalloonOpen: true,
-            minClusterSize: props.data.length > 50 ? 3 : 10,
-            viewportMargin: props.data.length > 50 ? 128 : 12000,
+            minClusterSize: data.length > 50 ? 3 : 10,
+            viewportMargin: data.length > 50 ? 128 : 12000,
             maxZoom: 9
         };
         let clusterer = new window.ymaps.Clusterer(clustererOptions);
         map.geoObjects.add(clusterer);
 
         // Add medical centers
-        if (props.data && props.data.length > 0) {
-            props.data.forEach((el, i) => {
+        if (data && data.length > 0) {
+            data.forEach((el, i) => {
                 let type = getTypePointMedCenters(el);
-                if (props.showFaps || type.thisDistrict) {
+                if (filters.showFaps || type.thisDistrict) {
                     let placemark = new window.ymaps.Placemark(
                         [el.latitude, el.longitude],
                         {
@@ -226,8 +246,8 @@ export const EMap = (props) => {
         }
 
         // Add organizations
-        if (props.orgs && props.orgs.length > 0) {
-            props.orgs.forEach((el, i) => {
+        if (orgs && orgs.length > 0) {
+            orgs.forEach((el, i) => {
                 let placemark = new window.ymaps.Placemark(
                     [el.latitude, el.longitude],
                     {
@@ -245,9 +265,9 @@ export const EMap = (props) => {
 
     useEffect(() => {
         if (mapLoaded) initMap()
-    }, [props.localities, mapLoaded,
+    }, [localities, mapLoaded,
         // if filter values changed
-        props.showFaps, props.showSettlements]);
+        filters.showFaps, filters.showSettlements]);
 
     // center, zoom changed - update map
     useEffect(() => {
@@ -260,7 +280,7 @@ export const EMap = (props) => {
     return (
         <div className="map">
             {
-                props.loading ?
+                isLoading ?
                     <div className="map__preloader">
                         <Preloader
                             active

@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
 import "./SingleLocality.scss"
-import {ReactComponent as ArrowBack} from '../../../img/arrow-back.svg'
 import {MapContext} from "../../../context/MapContext";
 import {useHttp} from "../../../hooks/http.hook";
 import {DistanceToMcElem} from "../DistanceToMC";
@@ -58,7 +57,7 @@ export const SingleLocality = (props) => {
                         className="single-locality__button single-locality__button--back"
                         onClick={props.back}
                     >
-                        <ArrowBack/>
+                        <img src={'/img/arrow-back.svg'}/>
                     </button>
 
                     <span className={"single-locality__title"}> {locality?.name}</span>

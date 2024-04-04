@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import './SingleView.scss'
-import {ReactComponent as ArrowBack} from '../../img/arrow-back.svg'
 import getAddress from "../../functions/getAddress"
 import {useHttp} from "../../hooks/http.hook"
 import {Preloader} from "react-materialize"
@@ -69,7 +68,7 @@ export const SingleViewOrg = (props) => {
                 className="single-view__button single-view__button--back"
                 onClick={props.back}
               >
-                <ArrowBack />
+                <img src='/img/arrow-back.svg' alt='back'/>
               </button>
 
               <div className="single-view__title">

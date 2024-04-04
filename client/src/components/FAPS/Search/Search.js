@@ -1,8 +1,6 @@
 import React from 'react'
 import '../ListView/ListView.scss'
 import {CardPanel, TextInput} from "react-materialize";
-import magnifer from "../../../img/magnifier.svg";
-import {ReactComponent as Filter} from "../../../img/filter.svg";
 import {SearchFilter} from "./SearchFilter"
 import './Search.scss'
 
@@ -28,14 +26,14 @@ export const Search = (props) => {
         <button
           className="sidebar__button sidebar__button--search"
         >
-          <img src={magnifer} alt="Поиск"/>
+          <img src='/img/magnifier.svg' alt="Поиск"/>
         </button>
 
         <button
           className="sidebar__button sidebar__button--filter"
           onClick={props.handleFilter}
         >
-          <Filter />
+            <img src='/img/filter.svg'/>
         </button>
       </div>
 

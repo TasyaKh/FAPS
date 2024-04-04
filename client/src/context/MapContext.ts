@@ -1,12 +1,10 @@
 import {createContext} from 'react'
 
-function noop() {}
+function noop(fields:{}) {}
 
 export const MapContext = createContext({
-  mapState: null,
+  mapState: {},
   zoom: 9,
   center: [37.588144, 55.733842],
   setMapState: noop
 })
-
-// export const SelectedItem = createContext([])

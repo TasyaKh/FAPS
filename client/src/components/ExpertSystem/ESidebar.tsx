@@ -1,13 +1,34 @@
 import './ESidebar.scss'
-import React, {useContext, useState} from 'react'
+import React, {FC, useContext, useState} from 'react'
 import {Skeleton} from "../FAPS/Skeleton";
 import {MapContext} from "../../context/MapContext";
 import {ESearch} from "./Search/ESearch";
 import {ListViewLocalities} from "./Locality/ListViewLocalities";
 import CustomScrollbars from "../FAPS/CustomScrollbar";
 import {SingleLocality} from "./Locality/SingleLocality";
+import {IFilterEMap} from "../../pages/ExpertSystem/EMapPage";
 
-export const ESidebar = (props) => {
+interface ESidebarProps {
+    localities: any,
+    loading: boolean,
+    filters: IFilterEMap,
+    onFilterChanged: (filter: IFilterEMap) => void,
+    hiddenSidebar: boolean,
+    setHiddenNavigation: (hidden: boolean) => void,
+    setHiddenSidebar: (hidden: boolean) => void,
+
+}
+
+export const ESidebar: FC<ESidebarProps> = ({
+
+                                                localities,
+                                                loading,
+                                                filters,
+                                                onFilterChanged,
+                                                hiddenSidebar,
+                                                setHiddenNavigation,
+                                                setHiddenSidebar
+                                            }) => {
 
     const {mapState, setMapState} = useContext(MapContext)
 
@@ -33,11 +54,11 @@ export const ESidebar = (props) => {
         })
     }
 
-    const HandleInputSearch = (e) => {
+    const HandleInputSearch = (e: any) => {
         setState({...state, 'search': e.target.value.trim().toLowerCase()})
     }
 
-    const handlePanelScroll = (e) => {
+    const handlePanelScroll = (e: any) => {
         const scrollTop = e.target.scrollTop
 
         if (scrollTop > 50) {
@@ -49,15 +70,15 @@ export const ESidebar = (props) => {
 
 
     const handleToggleButton = () => {
-        props.setHiddenSidebar(!props.hiddenSidebar)
+        setHiddenSidebar(!hiddenSidebar)
 
-        if (props.hiddenSidebar)
-            props.setHiddenNavigation(true)
+        if (hiddenSidebar)
+            setHiddenNavigation(true)
     }
 
     // from ListViewLocalities
     // ----------------------------------------------------------------------------------------------------
-    const handleLocalityTitleClick = (e, localityAndMc) => {
+    const handleLocalityTitleClick = (e: any, localityAndMc: any) => {
 
         setSingleLocality({
             flag: true,
@@ -74,7 +95,7 @@ export const ESidebar = (props) => {
             )
     }
 
-    const handleMedicalCenterClick = (e, localityAndMc, isMC) => {
+    const handleMedicalCenterClick = (e: any, localityAndMc: any, isMC: any) => {
 
         if (isMC) {
             if (localityAndMc && localityAndMc.mc_latitude && localityAndMc.mc_longitude) {
@@ -97,7 +118,7 @@ export const ESidebar = (props) => {
 
     }
 
-    function handleBack(e) {
+    function handleBack(e: any) {
         setSingleLocality({
             flag: false,
             id: null
@@ -105,7 +126,7 @@ export const ESidebar = (props) => {
     }
 
     return (
-        <div className={`sidebar ${props.hiddenSidebar && 'sidebar--hidden'}`}>
+        <div className={`sidebar ${hiddenSidebar && 'sidebar--hidden'}`}>
 
             <button
                 className="sidebar__toggle-button sidebar__toggle-button--a"
@@ -118,24 +139,17 @@ export const ESidebar = (props) => {
                 <ESearch
                     filterShow={state.filter.show}
                     scroll={state.scroll}
-
-                    showSettlements={props.showSettlements}
-                    showFaps={props.showFaps}
-
-                    onCheckBoxShowFapsClick={props.onCheckBoxShowFapsClick}
-                    onCheckBoxShowSettlementsClick={props.onCheckBoxShowSettlementsClick}
-
                     handleInput={HandleInputSearch}
                     handleFilter={handleFilterButton}
-                    onFilterChanged={props.onFilterChanged}
-                    filters={props.filters}
+                    onFilterChanged={onFilterChanged}
+                    filters={filters}
                 />
 
                 <div
                     className="sidebar__panel"
                 >
                     {
-                        props.loading ?
+                        loading ?
                             <div className="sidebar__loader">
 
                                 <Skeleton/>
@@ -158,11 +172,11 @@ export const ESidebar = (props) => {
                                     <SingleLocality
                                         id={singleLocality.id}
                                         key={singleLocality.id}
-                                        back={(e) => handleBack(e)}
+                                        back={(e: any) => handleBack(e)}
                                     />
                                     :
                                     <ListViewLocalities
-                                        localities={props.localities}
+                                        localities={localities}
                                         onLocalityTitleClick={handleLocalityTitleClick}
                                         onMedicalCenterClick={handleMedicalCenterClick}
                                     />

@@ -1,10 +1,21 @@
-import React, {useEffect} from 'react'
+import React, {FC, useEffect} from 'react'
 import './ESearchFilter.scss'
 import {CardPanel, Checkbox} from "react-materialize"
 import {useHttp} from "../../../hooks/http.hook";
 import {SelectArea} from "../../FAPS/SelectArea";
+import {IFilterEMap} from "../../../pages/ExpertSystem/EMapPage";
 
-export const ESearchFilter = (props) => {
+interface ESearchFilterProps {
+    onFilterChanged: (changed: IFilterEMap) => void,
+    filters: IFilterEMap,
+    isVisible: boolean,
+}
+
+export const ESearchFilter: FC<ESearchFilterProps> = ({
+                                                          onFilterChanged,
+                                                          filters,
+                                                          isVisible
+                                                      }) => {
     const {loading, error, request, clearError} = useHttp()
 
 
@@ -15,41 +26,40 @@ export const ESearchFilter = (props) => {
         clearError()
     }, [clearError, error])
 
-    const handleSelectChange = (e) => {
+    const handleSelectChange = (e: any) => {
         const {target} = e
         const {name} = target
         const value = parseInt(target.value)
 
-        props.onFilterChanged({[name]: !isNaN(value) ? value !== 0 ? value : null : null})
+        onFilterChanged({...filters, [name]: !isNaN(value) ? value !== 0 ? value : null : null})
     }
 
-    const handleCheckBoxFilterClick = (e) => {
+    const handleCheckBoxFilterClick = (e: any) => {
         const {target} = e
         const {value, checked} = target
         if (target.value === 'faps')
-            props.onCheckBoxShowFapsClick(checked)
+            onFilterChanged({...filters, showFaps: checked})
         else if (target.value === 'settlements')
-            props.onCheckBoxShowSettlementsClick(checked)
-
+            onFilterChanged({...filters, showSettlements: checked})
     }
 
     return (
 
         <CardPanel
-            className={`search-filter white ${props.className} ${(props.visible ? 'search-filter--visible' : 'search-filter--hidden')} ${props.style}`}>
+            className={`search-filter white ${(isVisible ? 'search-filter--visible' : 'search-filter--hidden')}`}>
             <div className="">
 
-                <h4 className="search-filter__title">Фильтры:</h4>
+                <h4 className="search-filter__title">Фильтры: </h4>
                 <div className="row">
                     <div className="col">
                         <Checkbox
                             filledIn
                             className=""
-                            checked={props.showSettlements}
+                            checked={filters.showSettlements}
                             id="show__settlements"
                             label="Показать НП-ы"
                             value="settlements"
-                            onClick={handleCheckBoxFilterClick}
+                            onChange={handleCheckBoxFilterClick}
                         /></div>
                     <div className="col">
                         <Checkbox
@@ -57,9 +67,9 @@ export const ESearchFilter = (props) => {
                             className=""
                             id="show__faps"
                             label="Показать ФАП-ы"
-                            checked={props.showFaps}
+                            checked={filters.showFaps}
                             value="faps"
-                            onClick={handleCheckBoxFilterClick}
+                            onChange={handleCheckBoxFilterClick}
                         /></div>
 
                 </div>
@@ -67,7 +77,7 @@ export const ESearchFilter = (props) => {
 
                     <SelectArea
                         // empty={true}
-                        value={props.filters.district_id}
+                        value={filters.district_id}
                         name="district_id"
                         onChange={handleSelectChange}
                         disabled={loading}

@@ -1,6 +1,4 @@
 import {Button, TextInput} from "react-materialize"
-import magnifer from "../../img/magnifier.svg"
-import {ReactComponent as Filter} from "../../img/filter.svg"
 import {SearchFilter} from "./Search/SearchFilter"
 import React, {useState} from "react"
 import './PageHeader.scss'
@@ -97,14 +95,14 @@ export const PageHeader = (props) => {
           <button
             className="search__button search__button--search"
           >
-            <img src={magnifer} alt="Поиск"/>
+            <img src='/img/magnifier.svg' alt="Поиск"/>
           </button>
 
           <button
             className="search__button search__button--filter"
             onClick={() => setFiltersVisible(!filtersVisible)}
           >
-            <Filter />
+              <img src='/img/filter.svg'/>
           </button>
         </div>
 

@@ -8,6 +8,13 @@ import {useHttp} from "../../hooks/http.hook";
 import {useQuery} from "react-query";
 import {getLocalitiesWithDistMcs} from "../../api/distances";
 
+export interface IFilterEMap {
+    district_id: number,
+    showFaps: boolean,
+    showSettlements: boolean,
+    showHeatMapPupulation: boolean,
+}
+
 export const EMapPage = () => {
 
     const {loading, request} = useHttp()
@@ -18,18 +25,16 @@ export const EMapPage = () => {
     const [orgs, setOrgs] = useState([])
     // показать подробную информацию о населенном пункте
 
-    const [filters, setFilters] = useState({
-        district_id: 2,
-    })
+    const getLocalStorageValue = (key: string, defaultValue = true) => {
+        const storedVal = localStorage.getItem(key);
+        return storedVal ? JSON.parse(storedVal) : defaultValue;
+    };
 
-    // use vals from local storage
-    const [showSettlements, setShowSettlements] = useState(() => {
-        const storedVal = localStorage.getItem('showSettlements')
-        return storedVal ? JSON.parse(storedVal) : true;
-    })
-    const [showFaps, setShowFaps] = useState(() => {
-        const storedVal = localStorage.getItem('showFaps')
-        return storedVal ? JSON.parse(storedVal) : true;
+    const [filters, setFilters] = useState<IFilterEMap>({
+        district_id: 2,
+        showFaps: getLocalStorageValue('showFaps'),
+        showSettlements: getLocalStorageValue('showSettlements'),
+        showHeatMapPupulation: getLocalStorageValue('showHeatmap'),
     })
 
     const {
@@ -60,7 +65,7 @@ export const EMapPage = () => {
         controls: [],
     });
 
-    const handleFilterChanged = (fieldChanged: any) => {
+    const handleFilterChanged = (fieldChanged: IFilterEMap) => {
 
         setFilters({
             ...filters,
@@ -69,25 +74,17 @@ export const EMapPage = () => {
 
     }
 
-    const handleCheckBoxShowFapsClick = (checked: boolean) => {
-        setShowFaps(checked)
-    }
-
-    const handleCheckBoxShowSettlementsClick = (checked: boolean) => {
-        setShowSettlements(checked)
-    }
-
+    // --------------------------------------------------------------------------------------------------------------
+    // effects
+    // --------------------------------------------------------------------------------------------------------------
     // save in local storage
     useEffect(() => {
-        localStorage.setItem('showSettlements', JSON.stringify(showSettlements))
-    }, [showSettlements]);
+        localStorage.setItem('showSettlements', JSON.stringify(filters.showSettlements))
+    }, [filters.showSettlements]);
 
     useEffect(() => {
-        localStorage.setItem('showFaps', JSON.stringify(showFaps))
-    }, [showFaps]);
-
-    // effects
-    // ----------------------------------------------------------------------------------------------------
+        localStorage.setItem('showFaps', JSON.stringify(filters.showFaps))
+    }, [filters.showFaps]);
 
     useEffect(() => {
         fetchMedicalCenters()
@@ -102,29 +99,21 @@ export const EMapPage = () => {
             }}>
                 <ESidebar
                     loading={localitiesWithDistMcsLoading}
-                    orgs={orgs}
-                    showSettlements={showSettlements}
-                    showFaps={showFaps}
-
                     hiddenSidebar={hiddenSidebar}
                     setHiddenSidebar={setHiddenSidebar}
                     setHiddenNavigation={setHiddenNavigation}
                     onFilterChanged={handleFilterChanged}
                     filters={filters}
                     localities={localitiesWithDistMcs}
-
-                    onCheckBoxShowFapsClick={handleCheckBoxShowFapsClick}
-                    onCheckBoxShowSettlementsClick={handleCheckBoxShowSettlementsClick}
                 />
 
                 <EMap
-                    loading={localitiesWithDistMcsLoading}
+                    isLoading={localitiesWithDistMcsLoading}
                     data={objects}
-                    localities={localitiesWithDistMcs}
+                    localities={localitiesWithDistMcs ?? []}
                     orgs={orgs}
                     districtId={filters.district_id}
-                    showFaps={showFaps}
-                    showSettlements={showSettlements}
+                    filters={filters}
                 />
 
                 <ENavigation

@@ -5,7 +5,6 @@ import './DetailPage.scss'
 import getAddress from "../../functions/getAddress";
 import {InlineGallery} from "../../components/FAPS/Gallery/InlineGallery"
 import {Map, Placemark, YMaps} from "react-yandex-maps"
-import {ReactComponent as ArrowBack} from '../../img/arrow-back.svg'
 import { Scrollbars } from 'react-custom-scrollbars'
 import {Button, Modal, Preloader} from "react-materialize"
 import {Box} from "../../components/FAPS/Skeleton"
@@ -98,7 +97,7 @@ export const DetailPage = () => {
                   className="detail__back-button"
                   onClick={handleBackButtonClick}
                 >
-                  <span><ArrowBack /></span> {history.length > 1 ? 'Назад' : 'Главная'}
+                  <span> <img src='/img/arrow-back.svg' alt='back'/></span> {history.length > 1 ? 'Назад' : 'Главная'}
                 </button>
               </div>
 
