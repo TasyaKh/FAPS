@@ -4,6 +4,8 @@ import './ConditionsLocality.scss'
 import {useMutation, useQuery} from "react-query";
 import {getConditionsLocalities, setConditionsLocalities} from "../../../../api/points";
 import {ProgressBar} from "react-materialize";
+import {toast} from "../../../Elements/Toast/ToastManager";
+import {AxiosError, AxiosResponse} from "axios";
 
 interface ConditionsLocalityProps {
     onSaveConditionsData: () => void;
@@ -19,7 +21,7 @@ export const ConditionsLocality:
         error: condLocError,
         isLoading: condLocLoading,
         refetch: refetchSolutions
-    } = useQuery(['conditionsLocalities'], () => getConditionsLocalities(),);
+    } = useQuery<IConditionsLocality, AxiosError, IConditionsLocality, string[]>(['conditionsLocalities'], () => getConditionsLocalities());
 
     const {
         mutateAsync,
@@ -70,6 +72,15 @@ export const ConditionsLocality:
         e.preventDefault();
         await mutateAsync(formData)
     };
+
+
+    useEffect(() => {
+        if(condLocError)
+        toast.show({
+            content: condLocError.response?.data?.toString() ?? condLocError.message,
+            type: 'error'
+        });
+    }, [condLocError]);
 
     return (
         <div className="elem">

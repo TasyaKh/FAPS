@@ -12,7 +12,7 @@ export interface IFilterEMap {
     district_id: number,
     showFaps: boolean,
     showSettlements: boolean,
-    showHeatMapPupulation: boolean,
+    showHeatmap: boolean,
 }
 
 export const EMapPage = () => {
@@ -25,7 +25,7 @@ export const EMapPage = () => {
     const [orgs, setOrgs] = useState([])
     // показать подробную информацию о населенном пункте
 
-    const getLocalStorageValue = (key: string, defaultValue = true) => {
+    const getLocalStorageValue = (key: string, defaultValue = false) => {
         const storedVal = localStorage.getItem(key);
         return storedVal ? JSON.parse(storedVal) : defaultValue;
     };
@@ -34,7 +34,7 @@ export const EMapPage = () => {
         district_id: 2,
         showFaps: getLocalStorageValue('showFaps'),
         showSettlements: getLocalStorageValue('showSettlements'),
-        showHeatMapPupulation: getLocalStorageValue('showHeatmap'),
+        showHeatmap: getLocalStorageValue('showHeatmap'),
     })
 
     const {
@@ -85,6 +85,11 @@ export const EMapPage = () => {
     useEffect(() => {
         localStorage.setItem('showFaps', JSON.stringify(filters.showFaps))
     }, [filters.showFaps]);
+
+    useEffect(() => {
+        localStorage.setItem('showHeatmap', JSON.stringify(filters.showHeatmap))
+    }, [filters.showHeatmap]);
+
 
     useEffect(() => {
         fetchMedicalCenters()

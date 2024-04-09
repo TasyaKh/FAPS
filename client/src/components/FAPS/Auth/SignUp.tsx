@@ -28,37 +28,46 @@ export const SignUp: FC<Props> = ({onSend}) => {
             {/*sign-up*/}
 
             <form className={"row mb-0"}>
-                <input
-                    className={"my-3 col s12"}
-                    type="text"
-                    name="name"
-                    placeholder="Введите имя"
-                    onChange={changeHandler}
-                />
-                <input
-                    className={"my-3 col s12"}
-                    type="email"
-                    name="email"
-                    placeholder="Введите email"
-                    onChange={changeHandler}
-                />
-                <input
-                    className={"my-3 col s12"}
-                    type="password"
-                    name="password"
-                    placeholder="Введите пароль"
-                    onChange={changeHandler}
-                />
-                <input
-                    className={"my-3 col s12"}
-                    type="password"
-                    name="repeatPassword"
-                    placeholder="Повторите пароль"
-                    onChange={changeHandler}
-                />
+                <div className="input-field col s12">
+                    <input
+                        className={""}
+                        type="text"
+                        name="name"
+
+                        onChange={changeHandler}
+                    />
+                    <label htmlFor="name">Имя</label>
+                </div>
+                <div className="input-field col s12">
+                    <input
+                        className={""}
+                        type="email"
+                        name="email"
+                        onChange={changeHandler}
+                    />
+                    <label htmlFor="email">Email</label>
+                </div>
+                <div className="input-field col s12">
+                    <input
+                        className={""}
+                        type="password"
+                        name="password"
+                        onChange={changeHandler}
+                    />
+                    <label htmlFor="password">Пароль</label>
+                </div>
+                <div className="input-field col s12">
+                    <input
+                        className={""}
+                        type="password"
+                        name="repeatPassword"
+                        onChange={changeHandler}
+                    />
+                    <label htmlFor="repeatPassword">Повторите пароль</label>
+                </div>
 
                 <button
-                    className="grey p-3 darken-4 white-text rounded my-4 login col s12"
+                    className="grey p-3 darken-4 white-text rounded my-4 login button col s12"
                     type="submit"
                     onClick={authHandler}
                 >

@@ -79,7 +79,7 @@ export const verifyUserToken = (req, res, next) => {
         next();
 
     } catch (error) {
-        res.status(400).send("Invalid Token");
+        res.status(403).send("Invalid Token, Unauthorized");
     }
 }
 
@@ -91,7 +91,7 @@ export const getUser = async (id: number) => {
 }
 
 export const checkUserRoleOrErr = (req: express.Request, res: express.Response, requiredRole: Roles) => {
-    console.log(req.user)
+    // console.log(req.user)
     const userRole = req.user.role
     if (userRole === requiredRole || roleHierarchy[userRole]?.includes(requiredRole)) {
         return true

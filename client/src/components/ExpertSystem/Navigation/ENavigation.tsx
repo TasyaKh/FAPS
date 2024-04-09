@@ -1,13 +1,24 @@
-import React, {useEffect, useState, useCallback, useContext} from 'react'
-import 'materialize-css'
+import React, {useEffect, useState, useCallback, useContext, FC} from 'react'
 import {Button, Dropdown} from 'react-materialize'
-import './ENavigation.scss'
+import '../../FAPS/Navigation/Navigation.scss'
 import {useHttp} from 'hooks/http.hook'
 import {ELegend} from "../Legend/ELegend";
 import {AuthContext} from "../../../context/AuthContext";
 import {roleHierarchy, Roles} from "../../../roles";
+import {AuthBtn} from "../../Elements/Buttons/BtnAuth/AuthBtn";
 
-export const ENavigation = (props) => {
+interface ENavigationProps {
+    hiddenNavigation: boolean
+    setHiddenNavigation: (hidden: boolean) => void
+    setHiddenSidebar: (hidden: boolean) => void
+}
+
+export const ENavigation: FC<ENavigationProps> = ({
+                                                      hiddenNavigation,
+                                                      setHiddenNavigation,
+                                                      setHiddenSidebar
+                                                  }) => {
+
     const {role} = useContext(AuthContext)
 
     const {error, request, clearError} = useHttp()
@@ -34,10 +45,10 @@ export const ENavigation = (props) => {
 
 
     const handleButtonCloseClick = () => {
-        props.setHiddenNavigation(!props.hiddenNavigation)
+        setHiddenNavigation(!hiddenNavigation)
 
-        if (props.hiddenNavigation)
-            props.setHiddenSidebar(true)
+        if (hiddenNavigation)
+            setHiddenSidebar(true)
     }
 
     const setLegendShowHandle = () => {
@@ -58,12 +69,12 @@ export const ENavigation = (props) => {
     }, [])
 
     return (
-        <div className={`navigation ${!props.hiddenNavigation && 'navigation--active'}`}>
+        <div className={`navigation ${!hiddenNavigation && 'navigation--active'}`}>
 
             <div className="navigation__close">
 
                 <button
-                    className={`navigation__button navigation__button--close ${!props.hiddenNavigation && 'navigation__button--active'}`}
+                    className={`navigation__button navigation__button--close ${!hiddenNavigation && 'navigation__button--active'}`}
                     onClick={handleButtonCloseClick}
                 >
                     <span/>
@@ -94,7 +105,9 @@ export const ENavigation = (props) => {
                             <a href="#!">Калькулятор баллов МП <i className="material-icons right">arrow_forward</i></a>
                         </Dropdown> : null
                     }
-
+                    <div className={'navigation__button navigation__link'}>
+                        <AuthBtn/>
+                    </div>
                 </div>
 
                 <div className="navigation__nav navigation__nav--bottom">

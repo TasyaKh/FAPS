@@ -1,4 +1,5 @@
 import {createContext} from 'react'
+import {Roles} from "../roles";
 
 function noop(){
 
@@ -6,7 +7,7 @@ function noop(){
 export const AuthContext = createContext({
     id: -1,
     name:"",
-    role: "",
+    role: Roles.USER,
     isAuthenticated: false,
     login: noop,
     logout:  noop,

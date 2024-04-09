@@ -29,6 +29,7 @@
 
 	&__button {
 
+		width: fit-content;
 		&--close {
 			background-color: transparent;
 			border: none;
@@ -98,6 +99,7 @@
 
 	&__button,
 	a {
+		display: inline-block;
 		margin-right: 5px;
 
 		&:last-child {
@@ -105,9 +107,6 @@
 		}
 	}
 
-	a {
-		display: inline-block;
-	}
 }
 
 @media only screen and (max-width: 768px) {

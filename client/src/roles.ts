@@ -1,7 +1,7 @@
-export enum Roles{
-    ADMIN="admin",
-    EXPERT="expert",
-    USER="user"
+export enum Roles {
+    ADMIN = "admin",
+    EXPERT = "expert",
+    USER = "user",
 }
 
 export const roleHierarchy = {

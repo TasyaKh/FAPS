@@ -152,6 +152,7 @@ export const EMap: FC<EMapProps> = ({
 
     function initHeatmap(map, localities) {
 
+        if (!filters.showHeatmap) return
         let features = prepareFeaturesHeatmap(localities)
 
         // Промис `ymaps3.ready` будет зарезолвлен, когда загрузятся все компоненты основного модуля API
@@ -267,7 +268,7 @@ export const EMap: FC<EMapProps> = ({
         if (mapLoaded) initMap()
     }, [localities, mapLoaded,
         // if filter values changed
-        filters.showFaps, filters.showSettlements]);
+        filters.showFaps, filters.showSettlements, filters.showHeatmap]);
 
     // center, zoom changed - update map
     useEffect(() => {

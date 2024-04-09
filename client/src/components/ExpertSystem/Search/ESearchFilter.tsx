@@ -18,7 +18,6 @@ export const ESearchFilter: FC<ESearchFilterProps> = ({
                                                       }) => {
     const {loading, error, request, clearError} = useHttp()
 
-
     useEffect(() => {
         if (error) {
             console.log('Ошибка: ' + error)
@@ -37,10 +36,17 @@ export const ESearchFilter: FC<ESearchFilterProps> = ({
     const handleCheckBoxFilterClick = (e: any) => {
         const {target} = e
         const {value, checked} = target
-        if (target.value === 'faps')
-            onFilterChanged({...filters, showFaps: checked})
-        else if (target.value === 'settlements')
-            onFilterChanged({...filters, showSettlements: checked})
+        switch (target.value) {
+            case 'faps':
+                onFilterChanged({...filters, showFaps: checked})
+                break
+            case 'settlements':
+                onFilterChanged({...filters, showSettlements: checked})
+                break
+            case 'heatmap':
+                onFilterChanged({...filters, showHeatmap: checked})
+                break
+        }
     }
 
     return (
@@ -57,7 +63,7 @@ export const ESearchFilter: FC<ESearchFilterProps> = ({
                             className=""
                             checked={filters.showSettlements}
                             id="show__settlements"
-                            label="Показать НП-ы"
+                            label="Населенные пункты"
                             value="settlements"
                             onChange={handleCheckBoxFilterClick}
                         /></div>
@@ -66,15 +72,23 @@ export const ESearchFilter: FC<ESearchFilterProps> = ({
                             filledIn
                             className=""
                             id="show__faps"
-                            label="Показать ФАП-ы"
+                            label="ФАП-ы"
                             checked={filters.showFaps}
                             value="faps"
                             onChange={handleCheckBoxFilterClick}
                         /></div>
-
+                    <div className="col">
+                        <Checkbox
+                            filledIn
+                            className=""
+                            id="show__heatmap"
+                            label="Тепловая карта"
+                            checked={filters.showHeatmap}
+                            value="heatmap"
+                            onChange={handleCheckBoxFilterClick}
+                        /></div>
                 </div>
                 <div className="row">
-
                     <SelectArea
                         // empty={true}
                         value={filters.district_id}

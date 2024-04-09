@@ -7,6 +7,7 @@ import {useHttp} from "../../../hooks/http.hook"
 import {Link} from "react-router-dom"
 import {Legend} from "../Legend/Legend"
 import {AuthContext} from "context/AuthContext";
+import {AuthBtn} from "../../Elements/Buttons/BtnAuth/AuthBtn";
 
 export const Navigation = (props) => {
     const {logout, isAuthenticated, role} = useContext(AuthContext)
@@ -134,27 +135,10 @@ export const Navigation = (props) => {
                             Управление
                         </Button>
                     </Link>
-
-                    {!isAuthenticated ?
-                        <Link to="/auth" className="navigation__link">
-                            <Button
-                                className="navigation__button grey darken-4 navigation__link"
-                                node="button"
-                                waves="light"
-                            >
-                                Войти
-                            </Button>
-                        </Link> :
-                        <Button
-                            className="navigation__button red darken-4 navigation__link"
-                            node="button"
-                            waves="light"
-                            onClick={onLogout}
-                        >
-                            Выйти
-                        </Button>
-                    }
-
+                    {/* auth btn */}
+                    <div className={'navigation__button navigation__link '}>
+                        <AuthBtn/>
+                    </div>
 
                 </div>
 

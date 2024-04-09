@@ -66,7 +66,7 @@ export const AuthPage = () => {
                         <a className={`tab col s6 ${tab === i ? "selected" : ''}`} onClick={() => setTab(i)}>{value}</a>
                     ))}
                 </div>
-                {/*login*/}
+                {/*login/SignUp*/}
                 {tab === 0 ? <Login onSend={handleOnSendLogin}/> : <SignUp onSend={handleOnSendReg}/>}
 
             </div>
