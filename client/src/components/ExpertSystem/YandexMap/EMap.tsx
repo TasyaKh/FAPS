@@ -174,8 +174,9 @@ export const EMap: FC<EMapProps> = ({
                     '0.7': 'rgba(230,226,0,0.7)',
                     '0.8': 'rgba(230,176,0,0.8)',
                     '0.9': 'rgba(230,123,0,0.9)',
-                    '1.0': 'rgb(230,69,0)',
+                    '1.0': 'rgba(230,69,0,1)',
                 })
+            console.log('features', features)
                 heatmap.setMap(map);
             }
         );

@@ -40,7 +40,7 @@ export default (app: Router) => {
 
             const dto:LocalitiesAndNearMcsDto = req.query as LocalitiesAndNearMcsDto
             const dS = new DistanceService()
-            const lMc = await  dS.getLocalitiesAndNearMcs(dto)
+            const lMc = await dS.getLocalitiesAndNearMcs(dto)
             return res.json(lMc)
         }
     )

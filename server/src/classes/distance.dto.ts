@@ -16,6 +16,8 @@ export class DistanceDto {
 export class LocalitiesAndNearMcsDto {
     region_id?: number;
     district_id?: number;
+
+    search?:string
     // orders
     locality_name_order?: "ASC" | "DESC"
     population_population_adult_order?: "ASC" | "DESC"

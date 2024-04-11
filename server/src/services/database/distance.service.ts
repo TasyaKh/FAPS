@@ -160,40 +160,45 @@ export class DistanceService {
         }
     }
 
-    private filterLocalitiesAndNearMcs(query: SelectQueryBuilder<Locality>, locsAndNearMcsDto: LocalitiesAndNearMcsDto) {
+    private filterLocalitiesAndNearMcs(query: SelectQueryBuilder<Locality>, dto: LocalitiesAndNearMcsDto) {
 
         // district_id
-        if (locsAndNearMcsDto.district_id) {
+        if (dto.district_id) {
             query.andWhere('locality.district_id = :district_id',
-                {district_id: locsAndNearMcsDto.district_id})
+                {district_id: dto.district_id})
             // region_id
-        } else if (locsAndNearMcsDto.region_id) {
+        } else if (dto.region_id) {
             query.leftJoin('locality.district', 'district')
-                .andWhere('district.region_id = :region_id', {region_id: locsAndNearMcsDto.region_id})
+                .andWhere('district.region_id = :region_id', {region_id: dto.region_id})
         }
+
+        // search
+        dto.search ?
+            query.andWhere('LOWER(locality.name) LIKE :name', {name: `%${dto.search}%`})
+            : null
 
         // ORDERS
         // population_population_adult_order
-        locsAndNearMcsDto.locality_name_order ? query.orderBy('locality.name',
-            locsAndNearMcsDto.locality_name_order) : query
+        dto.locality_name_order ? query.orderBy('locality.name',
+            dto.locality_name_order) : query
         // population_population_adult_order
-        locsAndNearMcsDto.population_population_adult_order ? query.orderBy('population.population_adult',
-            locsAndNearMcsDto.population_population_adult_order) : query
+        dto.population_population_adult_order ? query.orderBy('population.population_adult',
+            dto.population_population_adult_order) : query
         // medical_center_name_order
-        locsAndNearMcsDto.medical_center_name_order ? query.orderBy('mc.name',
-            locsAndNearMcsDto.medical_center_name_order) : query
+        dto.medical_center_name_order ? query.orderBy('mc.name',
+            dto.medical_center_name_order) : query
         // mc_staffing_order
-        locsAndNearMcsDto.mc_staffing_order ? query.orderBy('mc.staffing',
-            locsAndNearMcsDto.mc_staffing_order) : query
+        dto.mc_staffing_order ? query.orderBy('mc.staffing',
+            dto.mc_staffing_order) : query
         // mc_type_name_order
-        locsAndNearMcsDto.mc_type_name_order ? query.orderBy('mc_type.name',
-            locsAndNearMcsDto.mc_type_name_order) : query
+        dto.mc_type_name_order ? query.orderBy('mc_type.name',
+            dto.mc_type_name_order) : query
         // min_distance_order
-        locsAndNearMcsDto.min_distance_order ? query.orderBy('dtmc.distance',
-            locsAndNearMcsDto.min_distance_order) : query
+        dto.min_distance_order ? query.orderBy('dtmc.distance',
+            dto.min_distance_order) : query
         // min_duration_order
-        locsAndNearMcsDto.min_duration_order ? query.orderBy('dtmc.duration',
-            locsAndNearMcsDto.min_duration_order) : query
+        dto.min_duration_order ? query.orderBy('dtmc.duration',
+            dto.min_duration_order) : query
 
         return query
     }

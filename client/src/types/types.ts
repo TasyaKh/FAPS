@@ -32,6 +32,7 @@ export interface ILocalitiDistToNearectMC{
     district_id?:number;
 
     // order
+    search?:string
     locality_name_order?: Order,
     population_population_adult_order?: Order,
     medical_center_name_order?: Order,

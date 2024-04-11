@@ -2,7 +2,7 @@ import './ESidebar.scss'
 import React, {FC, useContext, useState} from 'react'
 import {Skeleton} from "../FAPS/Skeleton";
 import {MapContext} from "../../context/MapContext";
-import {ESearch} from "./Search/ESearch";
+import {ESearchAndFilter} from "./Search/ESearchAndFilter";
 import {ListViewLocalities} from "./Locality/ListViewLocalities";
 import CustomScrollbars from "../FAPS/CustomScrollbar";
 import {SingleLocality} from "./Locality/SingleLocality";
@@ -54,8 +54,10 @@ export const ESidebar: FC<ESidebarProps> = ({
         })
     }
 
-    const HandleInputSearch = (e: any) => {
-        setState({...state, 'search': e.target.value.trim().toLowerCase()})
+    const handleInputSearch = (e: any) => {
+        const txt =  e.target.value.trim().toLowerCase()
+        setState({...state, 'search':txt})
+        onFilterChanged({...filters, search: txt})
     }
 
     const handlePanelScroll = (e: any) => {}
@@ -128,10 +130,10 @@ export const ESidebar: FC<ESidebarProps> = ({
 
             <div className="sidebar__wrapper">
 
-                <ESearch
+                <ESearchAndFilter
                     filterShow={state.filter.show}
                     scroll={state.scroll}
-                    handleInput={HandleInputSearch}
+                    handleInput={handleInputSearch}
                     handleFilter={handleFilterButton}
                     onFilterChanged={onFilterChanged}
                     filters={filters}

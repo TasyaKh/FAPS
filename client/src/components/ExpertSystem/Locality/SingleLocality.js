@@ -3,6 +3,8 @@ import "./SingleLocality.scss"
 import {MapContext} from "../../../context/MapContext";
 import {useHttp} from "../../../hooks/http.hook";
 import {DistanceToMcElem} from "../DistanceToMC";
+import {Icon} from "react-materialize";
+import {Order} from "../../../enums";
 
 export const SingleLocality = (props) => {
 
@@ -57,7 +59,8 @@ export const SingleLocality = (props) => {
                         className="single-locality__button single-locality__button--back"
                         onClick={props.back}
                     >
-                        <img src={'/img/arrow-back.svg'}/>
+                        <Icon
+                            className={"material-icons"}>arrow_forward</Icon>
                     </button>
 
                     <span className={"single-locality__title"}> {locality?.name}</span>

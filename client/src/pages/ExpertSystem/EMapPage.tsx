@@ -7,9 +7,13 @@ import "../../scss/indents.scss"
 import {useHttp} from "../../hooks/http.hook";
 import {useQuery} from "react-query";
 import {getLocalitiesWithDistMcs} from "../../api/distances";
+import {Order} from "../../enums";
 
 export interface IFilterEMap {
     district_id: number,
+    population_population_adult_order: Order,
+    search: string,
+
     showFaps: boolean,
     showSettlements: boolean,
     showHeatmap: boolean,
@@ -32,6 +36,8 @@ export const EMapPage = () => {
 
     const [filters, setFilters] = useState<IFilterEMap>({
         district_id: 2,
+        search: '',
+        population_population_adult_order: Order.DESC,
         showFaps: getLocalStorageValue('showFaps'),
         showSettlements: getLocalStorageValue('showSettlements'),
         showHeatmap: getLocalStorageValue('showHeatmap'),
@@ -42,7 +48,7 @@ export const EMapPage = () => {
         // error: localitiesWithDistMcsError,
         isLoading: localitiesWithDistMcsLoading,
         // refetch: localitiesWithDistMcsRefetch
-    } = useQuery(['getLocalitiesWithDistMcs', filters.district_id], () => getLocalitiesWithDistMcs(filters.district_id));
+    } = useQuery(['getLocalitiesWithDistMcs', filters.district_id, filters.search], () => getLocalitiesWithDistMcs({...filters}));
 
     const fetchMedicalCenters = async () => {
         try {
