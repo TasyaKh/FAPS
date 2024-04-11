@@ -1,17 +1,17 @@
 import React, {useState} from 'react'
 import {Button, Icon, Preloader} from 'react-materialize'
-import './SolutionsLocalitiesPage.scss'
+import '../Calculators.scss'
 import {TableSolutions} from 'components/ExpertSystem/TableSolutions'
-import {SelectArea} from "../../../components/FAPS/SelectArea";
-import {ConditionsLocality} from "../../../components/ExpertSystem/Modals/Calculators/ConditionsLocality";
-import {DefaultModal} from "../../../components/ExpertSystem/Modals/TemplateModal";
+import {SelectArea} from "components/FAPS/SelectArea";
+import {ConditionsLocality} from "components/ExpertSystem/Modals/Calculators/ConditionsLocality";
+import {DefaultModal} from "components/ExpertSystem/Modals/TemplateModal";
 import {useQuery} from "react-query";
-import {getSolutionsLocalities} from "../../../api/points";
-import {Order} from "../../../enums";
-import {ILocalitiDistToNearectMC} from "../../../types/types";
-import {getExcelSolutionsLocalities} from "../../../api/uploads";
+import {getSolutionsLocalities} from "api/points";
+import {Order} from "enums";
+import {ILocalitiDistToNearectMC} from "types/types";
+import {getExcelSolutionsLocalities} from "api/uploads";
 
-export const SolutionsLocalitiesPage = () => {
+export const CalculatorLocalitiesPage = () => {
 
     const [filters, setFilters] = useState<ILocalitiDistToNearectMC>({
         region_id: 1,

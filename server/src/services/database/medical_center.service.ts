@@ -1,35 +1,33 @@
 import MC from "../../entities/medical_center.entity";
 import express from "express";
 import AppDataSource from "../../typeorm.config";
+import MedicalCenter from "../../entities/medical_center.entity";
+import {MedicalCenterDto} from "../../dto/points_medical_center.dto";
 
-export async function getMedicalCenters(mc: MC, res: express.Response) {
+export async function getMedicalCenters(mc: MedicalCenterDto, res: express.Response) {
     let r
-
-    const entityManager = AppDataSource.createEntityManager()
 
     try {
 
-        let values: any[] = []
-
-        let query = `SELECT medical_center.name, medical_center.latitude,
-            medical_center.longitude, medical_center.id 
-            FROM medical_center
-            left join locality on locality_id = locality.id
-            left join district on district_id = district.id
-            where 1 = 1 `
+        const mcRepo = AppDataSource.getRepository(MedicalCenter)
+        const query = mcRepo.createQueryBuilder('medical_center')
+            .leftJoinAndSelect('medical_center.locality', 'locality')
+            .leftJoinAndSelect('locality.population', 'population')
+            .leftJoinAndSelect('locality.district', 'district')
+            .leftJoinAndSelect('medical_center.building_condition', 'building_condition')
+            .where('district.id = :district_id', {district_id: mc.district_id})
 
 
         if (mc.district_id) {
-            query += 'and `district`.`id` = ?'
-            values.push(mc.district_id)
+            query.andWhere('district.id = :district_id', {district_id: mc.district_id})
         }
 
         if (mc.region_id) {
-            query += 'and `district`.`region_id` = ?'
-            values.push(mc.region_id)
+            query.leftJoinAndSelect('district.region', 'region')
+                .andWhere('region.id = :region_id', {region_id: mc.region_id})
         }
 
-        r = await entityManager.query(query, values)
+        r = await query.getMany()
 
     } catch (e) {
         console.log(e)

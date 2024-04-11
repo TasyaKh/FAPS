@@ -65,6 +65,7 @@ export const login = async (findUser: { nameEmail?: string, password: string; })
 
 export const verifyUserToken = (req, res, next) => {
     let token = req.headers.authorization;
+    console.log(req.headers)
     if (!token) return res.status(401).send("Access Denied / Unauthorized request");
 
     try {

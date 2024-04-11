@@ -1,7 +1,8 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import Locality from "./locality.entity";
 import {MedicalFacility} from "./medical_facility.entity";
 import {Type} from "./types.entity";
+import BuildingCondition from "./building_condition.entity";
 
 @Entity('medical_center')
 export default class MedicalCenter {
@@ -55,6 +56,9 @@ export default class MedicalCenter {
     @JoinColumn({ name: 'locality_id' })
     locality: Locality;
 
+    @OneToOne(() => BuildingCondition)
+    building_condition: BuildingCondition;
+
     @ManyToOne(() => MedicalFacility, {onDelete: 'CASCADE'})
     @JoinColumn({ name: 'medical_facility_id' })
     medical_facility: MedicalFacility;
@@ -62,7 +66,4 @@ export default class MedicalCenter {
     @ManyToOne(() => Type, {onDelete: 'CASCADE'})
     @JoinColumn({ name: 'type_id' })
     type: Type;
-
-    region_id:number
-    district_id:number
 }

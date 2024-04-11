@@ -1,4 +1,4 @@
-import {LocalitiesAndNearMcsDto} from "../../classes/distance.dto";
+import {LocalitiesAndNearMcsDto} from "../../dto/distance.dto";
 import {PointsService} from "./points.service";
 import {Workbook} from "exceljs";
 import express from "express";
@@ -6,9 +6,9 @@ import express from "express";
 export class UploadsService {
 
     // excel get solutions for localities
-    async getExcelSolutionsLocalities(res: express.Response, locsAndNearMcsDto: LocalitiesAndNearMcsDto) {
+    async getExcelSolutionsLocalities(userId:number, res: express.Response, locsAndNearMcsDto: LocalitiesAndNearMcsDto) {
         const pointsService = new PointsService()
-        const solutionsLocs = await pointsService.getSolutionsLocalities(locsAndNearMcsDto)
+        const solutionsLocs = await pointsService.getSolutionsLocalities(userId, locsAndNearMcsDto)
 
         res.setHeader(
             'Content-Type',

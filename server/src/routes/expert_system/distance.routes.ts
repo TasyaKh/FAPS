@@ -1,7 +1,7 @@
 import express, {NextFunction, Router} from 'express'
 import {DistanceService} from "../../services/database/distance.service";
 import {celebrate, Joi} from "celebrate";
-import {DistanceDto, LocalitiesAndNearMcsDto} from "../../classes/distance.dto";
+import {DistanceDto, LocalitiesAndNearMcsDto} from "../../dto/distance.dto";
 
 const router = Router()
 export default (app: Router) => {

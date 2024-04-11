@@ -1,4 +1,4 @@
-// import PointsMedicalCenter from '../../classes/points_medical_center.entity'
+// import PointsMedicalCenter from '../../dto/points_medical_center.entity'
 // import connection from '../../db'
 //
 //

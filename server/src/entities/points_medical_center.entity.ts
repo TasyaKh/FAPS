@@ -28,6 +28,6 @@ export class PointsMedicalCenter {
     max_found_year: number;
 
     @ManyToOne(() => User, { nullable: true, onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'user' })
+    @JoinColumn({ name: 'user_id' })
     user: User;
 }

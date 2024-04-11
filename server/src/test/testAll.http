@@ -25,7 +25,7 @@ content-type: application/json
 ### points/conditions-localities
 POST http://localhost:3002/api/points/conditions-localities
 content-type: application/json
-auth-token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6ImV4cGVydCIsInJvbGUiOiJleHBlcnQiLCJpYXQiOjE3MDY3ODgyNTgsImV4cCI6MTcwNjg3NDY1OH0.-_T9L2CrHTfmSdYPijXJoHV8nUZio34xFMo-h3bDueI"
+Authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6ImV4cGVydCIsInJvbGUiOiJleHBlcnQiLCJpYXQiOjE3MDY3ODgyNTgsImV4cCI6MTcwNjg3NDY1OH0.-_T9L2CrHTfmSdYPijXJoHV8nUZio34xFMo-h3bDueI"
 
 {
   "min_dist_mc": 6,

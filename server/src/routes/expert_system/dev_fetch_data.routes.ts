@@ -6,6 +6,7 @@ import {DevService} from "../../services/database/dev.service";
 import {getOrganizationsByDistrictId} from "../../services/database/organization.service";
 import {checkUserRoleOrErr, verifyUserToken} from "../../services/database/auth.service";
 import {Roles} from "../../roles";
+import {MedicalCenterDto} from "../../dto/points_medical_center.dto";
 
 const router = Router()
 export default (app: Router) => {
@@ -35,7 +36,7 @@ export default (app: Router) => {
 
                 // get mc_centers by disctrict
                 if (requestBody.region_id) {
-                    const mc = new MC()
+                    const mc:MedicalCenterDto = {}
                     mc.region_id = requestBody.region_id
                     // mc.district_id = requestBody.district_id
                     mcs = await getMedicalCenters(mc, res)

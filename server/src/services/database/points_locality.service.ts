@@ -1,4 +1,4 @@
-// import PointsLocality from '../../classes/points_locality.entity'
+// import PointsLocality from '../../dto/points_locality.entity'
 // import connection from "../../db";
 //
 // export async function getPointsLocalitiesOfDistrict(req:any, res:any) {

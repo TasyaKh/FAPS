@@ -1,4 +1,4 @@
-import {DistanceDto, LocalitiDistToNearectMC, LocalitiesAndNearMcsDto} from "../../classes/distance.dto";
+import {DistanceDto, LocalitiDistToNearectMC, LocalitiesAndNearMcsDto} from "../../dto/distance.dto";
 import AppDataSource from "../../typeorm.config";
 import Distance from "../../entities/distance.entity";
 import express from "express";

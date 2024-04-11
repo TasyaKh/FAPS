@@ -1,0 +1,20 @@
+### points-mcs
+POST http://localhost:3002/api/points/points-mcs
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzEyODI4OTkwLCJleHAiOjE3MTI5MTUzOTB9.GILy8HeEso5zNGTcIri9R9BTkcn2lDOvUQp7AyC4hNI
+
+{
+  "adult_population": 10,
+  "child_population": 2,
+  "max_found_year": 4,
+  "foundation_year": 4,
+  "staffing" : 3,
+  "state": 2,
+  "each_pers_staffing":2
+}
+
+### points-mcs
+GET http://localhost:3002/api/points/points-mcs
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzEyODI4OTkwLCJleHAiOjE3MTI5MTUzOTB9.GILy8HeEso5zNGTcIri9R9BTkcn2lDOvUQp7AyC4hNI
+content-type: application/json
+

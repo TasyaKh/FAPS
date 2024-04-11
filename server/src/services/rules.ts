@@ -1,5 +1,5 @@
 import {Engine, RuleProperties} from "json-rules-engine";
-import {ConditionsLocalityDto} from "../classes/conditions_locality.dto";
+import {ConditionsLocalityDto} from "../dto/conditions_locality.dto";
 
 export class RuleEngine {
     // default conditions for rules

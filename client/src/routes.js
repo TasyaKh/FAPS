@@ -9,7 +9,7 @@ import {AdminPage} from "./pages/AdminPage/AdminPage"
 import {AddPage} from "./pages/AddPage"
 // import {PointsLocalities} from 'pages/ExpertSystem/PointsLocalities'
 import {EMapPage} from 'pages/ExpertSystem/EMapPage'
-import {SolutionsLocalitiesPage} from "./pages/ExpertSystem/SolutionLocalities";
+import {CalculatorLocalitiesPage} from "./pages/ExpertSystem/Calculators/CalculatorLocalities";
 import {AuthPage} from "./pages/AuthPage/AuthPage";
 
 export const useRoutes = isAuthenticated => {
@@ -69,7 +69,7 @@ export const useRoutes = isAuthenticated => {
             {/*</Route>*/}
 
             <Route path="/expert-system/solution-localities">
-                <SolutionsLocalitiesPage/>
+                <CalculatorLocalitiesPage/>
             </Route>
 
             <Route path="/expert-system">
