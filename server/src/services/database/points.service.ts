@@ -115,19 +115,22 @@ export class PointsService {
         const existingConditions = await this.getPointsMCS(userId)
 
         if (!existingConditions) {
+            return null
         } else {
             const mcs = await getMedicalCenters(body, res)
 
-            const points: PointsMedicalCenterDto = {}
+            const points: PointsMedicalCenterDto[] = []
 
             mcs.forEach((mc, index) => {
-                points.foundation_year = mc.founding_year * existingConditions.foundation_year
-                points.staffing = ((1.0 - mc.staffing) / (100 / existingConditions.each_pers_staffing)) * existingConditions.staffing
-                points.state = (1.0 - mc.staffing) * existingConditions.staffing
+                const p = points[index]
+                p.foundation_year = mc.founding_year * existingConditions.foundation_year
+                p.staffing = ((1.0 - mc.staffing) / (100 / existingConditions.each_pers_staffing)) * existingConditions.staffing
+                p.state = mc.building_condition.state === 'строится' ? existingConditions.state : 0
+                p.adult_population = mc.locality.population.population_adult *  existingConditions.adult_population
+                p.child_population = mc.locality.population.population_child *  existingConditions.child_population
             })
 
+            return points
         }
-
-        // return result
     }
 }
