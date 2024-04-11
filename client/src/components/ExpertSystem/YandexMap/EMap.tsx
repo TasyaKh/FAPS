@@ -163,6 +163,19 @@ export const EMap: FC<EMapProps> = ({
                     },
                     heatmap = new Heatmap(data);
                 heatmap.options.set('radius', 23);
+                //         $colors: (lightcyan, lightblue,lightskyblue,  lightseagreen, lightgreen, lightgoldenrodyellow, lightsalmon, lightcoral, mediumpurple, rebeccapurple);
+                heatmap.options.set('gradient', {
+                    '0.1': 'rgba(0, 8, 230, 0.4)',
+                    '0.2': 'rgba(0, 180, 230, 0.4)',
+                    '0.3': 'rgba(0, 220, 230, 0.5)',
+                    '0.4': 'rgba(0, 250, 195, 0.5)',
+                    '0.5': 'rgba(0,230,19,0.6)',
+                    '0.6': 'rgba(138,230,0,0.6)',
+                    '0.7': 'rgba(230,226,0,0.7)',
+                    '0.8': 'rgba(230,176,0,0.8)',
+                    '0.9': 'rgba(230,123,0,0.9)',
+                    '1.0': 'rgb(230,69,0)',
+                })
                 heatmap.setMap(map);
             }
         );

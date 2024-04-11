@@ -18,7 +18,7 @@ export const AuthBtn: FC<AuthBtnProps> = () => {
     return (
         <>
             {!isAuthenticated ?
-                <Link to="/auth" className="">
+                <Link to="/auth" className="auth-btn">
                     <Button
                         className="grey darken-4 "
                         node="button"

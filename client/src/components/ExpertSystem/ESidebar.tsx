@@ -58,15 +58,7 @@ export const ESidebar: FC<ESidebarProps> = ({
         setState({...state, 'search': e.target.value.trim().toLowerCase()})
     }
 
-    const handlePanelScroll = (e: any) => {
-        const scrollTop = e.target.scrollTop
-
-        if (scrollTop > 50) {
-            setState({...state, 'scroll': true})
-        } else {
-            setState({...state, 'scroll': false})
-        }
-    }
+    const handlePanelScroll = (e: any) => {}
 
 
     const handleToggleButton = () => {
@@ -183,8 +175,6 @@ export const ESidebar: FC<ESidebarProps> = ({
                                 }
                             </CustomScrollbars>
                     }
-
-                    {/*<Scrollbar />*/}
                 </div>
 
             </div>
