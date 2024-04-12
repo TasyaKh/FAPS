@@ -18,3 +18,8 @@ GET http://localhost:3002/api/points/points-mcs
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzEyODI4OTkwLCJleHAiOjE3MTI5MTUzOTB9.GILy8HeEso5zNGTcIri9R9BTkcn2lDOvUQp7AyC4hNI
 content-type: application/json
 
+### medical-centers
+GET http://localhost:3002/api/medical-centers?district_id=2
+content-type: application/json
+
+

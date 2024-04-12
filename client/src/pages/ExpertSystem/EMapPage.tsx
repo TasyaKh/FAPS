@@ -21,7 +21,7 @@ export interface IFilterEMap {
 
 export const EMapPage = () => {
 
-    const {loading, request} = useHttp()
+    const { request} = useHttp()
     const [objects, setObjects] = useState([])
     // const [localities, setLocalities] = useState([])
     const [hiddenSidebar, setHiddenSidebar] = useState(false)

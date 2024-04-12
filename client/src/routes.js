@@ -7,10 +7,9 @@ import {EditPage} from "./pages/EditPage/EditPage"
 import {ErrorPage} from "./pages/ErrorPage/ErrorPage"
 import {AdminPage} from "./pages/AdminPage/AdminPage"
 import {AddPage} from "./pages/AddPage"
-// import {PointsLocalities} from 'pages/ExpertSystem/PointsLocalities'
 import {EMapPage} from 'pages/ExpertSystem/EMapPage'
-import {CalculatorLocalitiesPage} from "./pages/ExpertSystem/Calculators/CalculatorLocalities";
 import {AuthPage} from "./pages/AuthPage/AuthPage";
+import {CalculatorPage} from "./pages/ExpertSystem/Calculators/CalculatorPage";
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
@@ -69,7 +68,7 @@ export const useRoutes = isAuthenticated => {
             {/*</Route>*/}
 
             <Route path="/expert-system/solution-localities">
-                <CalculatorLocalitiesPage/>
+                <CalculatorPage/>
             </Route>
 
             <Route path="/expert-system">

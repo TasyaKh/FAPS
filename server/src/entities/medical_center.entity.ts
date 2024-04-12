@@ -57,6 +57,7 @@ export default class MedicalCenter {
     locality: Locality;
 
     @OneToOne(() => BuildingCondition)
+    @JoinColumn([{name: 'building_condition_id'}])
     building_condition: BuildingCondition;
 
     @ManyToOne(() => MedicalFacility, {onDelete: 'CASCADE'})

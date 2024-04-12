@@ -1,11 +1,11 @@
 import React, {type FC, useEffect, useState} from 'react'
-import {IConditionsLocality} from "../../../../types/types";
+import {IConditionsLocality} from "types/types";
 import './ConditionsLocality.scss'
 import {useMutation, useQuery} from "react-query";
-import {getConditionsLocalities, setConditionsLocalities} from "../../../../api/points";
+import {getConditionsLocalities, setConditionsLocalities} from "api/points";
 import {ProgressBar} from "react-materialize";
 import {toast} from "../../../Elements/Toast/ToastManager";
-import {AxiosError, AxiosResponse} from "axios";
+import {AxiosError} from "axios";
 
 interface ConditionsLocalityProps {
     onSaveConditionsData: () => void;

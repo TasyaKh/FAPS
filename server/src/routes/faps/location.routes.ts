@@ -1,7 +1,6 @@
 import {Router} from 'express'
 import AppDataSource from "../../typeorm.config";
 import Locality from "../../entities/locality.entity";
-import {DistanceService} from "../../services/database/distance.service";
 
 const router = Router()
 export default (app: Router) => {

@@ -5,6 +5,7 @@ import apiMapFilter from '../routes/faps/filter.routes'
 import apiMapSingle from '../routes/faps/single.routes'
 import apiMapOrg from '../routes/faps/org.routes'
 import apiView from '../routes/faps/view.routes'
+import apiMCS from '../routes/faps/medical_centers.routes'
 import apiDetail from '../routes/faps/detail.routes'
 import apiReports from '../routes/faps/reports.routes'
 import apiReportsArea from '../routes/faps/area.routes'
@@ -33,6 +34,7 @@ export default () => {
     apiMapSingle(app);
     apiMapOrg(app);
     apiView(app);
+    apiMCS(app);
     apiDetail(app);
     apiReports(app);
     apiReportsArea(app);

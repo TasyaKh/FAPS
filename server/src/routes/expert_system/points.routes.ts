@@ -18,12 +18,14 @@ export default (app: Router) => {
     // /api/points
     router.get(
         '/solutions-localities',
+        verifyUserToken,
         celebrate({
             params: Joi.object({
                 district_id: Joi.number(),
             }),
         }),
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             const userId = req.user.id
             const body = req.query as LocalitiesAndNearMcsDto
 
@@ -139,12 +141,14 @@ export default (app: Router) => {
     // /api/solutions-mcs
     router.get(
         '/solutions-mcs',
+        verifyUserToken,
         celebrate({
             params: Joi.object({
                 district_id: Joi.number(),
             }),
         }),
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             const userId = req.user.id
             const body: MedicalCenterDto = req.query
 

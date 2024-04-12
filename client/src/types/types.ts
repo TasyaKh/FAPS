@@ -1,6 +1,6 @@
 import {Order} from "../enums";
 
-export interface ILocalitiDistToNearectMC{
+export interface ILocalitiDistToNearectMC {
 
     locality_id?: number,
     locality_district_id?: number,
@@ -28,11 +28,11 @@ export interface ILocalitiDistToNearectMC{
     min_facility_distance?: number,
     min_facility_duration?: number
 
-    region_id?:number;
-    district_id?:number;
+    region_id?: number;
+    district_id?: number;
 
     // order
-    search?:string
+    search?: string
     locality_name_order?: Order,
     population_population_adult_order?: Order,
     medical_center_name_order?: Order,
@@ -42,20 +42,83 @@ export interface ILocalitiDistToNearectMC{
     min_duration_order?: Order
 }
 
-export interface ICustomSolutionsLocalities{
-    data?:ILocalitiDistToNearectMC,
-    solutions?:string[]
+export interface ICustomSolutionsLocalities {
+    data?: ILocalitiDistToNearectMC,
+    solutions?: string[]
 }
 
-export interface IConditionsLocality{
+export interface IConditionsLocality {
     min_dist_mc?: number;
     population_FAP?: number;
     population_Ambulatory?: number;
 }
 
-export interface IUser{
+export interface IUser {
     nameEmail?: string;
     name?: string;
     email?: string;
     password?: string;
+}
+
+// --------------------------------------------------------------------------------------------------------------
+// locality
+// --------------------------------------------------------------------------------------------------------------
+export interface ILocality {
+    id?: number
+    district?: IDistrict
+    name?: string
+    latitude?: string
+    longitude?: string
+    population?: IPopulation
+}
+
+export interface IDistrict {
+    id?: number
+    name?: string
+}
+
+export interface IPopulation {
+    id?: number
+    locality?: ILocality
+    population_adult?: number
+    population_child?: number
+    year?: number
+}
+
+// --------------------------------------------------------------------------------------------------------------
+// medical centers
+// --------------------------------------------------------------------------------------------------------------
+
+export interface IPointsMedicalCenter {
+    id?: number,
+    adult_population?: number,
+    child_population?: number,
+    foundation_year?: number,
+    staffing?: number,
+    state?: number,
+    each_pers_staffing?: number,
+    max_found_year?: number
+}
+
+export interface IBuildingCondition {
+    id?: number
+    state?:string
+    deteroation?:number
+}
+
+
+export interface IMedicalCenter {
+    id?: number
+    locality?: ILocality
+    name?: string
+    street?: string
+    number_of_house?: string
+    latitude?: number
+    longitude?: number
+    pharmacy?: number
+    founding_year?: number
+    staffing?: number
+    phone?: string
+
+    building_condition?: IBuildingCondition
 }

@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm"
+import {Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm"
 import MedicalCenter from "./medical_center.entity";
 
 @Entity("building_condition")
@@ -19,7 +19,6 @@ export default class BuildingCondition {
     @Column()
     deteroation: number
 
-    @ManyToOne(() => MedicalCenter, (mc) => mc.id, {onDelete: 'CASCADE'})
-    @JoinColumn([{name: 'medical_center_id'}])
-    medical_center: MedicalCenter
+    @OneToOne(() => MedicalCenter)
+    medical_center: MedicalCenter;
 }

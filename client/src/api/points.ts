@@ -1,16 +1,21 @@
 import axiosInstance from "./axiosInstance";
-import {IConditionsLocality, ICustomSolutionsLocalities, ILocalitiDistToNearectMC} from "../types/types";
+import {
+    IConditionsLocality,
+    ICustomSolutionsLocalities,
+    ILocalitiDistToNearectMC,
+    IPointsMedicalCenter
+} from "../types/types";
 
 // --------------------------------------------------------------------------------------------------------------
 // localities
 // --------------------------------------------------------------------------------------------------------------
-export const getSolutionsLocalities = async (filters: ILocalitiDistToNearectMC)  => {
-    const {data}  = await axiosInstance.get<ICustomSolutionsLocalities[]>(`/api/points/solutions-localities`, {params: {...filters}});
+export const getSolutionsLocalities = async (filters: ILocalitiDistToNearectMC) => {
+    const {data} = await axiosInstance.get<ICustomSolutionsLocalities[]>(`/api/points/solutions-localities`, {params: {...filters}});
     return data;
 };
 
-export const setConditionsLocalities = async (iConditionsLocality:IConditionsLocality) => {
-    const {data} = await axiosInstance.post(`/api/points/conditions-localities`,  {...iConditionsLocality});
+export const setConditionsLocalities = async (iConditionsLocality: IConditionsLocality) => {
+    const {data} = await axiosInstance.post(`/api/points/conditions-localities`, {...iConditionsLocality});
     return data;
 };
 
@@ -22,12 +27,12 @@ export const getConditionsLocalities = async () => {
 // --------------------------------------------------------------------------------------------------------------
 // mcs
 // --------------------------------------------------------------------------------------------------------------
-export const setPointsMedicalCenters = async (iConditionsLocality:IConditionsLocality) => {
-    const {data} = await axiosInstance.post(`/api/points/conditions-localities`,  {...iConditionsLocality});
+export const setPointsMedicalCenters = async (filter: IPointsMedicalCenter) => {
+    const {data} = await axiosInstance.post(`/api/points/points-mcs`, {...filter});
     return data;
 };
 
 export const getPointsMedicalCenters = async () => {
-    const {data} = await axiosInstance.get<IConditionsLocality>(`/api/points/conditions-localities`);
+    const {data} = await axiosInstance.get<IPointsMedicalCenter>(`/api/points/points-mcs`);
     return data;
 };
