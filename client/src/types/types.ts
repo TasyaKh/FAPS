@@ -1,5 +1,8 @@
 import {Order} from "../enums";
 
+// --------------------------------------------------------------------------------------------------------------
+// addition
+// --------------------------------------------------------------------------------------------------------------
 export interface ILocalitiDistToNearectMC {
 
     locality_id?: number,
@@ -42,9 +45,26 @@ export interface ILocalitiDistToNearectMC {
     min_duration_order?: Order
 }
 
+export interface ISolutionsMCS {
+    mc: IMedicalCenter
+
+    adult_population?: number
+    child_population?: number
+    foundation_year?: number
+    staffing?: number
+    state?: number
+
+    sum?: number
+}
+
+export interface IMessages {
+    key: string,
+    name: string
+}
+
 export interface ICustomSolutionsLocalities {
     data?: ILocalitiDistToNearectMC,
-    solutions?: string[]
+    solutions?: IMessages[]
 }
 
 export interface IConditionsLocality {
@@ -102,8 +122,8 @@ export interface IPointsMedicalCenter {
 
 export interface IBuildingCondition {
     id?: number
-    state?:string
-    deteroation?:number
+    state?: string
+    deteroation?: number
 }
 
 

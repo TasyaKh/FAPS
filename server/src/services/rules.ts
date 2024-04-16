@@ -1,6 +1,39 @@
 import {Engine, RuleProperties} from "json-rules-engine";
 import {ConditionsLocalityDto} from "../dto/conditions_locality.dto";
 
+export interface IMessages {
+    key: string,
+    name: string
+}
+
+const messages: IMessages[] = [
+    {
+        key: "needFapFarDistance",
+        name: 'Необходимо построить МП так как большое расстояние до ближайшего МП '
+    },
+    {
+        key: "needStaff",
+        name: 'Нам нужен доктор в медицинском учреждении, так как население '
+    },
+    {
+        key: "upgradeMCToHosp",
+        name: 'Необходимо улучшить тип МП до Амбулатории или больницы, так как население в НП-е МП-а '
+    },
+    {
+        key: "needFapPopulation",
+        name: 'Необходимо построить МП (Амбулатория или больница), так как нет МП и население '
+    },
+    {
+        key: "downgradeMCtoFap",
+        name: 'Необходимо понизить тип МП до ФАПА т.к население '
+    },
+    {
+        key: "noNeedFap",
+        name: 'МП не требуется так как число людей в НП '
+    }
+];
+
+
 export class RuleEngine {
     // default conditions for rules
     minDistanceKm: number = 10
@@ -20,7 +53,7 @@ export class RuleEngine {
     // Some error occurred
     err: any;
 
-    public setConditions(cLD:ConditionsLocalityDto): void {
+    public setConditions(cLD: ConditionsLocalityDto): void {
         this.minDistanceKm = cLD.min_dist_mc ?? this.minDistanceKm
         this.minPopulationForFAP = cLD.population_FAP ?? this.minPopulationForFAP
         this.minPopulationForAmbulance = cLD.population_Ambulatory ?? this.minPopulationForAmbulance
@@ -49,8 +82,12 @@ export class RuleEngine {
 
                     ],
                 },
+
                 event: {
-                    type: `Необходимо построить МП так как большое расстояние до ближайшего МП > ${this.minDistanceKm}`,
+                    type: messages[0].key,
+                    params: {
+                        message: messages[0].name + (' > ' + this.minDistanceKm)
+                    }
                 },
             },
             //  ****************************************************************************************************
@@ -71,7 +108,10 @@ export class RuleEngine {
                     ],
                 },
                 event: {
-                    type: `Нам нужен доктор в медицинском учреждении, так как население > ${this.minPopulationForFAP}, а состав персонала = ${this.staffCompositionForDoctor}`,
+                    type: messages[1].key,
+                    params: {
+                        message: messages[1].name + ('>' + this.minPopulationForFAP + ' а состав персонала = ' + this.staffCompositionForDoctor)
+                    }
                 },
             },
             //  ****************************************************************************************************
@@ -92,8 +132,10 @@ export class RuleEngine {
                     ],
                 },
                 event: {
-                    type: `Необходимо улучшить тип МП до Амбулатории или больницы, так как население в НП-е МП-а > 
-            ${this.minPopulationForAmbulance} и стоит ${this.FAP}`,
+                    type: messages[2].key,
+                    params: {
+                        message: messages[2].name + (' > ' + this.minPopulationForAmbulance + ' и стоит ' + this.FAP)
+                    }
                 },
             },
             //  ****************************************************************************************************
@@ -114,7 +156,10 @@ export class RuleEngine {
                     ],
                 },
                 event: {
-                    type: `Необходимо построить МП (Амбулатория или больница), так как население > ${this.minPopulationForAmbulance} и нет МП`,
+                    type: messages[3].key,
+                    params: {
+                        message: messages[3].name + (' > ' + this.minPopulationForAmbulance)
+                    }
                 },
             },
             //  ****************************************************************************************************
@@ -135,7 +180,10 @@ export class RuleEngine {
                     ],
                 },
                 event: {
-                    type: `Необходимо понизить тип МП до ФАПА т.к население < ${this.minPopulationForAmbulance}`,
+                    type: messages[4].key,
+                    params: {
+                        message: messages[4].name + (' < ' + this.minPopulationForAmbulance)
+                    }
                 },
             },
             //  ****************************************************************************************************
@@ -156,7 +204,10 @@ export class RuleEngine {
                     ],
                 },
                 event: {
-                    type: `МП не требуется так как число людей в НП <= ${this.minPopulationForFAP}`,
+                    type: messages[5].key,
+                    params: {
+                        message: messages[5].name + ('<=' + this.minPopulationForFAP)
+                    }
                 },
             },
         ];
@@ -170,13 +221,13 @@ export class RuleEngine {
     // execute engine
     public async runEngine() {
 
-        let res: string[] = []
+        let res: IMessages[] = []
         // Run the engine with the facts
         await this.engine
             .run(this.facts)
             .then((results) => {
                 if (results.events.length > 0) {
-                    results.events.map((event) => res.push(event.type));
+                    results.events.map((event) => res.push({key: event.type, name: event.params.message}));
                 }
                 // console.log(this.facts, results.events)
             })

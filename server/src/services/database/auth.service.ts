@@ -65,14 +65,10 @@ export const login = async (findUser: { nameEmail?: string, password: string; })
 
 export const verifyUserToken = (req, res, next) => {
     let token = req.headers.authorization;
-    console.log(req.headers)
+
     if (!token) return res.status(401).send("Access Denied / Unauthorized request");
 
     try {
-        // token = token.split(' ')[1] // Remove Bearer from string
-
-        // if (token === 'null' || !token) return res.status(401).send('Unauthorized request');
-
         let verifiedUser = jwt.verify(token, config.get('secret'));   // config.TOKEN_SECRET => 'secretKey'
         if (!verifiedUser) return res.status(401).send('Unauthorized request')
 

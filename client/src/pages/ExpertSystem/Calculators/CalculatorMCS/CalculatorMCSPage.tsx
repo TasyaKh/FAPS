@@ -5,11 +5,11 @@ import {SelectArea} from "components/FAPS/SelectArea";
 import {DefaultModal} from "components/ExpertSystem/Modals/TemplateModal";
 import {useQuery} from "react-query";
 import {Order} from "enums";
-import {getExcelSolutionsLocalities} from "api/uploads";
+import {getExcelSolutionsLocalities, getExcelSolutionsMCS} from "api/uploads";
 import {TableMCS} from "components/ExpertSystem/TablesCalculators/TableMCS";
 import {ISearchMedicalCenter} from "types/types-search";
 import {PointsMCS} from "components/ExpertSystem/Modals/Calculators/PointsMCS";
-import {getMCS} from "api/medical_centers";
+import {getPointsSolutionMCS} from "api/points";
 
 export const CalculatorMCSPage = () => {
 
@@ -24,20 +24,18 @@ export const CalculatorMCSPage = () => {
 
     const {
         data: solutions,
-        error: solutionsError,
         isLoading: solutionsLoading,
         refetch: refetchSolutions
-    } = useQuery(['getMCS', filters],
-        () => getMCS(filters),
+    } = useQuery(['getPointsSolutionsMCS', filters],
+        () => getPointsSolutionMCS(filters),
     );
 
     const {
         isLoading: excelSolutionsLoading,
         refetch: refetchExcelSolutions
-    } = useQuery(['getExcelSolutionsMCS'], () => getExcelSolutionsLocalities(filters), {
+    } = useQuery(['getExcelSolutionsMCS'], () => getExcelSolutionsMCS(filters), {
         enabled: false,
     });
-
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const {target} = e
@@ -51,12 +49,10 @@ export const CalculatorMCSPage = () => {
         refetchExcelSolutions().then(r => {})
     }
 
-
     const handleSetPointsMCS = () => {
         setConditionsModalState({show: false})
         refetchSolutions().then(r => {})
     }
-
 
     const handleConditionsModalHide = (show: boolean) => {
         setConditionsModalState({show: show})

@@ -1,11 +1,12 @@
 import React, {useEffect, useState, useCallback, useContext, FC} from 'react'
-import {Button, Dropdown} from 'react-materialize'
+import {Button} from 'react-materialize'
 import '../../FAPS/Navigation/Navigation.scss'
 import {useHttp} from 'hooks/http.hook'
 import {ELegend} from "../Legend/ELegend";
-import {AuthContext} from "../../../context/AuthContext";
-import {roleHierarchy, Roles} from "../../../roles";
+import {AuthContext} from "context/AuthContext";
+import {roleHierarchy, Roles} from "roles";
 import {AuthBtn} from "../../Elements/Buttons/BtnAuth/AuthBtn";
+import {Link} from "react-router-dom";
 
 interface ENavigationProps {
     hiddenNavigation: boolean
@@ -87,23 +88,16 @@ export const ENavigation: FC<ENavigationProps> = ({
                 <div className="navigation__nav navigation__nav--top">
 
                     {roleHierarchy[role]?.includes(Roles.EXPERT) ?
-                        <Dropdown
-                            options={{
-                                alignment: 'right',
-                                coverTrigger: false,
-                            }}
-                            trigger={<Button
-                                className="navigation__button blue darken-4 btn navigation__link"
-                                node="button"
-                                waves="light"
-                            ><i className="material-icons right">settings</i>
-                                Калькулятор
-                            </Button>}
-                        >
-                            <a href="/expert-system/solution-localities">Калькулятор НП (простой) <i
-                                className="material-icons right">arrow_forward</i></a>
-                            <a href="#!">Калькулятор баллов МП <i className="material-icons right">arrow_forward</i></a>
-                        </Dropdown> : null
+                        <div className={'navigation__button navigation__link'}>
+                            <Link to="/expert-system/solution-localities" className="auth-btn">
+                                <Button
+                                    className="grey darken-4 "
+                                    node="button"
+                                    waves="light"
+                                >
+                                    Калькулятор
+                                </Button>
+                            </Link></div> : null
                     }
                     <div className={'navigation__button navigation__link'}>
                         <AuthBtn/>
@@ -111,7 +105,6 @@ export const ENavigation: FC<ENavigationProps> = ({
                 </div>
 
                 <div className="navigation__nav navigation__nav--bottom">
-
 
                     <div className="navigation__controls">
                         <Button

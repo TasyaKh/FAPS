@@ -6,14 +6,12 @@ import {MedicalCenterDto} from "../../dto/points_medical_center.dto";
 export async function getMedicalCenters(mc: MedicalCenterDto, res: express.Response) {
 
     try {
-        console.log(mc)
         const mcRepo = AppDataSource.getRepository(MedicalCenter)
         const query = mcRepo.createQueryBuilder('medical_center')
             .leftJoinAndSelect('medical_center.locality', 'locality')
             .leftJoinAndSelect('locality.population', 'population')
             .leftJoinAndSelect('locality.district', 'district')
             .leftJoinAndSelect('medical_center.building_condition', 'building_condition')
-            .where('district.id = :district_id', {district_id: mc.district_id})
 
         if (mc.district_id) {
             query.andWhere('district.id = :district_id', {district_id: mc.district_id})

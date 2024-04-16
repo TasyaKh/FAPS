@@ -1,13 +1,13 @@
 import React, {FC, useState} from "react"
 import './ETable.scss'
-import {IMedicalCenter} from "types/types";
+import {ISolutionsMCS} from "types/types";
 import {FilterBtn} from "../../Elements/Buttons/BtnFilter/FilterBtn";
 import {Order} from "enums";
 import {ProgressBar} from "react-materialize";
 
 interface TableMCSProps {
     dataIsLoading: boolean,
-    data: IMedicalCenter[],
+    data: ISolutionsMCS[],
     onFilterStateChanged: (orderState: Order, filterName: string, prevFilterName: string) => void,
 }
 
@@ -15,12 +15,13 @@ export const TableMCS:
     FC<TableMCSProps> = ({data, onFilterStateChanged, dataIsLoading}) => {
 
     const columns = [
-        {col: 'МП', filterName: "mc_name_order", hasFilter: true},
-        {col: 'Взрослое насел.', filterName: "mc_population_adult_order", hasFilter: true},
+        {col: 'МП', filterName: "mc_name_order", hasFilter: false},
+        {col: 'Взрослое насел.', filterName: "mc_population_adult_order", hasFilter: false},
         {col: 'Детское насел.', filterName: "mc_population_child_order", hasFilter: false},
-        {col: 'Год', filterName: "foundation_year_order", hasFilter: true},
-        {col: 'Медик', filterName: "mc_staffing_order", hasFilter: true},
-        {col: 'Состояние', filterName: "state_order", hasFilter: true},
+        {col: 'Год', filterName: "foundation_year_order", hasFilter: false},
+        {col: 'Медик', filterName: "mc_staffing_order", hasFilter: false},
+        {col: 'Состояние', filterName: "state_order", hasFilter: false},
+        {col: 'Сумма', filterName: "", hasFilter: false},
     ]
 
     const [selectedFilter, setSelectedFilter] = useState({
@@ -58,14 +59,31 @@ export const TableMCS:
 
                 <tbody>
                 {data && data.map((dataEl, i) => (
-                    <tr className='table-view__row ' key={i}>
-                        <td>{dataEl.name} </td>
-                        <td>{dataEl.locality?.population?.population_adult}</td>
-                        <td>{dataEl.locality?.population?.population_child}</td>
-                        <td>{dataEl.founding_year}</td>
-                        <td>{dataEl.staffing}</td>
-                        <td>{dataEl.building_condition?.state}</td>
-                        <td></td>
+                    <tr className='table-view__row' key={i}>
+                        <td>{dataEl.mc.name} </td>
+                        <td>
+                            <div className={'colored center'}>({dataEl.adult_population ?? '-'})</div>
+                            <div className={'center'}>{dataEl.mc.locality?.population?.population_adult ?? '-'} </div>
+                        </td>
+                        <td>
+                            <div className={'colored center'}>({dataEl.child_population ?? '-'})</div>
+                            <div className={'center'}>{dataEl.mc.locality?.population?.population_child}</div>
+                        </td>
+                        <td>
+                            <div className={'colored center'}>({dataEl.foundation_year ?? '-'})</div>
+                            <div className={'center'}>{dataEl.mc.founding_year ?? '-'}</div>
+                        </td>
+                        <td>
+                            <div className={'colored center'}>({dataEl.staffing ?? '-'})</div>
+                            <div className={'center'}>{dataEl.mc.staffing ?? '-'}</div>
+                        </td>
+                        <td>
+                            <div className={'colored center'}>({dataEl.state ?? '-'})</div>
+                            <div className={'center'}> {dataEl.mc.building_condition?.state ?? '-'}</div>
+                        </td>
+                        <td>
+                            <div className={'colored center'}><b>{dataEl.sum}</b></div>
+                        </td>
                     </tr>
                 ))
                 }

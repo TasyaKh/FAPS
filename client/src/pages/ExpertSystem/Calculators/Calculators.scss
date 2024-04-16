@@ -51,6 +51,12 @@
         }
       }
     }
+
+    .recommendation {
+      margin: 5px 0;
+      padding: $padding1;
+      border-radius: $radius;
+    }
   }
 
   .btn-floating {
@@ -68,6 +74,11 @@
     margin-top: 5px;
   }
 
+  .circle {
+    padding: 20px;
+    background: gray;
+    border-radius: 50px;
+  }
 
   @media only screen and (max-width: 1280px) {
     //.table-container {
@@ -80,6 +91,5 @@
     //  margin: 40px auto;
     //}
   }
-
 
 }

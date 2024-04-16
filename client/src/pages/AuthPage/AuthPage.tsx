@@ -7,6 +7,7 @@ import {toast} from "../../components/Elements/Toast/ToastManager";
 import {Login} from "../../components/FAPS/Auth/Login";
 import {SignUp} from "../../components/FAPS/Auth/SignUp";
 import {AuthContext} from "../../context/AuthContext";
+import {showToast} from "../../functions/toast";
 
 export const AuthPage = () => {
     const {login:loginContext} = useContext(AuthContext)
@@ -17,13 +18,6 @@ export const AuthPage = () => {
 
     const [shouldRedirect, setShouldRedirect] = useState(false);
     const [tab, setTab] = useState(0);
-
-    const showToast = (msg: string, type: "error" | "info" | "save") => {
-        toast.show({
-            content: msg,
-            type: type
-        });
-    }
 
     const handleOnSendLogin = async (form: { nameEmail: string, password: string }) => {
         setIsLoading(true)

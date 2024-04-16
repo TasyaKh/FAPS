@@ -1,7 +1,7 @@
 ### points-mcs
 POST http://localhost:3002/api/points/points-mcs
 content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzEyODI4OTkwLCJleHAiOjE3MTI5MTUzOTB9.GILy8HeEso5zNGTcIri9R9BTkcn2lDOvUQp7AyC4hNI
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzEyOTczODYxLCJleHAiOjE3MTMwNjAyNjF9.C1WPw1zlHU15u9OWtzfYy2PxrtP0OiUtjP6MHrKURko
 
 {
   "adult_population": 10,
@@ -15,7 +15,12 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWlu
 
 ### points-mcs
 GET http://localhost:3002/api/points/points-mcs
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzEyODI4OTkwLCJleHAiOjE3MTI5MTUzOTB9.GILy8HeEso5zNGTcIri9R9BTkcn2lDOvUQp7AyC4hNI
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzEyOTczODYxLCJleHAiOjE3MTMwNjAyNjF9.C1WPw1zlHU15u9OWtzfYy2PxrtP0OiUtjP6MHrKURko
+content-type: application/json
+
+### sulutions-mcs
+GET http://localhost:3002/api/points/solutions-mcs?region_id=1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzEyOTczODYxLCJleHAiOjE3MTMwNjAyNjF9.C1WPw1zlHU15u9OWtzfYy2PxrtP0OiUtjP6MHrKURko
 content-type: application/json
 
 ### medical-centers

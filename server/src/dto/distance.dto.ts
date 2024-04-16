@@ -1,3 +1,5 @@
+import {IMessages} from "../services/rules";
+
 export class DistanceDto {
     distance?: number
     duration?: number //sec
@@ -17,7 +19,7 @@ export class LocalitiesAndNearMcsDto {
     region_id?: number;
     district_id?: number;
 
-    search?:string
+    search?: string
     // orders
     locality_name_order?: "ASC" | "DESC"
     population_population_adult_order?: "ASC" | "DESC"
@@ -61,5 +63,5 @@ export class LocalitiDistToNearectMC {
 
 export class CustomSolutionsLocalities {
     data?: LocalitiDistToNearectMC
-    solutions?: string[]
+    solutions?: IMessages[]
 }

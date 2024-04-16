@@ -6,7 +6,7 @@ export interface ToastProps {
     destroy: () => void;
     content: string;
     type: "error" | "info" | "save"
-    duration?: number;
+    duration?: number; //ms
 }
 
 const Toast: React.FC<ToastProps> = (props) => {

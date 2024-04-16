@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Button, Icon, Preloader} from 'react-materialize'
+import {Button, Collapsible, CollapsibleItem, Divider, Dropdown, Icon, Preloader, Select} from 'react-materialize'
 import '../Calculators.scss'
 import {TableLocalities} from 'components/ExpertSystem/TablesCalculators/TableLocalities'
 import {SelectArea} from "components/FAPS/SelectArea";
@@ -10,7 +10,9 @@ import {getSolutionsLocalities} from "api/points";
 import {Order} from "enums";
 import {ILocalitiDistToNearectMC} from "types/types";
 import {getExcelSolutionsLocalities} from "api/uploads";
-import CustomScrollbars from "../../../../components/FAPS/CustomScrollbar";
+import {showToast} from "functions/toast";
+import {AxiosError} from "axios";
+import {messages} from "types/rules";
 
 export const CalculatorLocalitiesPage = () => {
 
@@ -35,7 +37,12 @@ export const CalculatorLocalitiesPage = () => {
         isLoading: solutionsLoading,
         refetch: refetchSolutions
     } = useQuery(['getSolutionsLocalities', filters],
-        () => getSolutionsLocalities(filters),
+        () => getSolutionsLocalities(filters), {
+            onError: (error: AxiosError) => {
+                if (error.response && error.response.data)
+                    showToast(error.response.data.toString(), 'error', 4000)
+            },
+        }
     );
 
     const {
@@ -78,6 +85,11 @@ export const CalculatorLocalitiesPage = () => {
         }
         setFilters(newFilters)
     }
+
+    const onSelectRecomm = (event: any) => {
+
+    }
+
     return (
         <div className="">
             <div className="container__filter">
@@ -101,9 +113,20 @@ export const CalculatorLocalitiesPage = () => {
                         >Скачать Excel</Button>
                     </div>
                 </div>
-
             </div>
 
+            <div className=''>
+                {/* info select rules */}
+                <div>Информация</div>
+                <Collapsible style={{background:"white"}}>
+                    <CollapsibleItem header='Рекомендации' icon={<Icon className={'material-icons'}>pencil</Icon>}>
+                        {messages.map((el, index) => (
+                            <div className={'recommendation'} style={{width: '100%', background:el.color}}>{index+1}) {el.name}</div>
+                        ))}
+                    </CollapsibleItem>
+                </Collapsible>
+
+            </div>
             <div className="">
                 <Button
                     className="btn-floating"
@@ -115,7 +138,7 @@ export const CalculatorLocalitiesPage = () => {
             </div>
 
             {/* TablePoints */}
-            <div style={{height: '100%', overflow:'scroll'}}>
+            <div style={{height: '100%', overflow: 'scroll'}}>
                 <TableLocalities
                     dataIsLoading={solutionsLoading}
                     data={solutions ?? []}
@@ -126,8 +149,7 @@ export const CalculatorLocalitiesPage = () => {
             <DefaultModal header={"Условия для НП-ов"}
                           child={<ConditionsLocality onSaveConditionsData={handleSetConditionsLocalities}/>}
                           onHide={handleConditionsModalHide}
-                          show={conditionsModalState.show}
-            />
+                          show={conditionsModalState.show}/>
 
         </div>
     )

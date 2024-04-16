@@ -1,9 +1,10 @@
 import React, {FC, useState} from "react"
 import './ETable.scss'
-import {ICustomSolutionsLocalities} from "../../../types/types";
+import {ICustomSolutionsLocalities} from "types/types";
 import {FilterBtn} from "../../Elements/Buttons/BtnFilter/FilterBtn";
-import {Order} from "../../../enums";
+import {Order} from "enums";
 import {ProgressBar} from "react-materialize";
+import {messages} from "../../../types/rules";
 
 interface TableSolutionsProps {
     dataIsLoading: boolean,
@@ -35,8 +36,6 @@ export const TableLocalities:
     })
 
     const handleFilterStateChanged = (orderState: Order, filterName: string) => {
-        // alert("state new" + orderState + " " + filterName)
-
         const prevFilterName = selectedFilter.filterName
         // set filter
         setSelectedFilter({state: orderState, filterName: filterName})
@@ -51,17 +50,14 @@ export const TableLocalities:
                     {columns.map((el, i) => (
                         <th key={i} className="table-view__header" style={{alignItems: "end"}}>
                             <div className={"row"}>
-                                <div style={{display:"inline-block"}}> {el.col}</div>
-                                <div style={{display:"inline-block"}}>
+                                <div style={{display: "inline-block"}}> {el.col}</div>
+                                <div style={{display: "inline-block"}}>
                                     {el.hasFilter ?
                                         <FilterBtn name={el.filterName} onStateChanged={handleFilterStateChanged}
                                                    stateDefault={el.filterName == selectedFilter.filterName ? selectedFilter.state : Order.DEFAULT}/>
                                         : null}
-                                    {/*{el.filterName  +  " " +  selectedFilter.filterName } state {el.filterName === selectedFilter.filterName ? selectedFilter.state : Order.DEFAULT}*/}
                                 </div>
                             </div>
-
-
                         </th>
                     ))}
                 </tr>
@@ -79,7 +75,13 @@ export const TableLocalities:
                         <td>{dataEl.data?.min_distance ? (dataEl.data?.min_distance / 1000).toFixed(2) : '-'}</td>
                         <td>{dataEl.data?.min_duration ? (dataEl.data.min_duration / 1000).toFixed(2) : '-'}</td>
 
-                        <td>{dataEl.solutions && dataEl.solutions?.length > 0 ? dataEl.solutions.join(', \n') : '-'}</td>
+                        <td>{dataEl.solutions && dataEl.solutions?.length > 0 ?
+                            dataEl.solutions.map((el) => (
+                                <div
+                                    className={'recommendation'}
+                                    style={{background: messages.find(msg => msg.key === el.key)?.color ?? 'white'}}>{el.name}</div>
+                            ))
+                            : '-'}</td>
                     </tr>
                 ))
                 }
@@ -87,7 +89,7 @@ export const TableLocalities:
                 </tbody>
             </table>
 
-            {dataIsLoading && <ProgressBar/> }
+            {dataIsLoading && <ProgressBar/>}
         </div>
     )
 }

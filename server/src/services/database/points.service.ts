@@ -6,8 +6,7 @@ import {CustomSolutionsLocalities, LocalitiesAndNearMcsDto} from "../../dto/dist
 import {DistanceService} from "./distance.service";
 import {RuleEngine} from "../rules";
 import {PointsMedicalCenter} from "../../entities/points_medical_center.entity";
-import {MedicalCenterDto, PointsMedicalCenterDto} from "../../dto/points_medical_center.dto";
-import MedicalCenter from "../../entities/medical_center.entity";
+import {MedicalCenterDto, PointsMedicalCenterDto, SolutionsMCS} from "../../dto/points_medical_center.dto";
 import {getMedicalCenters} from "./medical_center.service";
 import express from "express";
 
@@ -119,15 +118,26 @@ export class PointsService {
         } else {
             const mcs = await getMedicalCenters(body, res)
 
-            const points: PointsMedicalCenterDto[] = []
+            const points: SolutionsMCS[] = []
 
             mcs.forEach((mc, index) => {
-                const p = points[index]
-                p.foundation_year = mc.founding_year * existingConditions.foundation_year
-                p.staffing = ((1.0 - mc.staffing) / (100 / existingConditions.each_pers_staffing)) * existingConditions.staffing
-                p.state = mc.building_condition.state === 'строится' ? existingConditions.state : 0
-                p.adult_population = mc.locality.population.population_adult *  existingConditions.adult_population
-                p.child_population = mc.locality.population.population_child *  existingConditions.child_population
+                const p: SolutionsMCS = {}
+                const currYear = new Date().getFullYear()
+                if (currYear - mc?.founding_year >= existingConditions.max_found_year)
+                    p.foundation_year = Number((existingConditions.foundation_year).toFixed(1))
+                p.staffing = Number(((((1.0 - mc?.staffing) * 100) / existingConditions.each_pers_staffing) * existingConditions.staffing)
+                    .toFixed(1))
+                p.state = Number((mc.building_condition?.state === 'строится' ? existingConditions.state : 0)
+                    .toFixed(1))
+                p.adult_population = Number((mc.locality?.population?.population_adult * existingConditions.adult_population)
+                    .toFixed(1))
+                p.child_population = Number((mc.locality?.population?.population_child * existingConditions.child_population)
+                    .toFixed(1))
+
+                p.sum = p.foundation_year + p.staffing + p.state + p.adult_population + p.child_population
+                p.mc = mc
+
+                points.push(p)
             })
 
             return points

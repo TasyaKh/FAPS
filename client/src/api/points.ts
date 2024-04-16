@@ -3,8 +3,9 @@ import {
     IConditionsLocality,
     ICustomSolutionsLocalities,
     ILocalitiDistToNearectMC,
-    IPointsMedicalCenter
-} from "../types/types";
+    IPointsMedicalCenter, ISolutionsMCS
+} from "types/types";
+import {ISearchMedicalCenter} from "../types/types-search";
 
 // --------------------------------------------------------------------------------------------------------------
 // localities
@@ -36,3 +37,9 @@ export const getPointsMedicalCenters = async () => {
     const {data} = await axiosInstance.get<IPointsMedicalCenter>(`/api/points/points-mcs`);
     return data;
 };
+
+export const getPointsSolutionMCS = async (filters: ISearchMedicalCenter) => {
+    const {data} = await axiosInstance.get<ISolutionsMCS[]>(`/api/points/solutions-mcs`, {params: {...filters}});
+    return data;
+};
+
