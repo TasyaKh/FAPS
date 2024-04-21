@@ -56,16 +56,17 @@ export const useRoutes = isAuthenticated => {
             </Route>
 
             {/*auth */}
-            <Route path="/auth">
-                <AuthPage/>
-            </Route>
 
-            <Route path="/forgot-password">
+            <Route path="/auth/forgot-password">
                 <ForgotPasswordPage/>
             </Route>
 
-            <Route path="/reset-password/:token">
+            <Route path="/auth/reset-password/:token">
                 <ResetPasswordPage/>
+            </Route>
+
+            <Route path="/auth">
+                <AuthPage/>
             </Route>
 
             <Route path="/error">
@@ -73,10 +74,6 @@ export const useRoutes = isAuthenticated => {
             </Route>
 
             {/* expert system */}
-
-            {/*<Route path="/expert-system/points-localities">*/}
-            {/*    <PointsLocalities/>*/}
-            {/*</Route>*/}
 
             <Route path="/expert-system/solution-localities">
                 <CalculatorPage/>
