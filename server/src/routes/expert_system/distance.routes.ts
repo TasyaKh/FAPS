@@ -1,5 +1,5 @@
 import express, {NextFunction, Router} from 'express'
-import {DistanceService} from "../../services/database/distance.service";
+import {DistanceService} from "../../services/distance.service";
 import {celebrate, Joi} from "celebrate";
 import {DistanceDto, LocalitiesAndNearMcsDto} from "../../dto/distance.dto";
 

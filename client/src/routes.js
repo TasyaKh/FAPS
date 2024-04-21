@@ -10,6 +10,8 @@ import {AddPage} from "./pages/AddPage"
 import {EMapPage} from 'pages/ExpertSystem/EMapPage'
 import {AuthPage} from "./pages/AuthPage/AuthPage";
 import {CalculatorPage} from "./pages/ExpertSystem/Calculators/CalculatorPage";
+import {ForgotPasswordPage} from "./pages/AuthPage/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/AuthPage/ResetPasswordPage";
 
 export const useRoutes = isAuthenticated => {
     if (isAuthenticated) {
@@ -53,8 +55,17 @@ export const useRoutes = isAuthenticated => {
                 <AdminPage/>
             </Route>
 
+            {/*auth */}
             <Route path="/auth">
                 <AuthPage/>
+            </Route>
+
+            <Route path="/forgot-password">
+                <ForgotPasswordPage/>
+            </Route>
+
+            <Route path="/reset-password/:token">
+                <ResetPasswordPage/>
             </Route>
 
             <Route path="/error">

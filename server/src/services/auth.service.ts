@@ -1,23 +1,26 @@
-import {User} from "../../entities/user.entity";
+import {User} from "../entities/user.entity";
 import bcrypt from "bcrypt";
-import AppDataSource from "../../typeorm.config";
+import AppDataSource from "../typeorm.config";
 import jwt from "jsonwebtoken";
 import config from "config";
-import {roleHierarchy, Roles} from "../../roles";
+import {roleHierarchy, Roles} from "../roles";
 import express from "express";
+import {v4 as uuid} from 'uuid';
+import {UserService} from "./user.service";
+import EmailService from "./email.service";
 
 export const signup = async (newUser: { password: string; name: string, email: string }) => {
 
     if (newUser.name?.length >= 3 && newUser.password?.length >= 6) {
         //Hash password
         const salt = await bcrypt.genSalt(10);
-        const hasPassword = await bcrypt.hash(newUser.password, salt);
+        const encryptedPassword = await bcrypt.hash(newUser.password, salt);
 
         // Create user object
         let user = new User()
 
         user.name = newUser.name
-        user.password = hasPassword
+        user.password = encryptedPassword
         user.email = newUser.email
 
         const userRepository = AppDataSource.getRepository(User);
@@ -77,6 +80,41 @@ export const verifyUserToken = (req, res, next) => {
 
     } catch (error) {
         res.status(403).send("Invalid Token, Unauthorized");
+    }
+}
+
+export async function forgotPassword(email: string) {
+    const usersService = new UserService()
+    const user = await usersService.findByEmail(email);
+    if (!user) {
+        throw new Error("Email не найден")
+    }
+    const emailService = new EmailService()
+    const forgotPasswordToken = uuid()
+    await usersService.updateUser(user.id, {forgot_password_token: forgotPasswordToken});
+    emailService
+        .sendPasswordResetEmail(email, forgotPasswordToken, user.name)
+        .catch((err) => console.error('Error while sending password reset mail', err));
+}
+
+export async function resetPassword(token: string, password: string) {
+    const usersService = new UserService()
+    const user = await usersService.findByPasswordResetToken(token);
+
+    if (!user) {
+        throw new Error('Ссылка сброса не существует');
+    } else {
+
+        if (password?.length >= 6) {
+            //Hash password
+            const salt = await bcrypt.genSalt(10);
+            const encryptedPassword = await bcrypt.hash(password, salt);
+            await usersService.updateUser(user.id, {
+                password: encryptedPassword,
+                forgot_password_token: null,
+            });
+
+        } else throw new Error("Длина пароля должна быть > 5")
     }
 }
 

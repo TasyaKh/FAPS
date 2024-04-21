@@ -1,5 +1,5 @@
 import express, {Router} from 'express'
-import {getUser, login, signup, verifyUserToken} from "../services/database/auth.service";
+import {forgotPassword, getUser, login, resetPassword, signup, verifyUserToken} from "../services/auth.service";
 
 const router = Router()
 export default (app: Router) => {
@@ -49,11 +49,43 @@ export default (app: Router) => {
                     res.status(200).header("Authorization", token).send({"token": token});
                 else res.status(401).send('Что-то пошло не так')
             } catch (err) {
-                res.status(401).json(err.message)
+                res.status(400).json(err.message)
             }
         }
     )
 
+    router.post(
+        '/forgot-password',
+        [],
+        async (req: express.Request, res: express.Response) => {
+            try {
+                const {email} = req.body;
+
+                await forgotPassword(email).then(() => {
+                    res.status(200).json({message: "Отправлено"});
+                })
+            } catch (err) {
+                res.status(400).json(err.message)
+            }
+        }
+    )
+
+    router.post(
+        '/reset-password',
+        [],
+        async (req: express.Request, res: express.Response) => {
+            try {
+                const {forgot_password_token, password} = req.body;
+
+                await resetPassword(forgot_password_token, password).then(() => {
+                    res.status(200).json({message: "Успешно"});
+                })
+
+            } catch (err) {
+                res.status(400).json(err.message)
+            }
+        }
+    )
 
 }
 

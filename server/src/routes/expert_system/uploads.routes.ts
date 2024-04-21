@@ -1,8 +1,8 @@
 import {Router} from 'express'
-import {UploadsService} from "../../services/database/uploads.service";
+import {UploadsService} from "../../services/uploads.service";
 import {celebrate, Joi} from "celebrate";
 import {LocalitiesAndNearMcsDto} from "../../dto/distance.dto";
-import {checkUserRoleOrErr, verifyUserToken} from "../../services/database/auth.service";
+import {checkUserRoleOrErr, verifyUserToken} from "../../services/auth.service";
 import {Roles} from "../../roles";
 import {MedicalCenterDto} from "../../dto/points_medical_center.dto";
 

@@ -1,8 +1,8 @@
-import {LocalitiesAndNearMcsDto} from "../../dto/distance.dto";
+import {LocalitiesAndNearMcsDto} from "../dto/distance.dto";
 import {PointsService} from "./points.service";
 import {Workbook} from "exceljs";
 import express from "express";
-import {MedicalCenterDto} from "../../dto/points_medical_center.dto";
+import {MedicalCenterDto} from "../dto/points_medical_center.dto";
 
 export class UploadsService {
 

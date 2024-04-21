@@ -1,10 +1,10 @@
 import {Router} from 'express'
 import {celebrate, Joi} from "celebrate";
 import {ConditionsLocalityDto} from "../../dto/conditions_locality.dto";
-import {PointsService} from "../../services/database/points.service";
-import {UserService} from "../../services/database/user.service";
+import {PointsService} from "../../services/points.service";
+import {UserService} from "../../services/user.service";
 import {LocalitiesAndNearMcsDto} from "../../dto/distance.dto";
-import {checkUserRoleOrErr, verifyUserToken} from "../../services/database/auth.service";
+import {checkUserRoleOrErr, verifyUserToken} from "../../services/auth.service";
 import {Roles} from "../../roles";
 import {MedicalCenterDto, PointsMedicalCenterDto} from "../../dto/points_medical_center.dto";
 

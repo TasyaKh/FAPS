@@ -1,10 +1,10 @@
 import express, {Router} from 'express'
-import {getMedicalCenters} from "../../services/database/medical_center.service";
+import {getMedicalCenters} from "../../services/medical_center.service";
 import MC from "../../entities/medical_center.entity";
-import {getLocalitiesByDistrictId} from "../../services/database/locality.service";
-import {DevService} from "../../services/database/dev.service";
-import {getOrganizationsByDistrictId} from "../../services/database/organization.service";
-import {checkUserRoleOrErr, verifyUserToken} from "../../services/database/auth.service";
+import {getLocalitiesByDistrictId} from "../../services/locality.service";
+import {DevService} from "../../services/dev.service";
+import {getOrganizationsByDistrictId} from "../../services/organization.service";
+import {checkUserRoleOrErr, verifyUserToken} from "../../services/auth.service";
 import {Roles} from "../../roles";
 import {MedicalCenterDto} from "../../dto/points_medical_center.dto";
 

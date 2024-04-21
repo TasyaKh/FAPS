@@ -1,13 +1,12 @@
 import React, {useContext, useState} from 'react'
-import {login, signUp} from "../../api/auth";
+import {login, signUp} from "api/auth";
 import {ProgressBar} from "react-materialize";
 import "./AuthPage.scss"
 import {Redirect} from "react-router-dom";
-import {toast} from "../../components/Elements/Toast/ToastManager";
-import {Login} from "../../components/FAPS/Auth/Login";
-import {SignUp} from "../../components/FAPS/Auth/SignUp";
-import {AuthContext} from "../../context/AuthContext";
-import {showToast} from "../../functions/toast";
+import {Login} from "components/FAPS/Auth/Login";
+import {SignUp} from "components/FAPS/Auth/SignUp";
+import {AuthContext} from "context/AuthContext";
+import {showToast} from "functions/toast";
 
 export const AuthPage = () => {
     const {login:loginContext} = useContext(AuthContext)
@@ -62,9 +61,7 @@ export const AuthPage = () => {
                 </div>
                 {/*login/SignUp*/}
                 {tab === 0 ? <Login onSend={handleOnSendLogin}/> : <SignUp onSend={handleOnSendReg}/>}
-
             </div>
-
         </div>
     )
 }

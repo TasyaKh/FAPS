@@ -1,7 +1,7 @@
 import express from "express";
-import AppDataSource from "../../typeorm.config";
-import MedicalCenter from "../../entities/medical_center.entity";
-import {MedicalCenterDto} from "../../dto/points_medical_center.dto";
+import AppDataSource from "../typeorm.config";
+import MedicalCenter from "../entities/medical_center.entity";
+import {MedicalCenterDto} from "../dto/points_medical_center.dto";
 
 export async function getMedicalCenters(mc: MedicalCenterDto, res: express.Response) {
 

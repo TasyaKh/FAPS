@@ -1,12 +1,12 @@
-import {ConditionsLocalityDto} from "../../dto/conditions_locality.dto";
-import AppDataSource from "../../typeorm.config";
-import {ConditionsLocality} from "../../entities/conditions_locality.entity";
-import {User} from "../../entities/user.entity";
-import {CustomSolutionsLocalities, LocalitiesAndNearMcsDto} from "../../dto/distance.dto";
+import {ConditionsLocalityDto} from "../dto/conditions_locality.dto";
+import AppDataSource from "../typeorm.config";
+import {ConditionsLocality} from "../entities/conditions_locality.entity";
+import {User} from "../entities/user.entity";
+import {CustomSolutionsLocalities, LocalitiesAndNearMcsDto} from "../dto/distance.dto";
 import {DistanceService} from "./distance.service";
-import {RuleEngine} from "../rules";
-import {PointsMedicalCenter} from "../../entities/points_medical_center.entity";
-import {MedicalCenterDto, PointsMedicalCenterDto, SolutionsMCS} from "../../dto/points_medical_center.dto";
+import {RuleEngine} from "./rules";
+import {PointsMedicalCenter} from "../entities/points_medical_center.entity";
+import {MedicalCenterDto, PointsMedicalCenterDto, SolutionsMCS} from "../dto/points_medical_center.dto";
 import {getMedicalCenters} from "./medical_center.service";
 import express from "express";
 

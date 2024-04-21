@@ -6,21 +6,24 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ nullable: true })
+    @Column({nullable: true})
     name: string;
 
-    @Column({ nullable: true })
+    @Column({nullable: true})
     email: string;
 
-    @Column({ length: 100 })
+    @Column({length: 100})
     password: string;
 
-    @Column({ nullable: true })
+    @Column({nullable: true})
     session: string;
 
     @Column()
     role_name: string;
 
-    @OneToOne(() => ConditionsLocality, (cL)=>cL.user)
+    @Column({nullable: true})
+    forgot_password_token: string;
+
+    @OneToOne(() => ConditionsLocality, (cL) => cL.user)
     conditions_locality: ConditionsLocality;
 }

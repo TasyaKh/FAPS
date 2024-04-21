@@ -1,12 +1,12 @@
-import {DistanceDto, LocalitiDistToNearectMC, LocalitiesAndNearMcsDto} from "../../dto/distance.dto";
-import AppDataSource from "../../typeorm.config";
-import Distance from "../../entities/distance.entity";
+import {DistanceDto, LocalitiDistToNearectMC, LocalitiesAndNearMcsDto} from "../dto/distance.dto";
+import AppDataSource from "../typeorm.config";
+import Distance from "../entities/distance.entity";
 import express from "express";
-import Locality from "../../entities/locality.entity";
-import MedicalCenter from "../../entities/medical_center.entity";
-import {MedicalFacility} from "../../entities/medical_facility.entity";
-import {Type} from "../../entities/types.entity";
-import {Population} from "../../entities/population.entity";
+import Locality from "../entities/locality.entity";
+import MedicalCenter from "../entities/medical_center.entity";
+import {MedicalFacility} from "../entities/medical_facility.entity";
+import {Type} from "../entities/types.entity";
+import {Population} from "../entities/population.entity";
 import {SelectQueryBuilder} from "typeorm";
 
 export class DistanceService {

@@ -78,6 +78,7 @@ export interface IUser {
     name?: string;
     email?: string;
     password?: string;
+    forgot_password_token?:string
 }
 
 // --------------------------------------------------------------------------------------------------------------

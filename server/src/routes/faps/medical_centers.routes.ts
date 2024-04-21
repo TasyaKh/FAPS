@@ -1,7 +1,7 @@
 import {Router} from 'express'
 import {celebrate, Joi} from "celebrate";
 import {MedicalCenterDto} from "../../dto/points_medical_center.dto";
-import {getMedicalCenters} from "../../services/database/medical_center.service";
+import {getMedicalCenters} from "../../services/medical_center.service";
 
 const router = Router()
 

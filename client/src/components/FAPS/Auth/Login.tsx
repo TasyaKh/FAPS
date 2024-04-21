@@ -1,5 +1,6 @@
 import React, {FC, useState} from 'react'
 import "pages/AuthPage/AuthPage.scss"
+import {Link} from "react-router-dom";
 
 interface Props {
     onSend: (form: { nameEmail: string, password: string }) => void
@@ -54,8 +55,12 @@ export const Login: FC<Props> = ({onSend}) => {
                     >
                         Войти
                     </button>
+                    <Link to={"/auth/forgot-password"}>
+                        <div className={"link"}>Забыли пароль?</div>
+                    </Link>
+
                 </div>
-                
+
             </form>
         </div>
     )

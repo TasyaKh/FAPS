@@ -20,10 +20,10 @@
     overflow: hidden;
     border-radius: $radius;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
-
+    color: #000000;
+    padding: 20px 50px;
 
     form {
-      padding: 20px 50px;
 
       .login{
         width: 100%;

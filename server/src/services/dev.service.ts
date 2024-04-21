@@ -1,6 +1,6 @@
 import {DistanceService} from "./distance.service";
-import {DistanceOpenRoute} from "../outside/findDistandeOpenRoute.service";
-import {DistanceDto} from "../../dto/distance.dto";
+import {DistanceOpenRoute} from "./outside/findDistandeOpenRoute.service";
+import {DistanceDto} from "../dto/distance.dto";
 
 export class DevService {
 

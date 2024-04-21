@@ -1,4 +1,4 @@
-import AppDataSource from "../../typeorm.config";
+import AppDataSource from "../typeorm.config";
 
 export async function getLocalitiesByDistrictId(districtId: number) {
     let r: any

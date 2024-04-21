@@ -11,11 +11,15 @@ export const signUp = async (user: IUser) => {
     return data;
 };
 
-//TODO: DELETE
-// export const getUserByToken = async () => {
-//     const {data} = await axiosInstance.get(`/api/auth`);
-//     return data;
-// };
+export const resetPassword = async (user: IUser) => {
+    const {data} = await axiosInstance.post(`/api/auth/reset-password`, {...user});
+    return data;
+};
+
+export const forgotPassword = async (email: string) => {
+    const {data} = await axiosInstance.post(`/api/auth/forgot-password`, {email: email});
+    return data;
+};
 
 export const getUserLocal = () => {
 
@@ -34,7 +38,7 @@ export const getUserLocal = () => {
         usr.id = decodedJwt.id
         usr.role = decodedJwt.role
         usr.name = decodedJwt.name
-    } else usr.isAuthenticated= false
+    } else usr.isAuthenticated = false
 
     return usr
 };
