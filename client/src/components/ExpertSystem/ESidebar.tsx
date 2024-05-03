@@ -3,7 +3,7 @@ import React, {FC, useContext, useState} from 'react'
 import {Skeleton} from "../FAPS/Skeleton";
 import {MapContext} from "../../context/MapContext";
 import {ESearchAndFilter} from "./Search/ESearchAndFilter";
-import {ListViewLocalities} from "./Locality/ListViewLocalities";
+import {ListLocalities} from "./Locality/ListLocalities";
 import CustomScrollbars from "../FAPS/CustomScrollbar";
 import {SingleLocality} from "./Locality/SingleLocality";
 import {IFilterEMap} from "../../pages/ExpertSystem/EMapPage";
@@ -70,7 +70,7 @@ export const ESidebar: FC<ESidebarProps> = ({
             setHiddenNavigation(true)
     }
 
-    // from ListViewLocalities
+    // from ListLocalities
     // ----------------------------------------------------------------------------------------------------
     const handleLocalityTitleClick = (e: any, localityAndMc: any) => {
 
@@ -89,7 +89,7 @@ export const ESidebar: FC<ESidebarProps> = ({
             )
     }
 
-    const handleMedicalCenterClick = (e: any, localityAndMc: any, isMC: any) => {
+    const handleMedicalCenterClick = (e: any, localityAndMc: any, isMC: boolean) => {
 
         if (isMC) {
             if (localityAndMc && localityAndMc.mc_latitude && localityAndMc.mc_longitude) {
@@ -108,8 +108,6 @@ export const ESidebar: FC<ESidebarProps> = ({
                 })
             }
         }
-
-
     }
 
     function handleBack(e: any) {
@@ -169,7 +167,8 @@ export const ESidebar: FC<ESidebarProps> = ({
                                         back={(e: any) => handleBack(e)}
                                     />
                                     :
-                                    <ListViewLocalities
+                                    <ListLocalities
+                                        loading={loading}
                                         localities={localities}
                                         onLocalityTitleClick={handleLocalityTitleClick}
                                         onMedicalCenterClick={handleMedicalCenterClick}

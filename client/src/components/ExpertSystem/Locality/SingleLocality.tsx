@@ -1,21 +1,27 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {FC, useContext, useEffect, useState} from 'react'
 import "./SingleLocality.scss"
-import {MapContext} from "../../../context/MapContext";
-import {useHttp} from "../../../hooks/http.hook";
+import {MapContext} from "context/MapContext";
+import {useHttp} from "hooks/http.hook";
 import {DistanceToMcElem} from "../DistanceToMC";
 import {Icon} from "react-materialize";
-import {Order} from "../../../enums";
+import {ILocality} from "types/types";
 
-export const SingleLocality = (props) => {
+interface Props {
+    id: number | null
+    back: (e: any) => void
+
+}
+
+export const SingleLocality: FC<Props> = ({id, back}) => {
 
     const {loading, request} = useHttp()
-    const [locality, setLocality] = useState({});
-    const [mcs, setMcs] = useState({});
+    const [locality, setLocality] = useState<ILocality>({});
+    const [mcs, setMcs] = useState<any[]>([]);
     const {mapState, setMapState} = useContext(MapContext)
 
     const fetchLocality = async () => {
         try {
-            const l = await request(`/api/location/locality/${props.id}`, 'POST')
+            const l = await request(`/api/location/locality/${id}`, 'POST')
 
             setLocality(l)
         } catch (e) {
@@ -24,7 +30,7 @@ export const SingleLocality = (props) => {
 
     const fetchMcs = async () => {
         try {
-            const distMcs = await request(`/api/distance/mc`, 'POST', {locality_id: props.id})
+            const distMcs = await request(`/api/distance/mc`, 'POST', {locality_id: id})
 
             setMcs(distMcs)
         } catch (e) {
@@ -36,9 +42,9 @@ export const SingleLocality = (props) => {
         fetchLocality()
         fetchMcs()
 
-    }, [props.id])
+    }, [id])
 
-    function handleOnMcClick(e, lon, lat) {
+    function handleOnMcClick(e: any, lon: number, lat: number) {
 
         if (lon && lat)
             setMapState({
@@ -48,6 +54,18 @@ export const SingleLocality = (props) => {
             })
     }
 
+    const onGoToLocality = (locality: ILocality) => {
+
+
+        if (locality && locality.latitude && locality.longitude) {
+            setMapState({
+                ...mapState,
+                zoom: 12,
+                center: [locality.latitude, locality.longitude]
+            })
+        }
+
+    }
 
     return (
         <div className="single-locality">
@@ -56,33 +74,33 @@ export const SingleLocality = (props) => {
                 <div className="single-locality__head p-4 mb-4">
 
                     <button
-                        className="single-locality__button single-locality__button--back"
-                        onClick={props.back}
+                        className="button-icon"
+                        onClick={back}
                     >
-                        <Icon
-                            className={"material-icons"}>arrow_forward</Icon>
+                        <Icon className={"material-icons"}>arrow_back</Icon>
                     </button>
-
-                    <span className={"single-locality__title"}> {locality?.name}</span>
-
+                    {/* locality name */}
+                    <span className={"single-locality__title link"} onClick={() => {
+                        onGoToLocality(locality)
+                    }}> {locality?.name}</span>
+                    {/*district name*/}
                     <div className={"mt-2"}>
                         <p>{locality?.district?.name} </p>
-                        <span
-                            className={"single-locality__coords"}> ({locality?.longitude}, {locality?.latitude})</span>
-                        <p><b> население (взрос./дет.):</b> {locality?.population?.population_adult}/{locality?.population?.population_child}
+                        {/* locality coords */}
+                        <span className={"single-locality__coords link"} onClick={() => {
+                            onGoToLocality(locality)
+                        }}>
+                            [{locality?.longitude}, {locality?.latitude}]
+                        </span>
+                        <p><b> Население
+                            (взрос./дет.):</b> {locality?.population?.population_adult}/{locality?.population?.population_child}
                         </p>
-
                     </div>
-
-
                 </div>
 
 
                 <div className="single-locality__body p-4">
-
-
                     <div onClick={(e) => {
-
                     }} className="single-locality__link">
 
                         {!loading ? mcs && mcs.length > 0 ? mcs.map((dist, i) => (
@@ -107,10 +125,7 @@ export const SingleLocality = (props) => {
                                 </div> :
                             'loading 1'
                         }
-
                     </div>
-
-
                 </div>
             </div>
         </div>

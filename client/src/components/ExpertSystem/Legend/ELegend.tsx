@@ -17,14 +17,11 @@ export const ELegend:
         <div className="legend shadow">
 
             <div className="legend__wrapper">
-
-                <h5 className="legend__title">
-                    Легенда карты:
-                </h5>
-
+                <div className={"center"}><h5 className="legend__title">Легенда карты</h5></div>
                 <div className={'row'}>
+
                     <div className={'col s6'}>
-                        <div className={' mb-3'}><b>Население (чел. )</b></div>
+                        <div className={'mb-3'}><b>Население (чел. )</b></div>
                         <ELegendHetmap/>
                     </div>
                     <div className={'col s6'}>

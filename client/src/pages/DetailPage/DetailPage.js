@@ -6,7 +6,7 @@ import getAddress from "../../functions/getAddress";
 import {InlineGallery} from "../../components/FAPS/Gallery/InlineGallery"
 import {Map, Placemark, YMaps} from "react-yandex-maps"
 import { Scrollbars } from 'react-custom-scrollbars'
-import {Button, Modal, Preloader} from "react-materialize"
+import {Button, Icon, Modal, Preloader} from "react-materialize"
 import {Box} from "../../components/FAPS/Skeleton"
 import {InlineRates} from "../../components/FAPS/Rates/InlineRates";
 
@@ -97,12 +97,10 @@ export const DetailPage = () => {
                   className="detail__back-button"
                   onClick={handleBackButtonClick}
                 >
-                  <span> <img src='/img/arrow-back.svg' alt='back'/></span> {history.length > 1 ? 'Назад' : 'Главная'}
+                  <span> <Icon className={"material-icons"}>arrow_forward</Icon></span> {history.length > 1 ? 'Назад' : 'Главная'}
                 </button>
               </div>
-
               <div className="details_buttons">
-
                 <Button
                   className="detail__button"
                   node="button"

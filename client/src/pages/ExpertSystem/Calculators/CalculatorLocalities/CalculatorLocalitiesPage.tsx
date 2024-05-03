@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Button, Collapsible, CollapsibleItem, Divider, Dropdown, Icon, Preloader, Select} from 'react-materialize'
+import {Button, Collapsible, CollapsibleItem, Icon, Preloader, } from 'react-materialize'
 import '../Calculators.scss'
 import {TableLocalities} from 'components/ExpertSystem/TablesCalculators/TableLocalities'
 import {SelectArea} from "components/FAPS/SelectArea";

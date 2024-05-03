@@ -17,15 +17,6 @@
     border-bottom: 1px solid rgba(#000000, .2);
   }
 
-  &__link {
-    color: #000000;
-
-    &:hover{
-      color: $link-hover;
-      transition: 0.3s;
-    }
-  }
-
   &__title{
     font-size: 16px;
     margin-top: 5px;

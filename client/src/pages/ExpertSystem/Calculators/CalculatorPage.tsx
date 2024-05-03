@@ -26,7 +26,7 @@ export const CalculatorPage = () => {
                 <div className={'view'} style={{overflow:'hidden'}}>
                     <div className={'tabs-wrapper'}>
                         {tabs.map((tab, index) => {
-                            return (<div className={`custom-tab ${selectedTab == index ? 'selected' : ''}`} key={index}
+                            return (<div className={`custom-tab ${selectedTab === index ? 'selected' : ''}`} key={index}
                                          onClick={() => onTabClick(index)}>{tab}</div>)
                         })}
                     </div>

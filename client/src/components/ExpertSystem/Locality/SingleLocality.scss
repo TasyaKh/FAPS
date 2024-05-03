@@ -18,27 +18,6 @@
     margin-top: 90px;
   }
 
-  &__button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-
-    &--back {
-      transform: rotate(180deg);
-      margin-right: 5px;
-
-
-      &:focus,
-      &:hover {
-        background-color: transparent;
-
-        svg {
-          fill: #000000;
-        }
-      }
-    }
-  }
-
   &__body {
     background-color: #ffffff;
   }
@@ -54,15 +33,5 @@
     height: 0;
     border: none;
     border-top: 2px dashed #ddd;
-  }
-
-  &__link {
-    color: #000000;
-    cursor: pointer;
-
-    &:hover {
-      color: $link-hover;
-      transition: 0.3s;
-    }
   }
 }

@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react'
 import './SingleView.scss'
 import getAddress from "../../functions/getAddress"
 import {useHttp} from "../../hooks/http.hook"
-import {Button, Preloader} from "react-materialize"
+import {Button, Icon, Preloader} from "react-materialize"
 import {Link} from "react-router-dom"
 import {SingleViewRateCard} from "./Rates/SingleViewRateCard";
 
@@ -74,7 +74,7 @@ export const SingleView = (props) => {
                 className="single-view__button single-view__button--back"
                 onClick={props.back}
               >
-                <img src='/img/arrow-back.svg' alt='back'/>
+                <Icon className={"material-icons"}>arrow_forward</Icon>
               </button>
 
               <div className="single-view__title">

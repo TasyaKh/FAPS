@@ -44,10 +44,6 @@ body {
   }
 }
 
-* {
-  box-sizing: border-box;
-}
-
 .container--map {
   position: relative;
   display: flex;
@@ -56,6 +52,10 @@ body {
 .shadow {
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .2);
 }
+
+// --------------------------------------------------------------------------------------------------------------
+// button
+// --------------------------------------------------------------------------------------------------------------
 
 .button {
   border-radius: 8px;
@@ -66,10 +66,20 @@ body {
   outline: none;
   cursor: pointer;
   color: $text;
+}
+
+.button-icon {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 
   &:focus,
   &:hover {
-    //fix
+    background-color: transparent;
+
+    svg {
+      fill: #000000;
+    }
   }
 }
 
@@ -96,7 +106,6 @@ body {
     border-radius: inherit;
     background-color: rgba(123, 154, 255, 0.418); // changed the color
   }
-
 }
 
 .track-horizontal {
@@ -124,7 +133,10 @@ body {
   }
 }
 
-.link {
+// --------------------------------------------------------------------------------------------------------------
+// link
+// --------------------------------------------------------------------------------------------------------------
+.link, .link-neutral {
   color: $link;
   cursor: pointer;
 
@@ -134,6 +146,9 @@ body {
   }
 }
 
+.link-neutral{
+  color: black ;
+}
 /*
 @include media-breakpoint-down(md) {
 }
