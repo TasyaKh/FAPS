@@ -5,7 +5,7 @@ import './EditPage.scss'
 import {InlineGallery} from "../../components/FAPS/Gallery/InlineGallery"
 import {Map, Placemark, YMaps} from "react-yandex-maps"
 import {Scrollbars} from 'react-custom-scrollbars'
-import {Button, Modal, Preloader, Switch, TextInput} from "react-materialize"
+import {Button, Icon, Modal, Preloader, Switch, TextInput} from "react-materialize"
 import {SelectArea} from "../../components/FAPS/SelectArea"
 import {InlineRates} from "../../components/FAPS/Rates/InlineRates";
 
@@ -168,7 +168,7 @@ export const EditPage = () => {
                                     href="#modal-update"
                                     onClick={handleBackButtonClick}
                                 >
-                                    <span><img src='/img/arrow-back.svg' alt='back'/></span> Назад
+                                    <span><Icon className={"material-icons"}>arrow_forward</Icon> </span> Назад
                                 </button>
                             </div>
 

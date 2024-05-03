@@ -1,6 +1,8 @@
 import {Router} from 'express'
 import AppDataSource from "../../typeorm.config";
 import Locality from "../../entities/locality.entity";
+import {checkUserRoleOrErr, verifyUserToken} from "../../services/auth.service";
+import {Roles} from "../../roles";
 
 const router = Router()
 export default (app: Router) => {
@@ -121,31 +123,7 @@ export default (app: Router) => {
                 req.params.id ?
                     query.where('locality.id = :locality_id', {locality_id: req.params.id}) : query
 
-                //     query += `
-                // GROUP BY locality.id
-                // ORDER BY locality.name`
-
-//                 let query = `
-// SELECT locality.id, locality.district_id, locality.longitude, locality.latitude,
-// locality.name, (population.population_adult) AS population_adult, (population.population_child) AS population_child,
-// district.name as district_name
-// FROM locality
-//                 LEFT JOIN population
-//                 ON locality.id = population.locality_id
-//                 LEFT JOIN district
-//                 ON district.id = locality.district_id`
-//
-//                 if (req.params.id) {
-//                     query += ` WHERE locality.id  = ?`
-//                 }
-//
-//                 query += `
-//             GROUP BY locality.id
-//             ORDER BY locality.name`
-
-                // const result = await entityManager.query(query)
-                // res.json(result)
-                 res.json(await query.getOne())
+                res.json(await query.getOne())
             } catch (e) {
                 console.log(e)
                 res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
@@ -158,10 +136,10 @@ export default (app: Router) => {
 // /api/location/update/district
     router.post(
         '/update/district',
-        [],
+        verifyUserToken,
         async (req, res) => {
             try {
-
+                checkUserRoleOrErr(req, res, Roles.EXPERT)
                 const entityManager = AppDataSource.createEntityManager()
 
                 const query = "UPDATE `district` SET `region_id` = " + req.body.region_id + ", `name` = '" + req.body.name + "' WHERE `district`.`id` = " + req.body.id
@@ -180,10 +158,10 @@ export default (app: Router) => {
 // /api/location/update/locality
     router.post(
         '/update/locality',
-        [],
+        verifyUserToken,
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             try {
-
                 const entityManager = AppDataSource.createEntityManager()
 
                 const query = "UPDATE `locality` SET `district_id` = '" + req.body.district_id + "', `name` = '" + req.body.name + "' WHERE `locality`.`id` = " + req.body.id
@@ -202,8 +180,9 @@ export default (app: Router) => {
 // /api/location/update/region
     router.post(
         '/update/region',
-        [],
+        verifyUserToken,
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             try {
                 const entityManager = AppDataSource.createEntityManager()
 
@@ -225,8 +204,9 @@ export default (app: Router) => {
 // /api/location/add/district
     router.post(
         '/add/district',
-        [],
+        verifyUserToken,
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             try {
 
                 const entityManager = AppDataSource.createEntityManager()
@@ -247,8 +227,9 @@ export default (app: Router) => {
 // /api/location/add/locality
     router.post(
         '/add/locality',
-        [],
+        verifyUserToken,
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             try {
 
                 const entityManager = AppDataSource.createEntityManager()
@@ -269,8 +250,9 @@ export default (app: Router) => {
 // /api/location/add/region
     router.post(
         '/add/region',
-        [],
+        verifyUserToken,
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             try {
 
                 const entityManager = AppDataSource.createEntityManager()
@@ -294,8 +276,9 @@ export default (app: Router) => {
 // /api/location/delete/district
     router.post(
         '/delete/district',
-        [],
+        verifyUserToken,
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             try {
 
                 const entityManager = AppDataSource.createEntityManager()
@@ -316,8 +299,9 @@ export default (app: Router) => {
 // /api/location/delete/locality
     router.post(
         '/delete/locality',
-        [],
+        verifyUserToken,
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             try {
 
                 const entityManager = AppDataSource.createEntityManager()
@@ -338,8 +322,9 @@ export default (app: Router) => {
 // /api/location/delete/region
     router.post(
         '/delete/region',
-        [],
+        verifyUserToken,
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             try {
 
                 const entityManager = AppDataSource.createEntityManager()

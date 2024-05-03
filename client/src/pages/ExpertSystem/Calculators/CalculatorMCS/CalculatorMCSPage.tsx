@@ -5,7 +5,7 @@ import {SelectArea} from "components/FAPS/SelectArea";
 import {DefaultModal} from "components/ExpertSystem/Modals/TemplateModal";
 import {useQuery} from "react-query";
 import {Order} from "enums";
-import {getExcelSolutionsLocalities, getExcelSolutionsMCS} from "api/uploads";
+import {getExcelSolutionsMCS} from "api/uploads";
 import {TableMCS} from "components/ExpertSystem/TablesCalculators/TableMCS";
 import {ISearchMedicalCenter} from "types/types-search";
 import {PointsMCS} from "components/ExpertSystem/Modals/Calculators/PointsMCS";

@@ -3,6 +3,8 @@ import multer from 'multer'
 import CyrillicToTranslit from 'cyrillic-to-translit-js'
 import fs from 'fs'
 import AppDataSource from "../../typeorm.config";
+import {checkUserRoleOrErr, verifyUserToken} from "../../services/auth.service";
+import {Roles} from "../../roles";
 
 const router = Router()
 
@@ -54,8 +56,10 @@ export default (app: Router) => {
 // /api/upload/images
     router.post(
         '/images',
+        verifyUserToken,
         multer(({storage: storageConfig, fileFilter: fileFilter})).single("filedata"),
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             try {
 
                 if (!req.file)
@@ -89,8 +93,9 @@ export default (app: Router) => {
 // /api/upload/images/delete
     router.post(
         '/images/delete',
-        [],
+        verifyUserToken,
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             try {
 
                 const entityManager = AppDataSource.createEntityManager()

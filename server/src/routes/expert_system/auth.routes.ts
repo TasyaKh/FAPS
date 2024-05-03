@@ -1,5 +1,5 @@
 import express, {Router} from 'express'
-import {forgotPassword, getUser, login, resetPassword, signup, verifyUserToken} from "../services/auth.service";
+import {forgotPassword, getUser, login, resetPassword, signup, verifyUserToken} from "../../services/auth.service";
 
 const router = Router()
 export default (app: Router) => {

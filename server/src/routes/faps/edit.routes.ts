@@ -1,5 +1,7 @@
 import {Router} from 'express'
 import AppDataSource from "../../typeorm.config";
+import {checkUserRoleOrErr, verifyUserToken} from "../../services/auth.service";
+import {Roles} from "../../roles";
 
 const router = Router()
 
@@ -16,7 +18,7 @@ export default (app: Router) => {
 
         await entityManager.query(query).catch((err) => {
             throw err
-        }).then( async (rows) => {
+        }).then(async (rows) => {
             // TODO: CHECK all in file
             let rateFullSum = 0
             let rateOccupiedSum = 0
@@ -44,10 +46,10 @@ export default (app: Router) => {
 // /api/edit/rate/add
     router.post(
         '/rate/add',
-        [],
+        verifyUserToken,
         async (req, res) => {
             try {
-
+                checkUserRoleOrErr(req, res, Roles.EXPERT)
                 const entityManager = AppDataSource.createEntityManager()
 
                 let date = new Date()
@@ -76,8 +78,9 @@ export default (app: Router) => {
 // /api/edit/rate/update
     router.post(
         '/rate/update',
-        [],
+        verifyUserToken,
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             try {
                 const entityManager = AppDataSource.createEntityManager()
 
@@ -85,7 +88,7 @@ export default (app: Router) => {
                 // @ts-ignore
                 date = date.getFullYear() + '-' + (date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth()) + '-' + date.getDate()
 
-                const query:string = "UPDATE `staff` SET `date` = ?, `position` = ?, `rate_full` = ?, `rate_occupied` = ? WHERE `staff`.`id` = ?"
+                const query: string = "UPDATE `staff` SET `date` = ?, `position` = ?, `rate_full` = ?, `rate_occupied` = ? WHERE `staff`.`id` = ?"
 
                 await entityManager.query(query, [date, req.body.position, req.body.rate_full, req.body.rate_occupied, req.body.id])
 
@@ -104,8 +107,9 @@ export default (app: Router) => {
 // /api/edit/rate/delete
     router.post(
         '/rate/delete',
-        [],
+        verifyUserToken,
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
             try {
                 const entityManager = AppDataSource.createEntityManager()
 

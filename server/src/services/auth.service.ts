@@ -128,7 +128,7 @@ export const getUser = async (id: number) => {
 export const checkUserRoleOrErr = (req: express.Request, res: express.Response, requiredRole: Roles) => {
     // console.log(req.user)
     const userRole = req.user.role
-    if (userRole === requiredRole || roleHierarchy[userRole]?.includes(requiredRole)) {
+    if (userRole === Roles.ADMIN || roleHierarchy[userRole]?.includes(requiredRole)) {
         return true
     } else res.status(403).send("У вас нет доступа - " + requiredRole);
 }

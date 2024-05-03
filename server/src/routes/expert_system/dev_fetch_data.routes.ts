@@ -1,6 +1,5 @@
 import express, {Router} from 'express'
 import {getMedicalCenters} from "../../services/medical_center.service";
-import MC from "../../entities/medical_center.entity";
 import {getLocalitiesByDistrictId} from "../../services/locality.service";
 import {DevService} from "../../services/dev.service";
 import {getOrganizationsByDistrictId} from "../../services/organization.service";

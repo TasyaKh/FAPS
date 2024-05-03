@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Button, Collapsible, CollapsibleItem, Icon, Preloader, } from 'react-materialize'
+import {Button, Collapsible, CollapsibleItem, Icon, Preloader,} from 'react-materialize'
 import '../Calculators.scss'
 import {TableLocalities} from 'components/ExpertSystem/TablesCalculators/TableLocalities'
 import {SelectArea} from "components/FAPS/SelectArea";
@@ -118,10 +118,11 @@ export const CalculatorLocalitiesPage = () => {
             <div className=''>
                 {/* info select rules */}
                 <div>Информация</div>
-                <Collapsible style={{background:"white"}}>
+                <Collapsible style={{background: "white"}}>
                     <CollapsibleItem header='Рекомендации' icon={<Icon className={'material-icons'}>pencil</Icon>}>
                         {messages.map((el, index) => (
-                            <div className={'recommendation'} style={{width: '100%', background:el.color}}>{index+1}) {el.name}</div>
+                            <div className={'recommendation'}
+                                 style={{width: '100%', background: el.color}}>{index + 1}) {el.name}</div>
                         ))}
                     </CollapsibleItem>
                 </Collapsible>
@@ -138,12 +139,10 @@ export const CalculatorLocalitiesPage = () => {
             </div>
 
             {/* TablePoints */}
-            <div style={{height: '100%', overflow: 'scroll'}}>
-                <TableLocalities
-                    dataIsLoading={solutionsLoading}
-                    data={solutions ?? []}
-                    onFilterStateChanged={handleFilterStateChanged}/>
-            </div>
+            <TableLocalities
+                dataIsLoading={solutionsLoading}
+                data={solutions ?? []}
+                onFilterStateChanged={handleFilterStateChanged}/>
 
             {/*modal ConditionsLocality */}
             <DefaultModal header={"Условия для НП-ов"}

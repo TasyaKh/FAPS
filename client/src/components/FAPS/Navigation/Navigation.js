@@ -8,6 +8,7 @@ import {Link} from "react-router-dom"
 import {Legend} from "../Legend/Legend"
 import {AuthContext} from "context/AuthContext";
 import {AuthBtn} from "../../Elements/Buttons/BtnAuth/AuthBtn";
+import {roleHierarchy, Roles} from "../../../roles";
 
 export const Navigation = (props) => {
     const {logout, isAuthenticated, role} = useContext(AuthContext)
@@ -124,8 +125,8 @@ export const Navigation = (props) => {
                         </Button>
                     </Link>
 
-
-                    <Link to="/management" className="navigation__link">
+                    {roleHierarchy[role]?.includes(Roles.EXPERT) &&
+                        <Link to="/management" className="navigation__link">
 
                         <Button
                             className="navigation__button blue darken-4"
@@ -135,6 +136,7 @@ export const Navigation = (props) => {
                             Управление
                         </Button>
                     </Link>
+                    }
                     {/* auth btn */}
                     <div className={'navigation__button navigation__link '}>
                         <AuthBtn/>

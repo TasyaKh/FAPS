@@ -1,14 +1,15 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useContext, useEffect, useState} from 'react'
 import {useHttp} from "../hooks/http.hook"
 import {useHistory} from "react-router-dom"
 import './EditPage/EditPage.scss'
 import {Map, Placemark, YMaps} from "react-yandex-maps"
 import {Scrollbars} from 'react-custom-scrollbars'
-import {Button, Preloader, Switch, TextInput} from "react-materialize"
+import {Button, Icon, Preloader, Switch, TextInput} from "react-materialize"
 import {SelectArea} from "../components/FAPS/SelectArea"
+import {AuthContext} from "../context/AuthContext";
 
 export const AddPage = () => {
-
+    const {role} = useContext(AuthContext)
     const {loading, error, request, clearError} = useHttp()
 
     const history = useHistory()
@@ -111,7 +112,7 @@ export const AddPage = () => {
                                     href="#modal-update"
                                     onClick={handleBackButtonClick}
                                 >
-                                    <span> <img src='/img/arrow-back.svg' alt='back'/></span> Назад
+                                    <span><Icon className={"material-icons"}>arrow_forward</Icon> </span> Назад
                                 </button>
                             </div>
 

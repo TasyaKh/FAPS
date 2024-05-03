@@ -1,5 +1,7 @@
 import {Router} from 'express'
 import AppDataSource from "../../typeorm.config";
+import {checkUserRoleOrErr, verifyUserToken} from "../../services/auth.service";
+import {Roles} from "../../roles";
 
 const router = Router()
 
@@ -95,10 +97,10 @@ export default (app: Router) => {
 // api/detail/delete
     router.post(
         '/delete',
-        [],
+        verifyUserToken,
         async (req, res) => {
             try {
-
+                checkUserRoleOrErr(req, res, Roles.EXPERT)
                 const entityManager = AppDataSource.createEntityManager()
 
                 const query = 'DELETE FROM `medical_center` WHERE `medical_center`.`id` = ' + req.body.id
@@ -115,10 +117,10 @@ export default (app: Router) => {
 // api/detail/update
     router.post(
         '/update',
-        [],
+        verifyUserToken,
         async (req, res) => {
             try {
-
+                checkUserRoleOrErr(req, res, Roles.EXPERT)
                 const entityManager = AppDataSource.createEntityManager()
 
                 const query = "UPDATE `medical_center` SET `locality_id` = ?, `medical_facility_id` = ?, `type_id` = ?, `name` = ?, `street` = ?, `number_of_house` = ?, `phone` = ?, `latitude` = ?, `longitude` = ?, `pharmacy` = ?, `founding_year` = ?, `availability_of_emergency_mediical_care` = ?, `access_to_primary_health_care` = ?, `founding_year` = ? WHERE `medical_center`.`id` = ?"
@@ -138,10 +140,10 @@ export default (app: Router) => {
 // api/detail/add
     router.post(
         '/add',
-        [],
+        verifyUserToken,
         async (req, res) => {
             try {
-
+                checkUserRoleOrErr(req, res, Roles.EXPERT)
                 const entityManager = AppDataSource.createEntityManager()
 
                 if (req.body.phone) {
@@ -166,19 +168,6 @@ export default (app: Router) => {
                     success: true,
                     id: result.insertId
                 })
-
-                // connection.query(query, [data], (err, rows) => {
-                //   connection.end()
-                //
-                //   if (err) {
-                //     throw err
-                //   }
-                //
-                //   res.json({
-                //     success: true,
-                //     id: rows.insertId
-                //   })
-                // })
 
             } catch (e) {
                 console.log(e)

@@ -8,9 +8,6 @@ import {MedicalCenterDto} from "../../dto/points_medical_center.dto";
 
 const router = Router()
 
-// region_id?: number
-// district_id?: number
-
 export default (app: Router) => {
     app.use('/uploads', router)
     // /api/uploads/excel/solutions-localities
@@ -23,9 +20,9 @@ export default (app: Router) => {
             }),
         }),
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
 
             const userId = req.user.id
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
             const body = req.query as LocalitiesAndNearMcsDto
 
             const uploadsService = new UploadsService()
@@ -46,9 +43,9 @@ export default (app: Router) => {
             }),
         }),
         async (req, res) => {
+            checkUserRoleOrErr(req, res, Roles.EXPERT)
 
             const userId = req.user.id
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
             const body = req.query as MedicalCenterDto
 
             const uploadsService = new UploadsService()

@@ -7,7 +7,7 @@ const router = Router()
 
   export default (app: Router) => {
     app.use('/filter', router)
-// /api/filter
+    // /api/filter
     router.post(
         '/',
         [],
