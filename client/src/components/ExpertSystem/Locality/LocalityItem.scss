@@ -1,0 +1,45 @@
+@import "~scss/vars";
+
+.item {
+  position: relative;
+  padding: 20px;
+  transition: .3s;
+  background-color: #ffffff;
+  border-top: 1px solid rgba(#000000, .2);
+
+  &:focus,
+  &:hover {
+    background-color: #f6f6f6;
+    cursor: pointer;
+  }
+
+  &:last-of-type {
+    border-bottom: 1px solid rgba(#000000, .2);
+  }
+
+  &__title{
+    font-size: 16px;
+    margin-top: 5px;
+    font-weight: bold;
+  }
+
+  &__body {
+    margin-top: 5px;
+    color: rgba(#000000, .7);
+    font-size: 14px;
+
+    .crumb{
+      border-radius: 10px;
+      padding: 5px 8px;
+    }
+
+  }
+
+  &__line{
+    margin: 20px 0;
+    padding: 0;
+    height: 0;
+    border: none;
+    border-top: 2px dashed #ddd;
+  }
+}

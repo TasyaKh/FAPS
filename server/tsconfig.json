@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",    // or ES2015, ES2020
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "sourceMap": true,
+    "outDir": "dist",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "strict": false,
+    "allowJs": true,
+    "rootDir": "src",
+    "typeRoots" : ["./src/types", "./node_modules/@types"]
+  },
+  "ts-node": {
+    // these options are overrides used only by ts-node
+    // same as the --compilerOptions flag and the TS_NODE_COMPILER_OPTIONS environment variable
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  },
+}

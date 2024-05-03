@@ -1,0 +1,24 @@
+{
+  "port": 3002,
+  "jwtSecret": "keyMapHospitals",
+  "SERVER_HOST": "http://localhost:3000",
+
+  "host": "localhost",
+  "user": "root",
+  "portDB": 3306,
+  "password": "Akita857281959",
+  "database": "fap_last",
+
+  "NODE_ENV": "production",
+
+  "DEFAULT_FROM_EMAIL": "akitaspam@yandex.ru",
+  "SMTP_PORT": "465",
+  "SMTP_DOMAIN":"smtp.yandex.com",
+  "SMTP_USERNAME":"akitaspam@yandex.ru",
+  "SMTP_PASSWORD":"857281959",
+
+  "api_graphopper": "b47cc4e2-4892-48a4-a263-3229c968b6ce",
+  "url_graphopper": "https://graphhopper.com/api/1/",
+  "url_openservice": "http://localhost:8080/ors/v2/",
+  "secret": "akiinu85"
+}

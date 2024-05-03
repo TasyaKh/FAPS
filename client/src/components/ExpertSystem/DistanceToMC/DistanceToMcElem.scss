@@ -1,0 +1,30 @@
+@import "~scss/vars";
+
+.distance-elem {
+
+  &__link {
+    color: #000000;
+
+    &:hover{
+      color: $link-hover;
+      transition: 0.3s;
+    }
+  }
+
+  &__title{
+    font-size: 16px;
+    margin-top: 5px;
+    font-weight: bold;
+  }
+
+  &__body {
+    margin-top: 5px;
+    color: rgba(#000000, .7);
+    font-size: 14px;
+
+    .crumb{
+      border-radius: 10px;
+      padding: 5px 8px;
+    }
+  }
+}

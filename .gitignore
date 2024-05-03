@@ -1,4 +1,4 @@
 /client/build/
-/.idea/
+/server/dist/
 /**/node_modules/
 /**/package-lock.json

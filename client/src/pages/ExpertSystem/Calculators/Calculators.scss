@@ -1,0 +1,95 @@
+@import "scss/vars";
+
+.calculator-page {
+  background: #e6e6e6;
+
+  .container {
+
+    &__filter {
+      margin: 5px 0px;
+      padding: $padding1;
+      background-color: lightcyan;
+
+      .row {
+        align-items: center;
+      }
+    }
+
+    .content-wrapper {
+      overflow: scroll;
+      height: 90%;
+      background: white;
+      padding: $padding1;
+    }
+
+    .tabs-wrapper {
+
+      overflow: hidden;
+      background: transparent;
+      padding-top: 20px;
+
+      .custom-tab {
+        display: inline;
+        border-radius: $radius $radius 0px 0px;
+        padding: 10px 20px;
+        margin-right: 5px;
+        background: white;
+        cursor: pointer;
+
+        &.selected {
+          transition: 0.3s;
+          background: white !important;
+        }
+      }
+
+      $colors: (#BDEDB5, #9ec6f3);
+
+      @each $color in $colors {
+        $index: index($colors, $color);
+        .custom-tab:nth-child(#{$index}) {
+          background-color: $color;
+        }
+      }
+    }
+
+    .recommendation {
+      margin: 5px 0;
+      padding: $padding1;
+      border-radius: $radius;
+    }
+  }
+
+  .btn-floating {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 40px;
+    right: 40px;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 2px 2px 3px #999;
+  }
+
+  .icon-floating {
+    margin-top: 5px;
+  }
+
+  .circle {
+    padding: 20px;
+    background: gray;
+    border-radius: 50px;
+  }
+
+  @media only screen and (max-width: 1280px) {
+    //.table-container {
+    //  width: 90%;
+    //}
+  }
+
+  @media only screen and (max-width: 425px) {
+    //.table-container {
+    //  margin: 40px auto;
+    //}
+  }
+
+}

@@ -1,0 +1,54 @@
+@import "scss/vars";
+
+.auth {
+  background: rgb(168,221,255);
+  background: linear-gradient(120deg, rgba(168,221,255,1) 0%, rgba(62,109,237,1) 100%);
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #ffffff;
+
+  form{
+    max-width: 500px;
+  }
+
+  .form-wrap {
+    background: rgba(255, 255, 255, 1);
+    overflow: hidden;
+    border-radius: $radius;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    color: #000000;
+    padding: 20px 50px;
+
+    form {
+
+      .login{
+        width: 100%;
+      }
+    }
+
+    .tabs{
+      text-align: center;
+      cursor: pointer;
+      color: $link;
+
+      .tab{
+
+
+        &:hover{
+          color: $link-hover;
+          transition: 0.3s;
+        }
+
+        &.selected{
+          border-bottom: 1px solid $link-hover;
+          color: $link-hover;
+        }
+      }
+
+    }
+  }
+}

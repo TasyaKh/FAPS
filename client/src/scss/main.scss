@@ -2,125 +2,153 @@
 @import "fonts";
 
 * {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 ::placeholder {
-	color: #666;
+  color: #666;
 }
 
 ::selection {
-	background-color: $text;
-	color: $white;
+  background-color: $text;
+  color: $white;
 }
 
 html {
-	padding: 0;
-	margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 body {
-	margin: 0;
-	padding: 0;
-	font-size: 16px;
-	min-width: 320px;
-	position: relative;
-	line-height: 1.65;
-	font-family: 'Roboto', sans-serif;
-	overflow-x: hidden;
-	color: $text;
-	input, textarea {
-		border: #666 1px solid;
-		outline: none;
-		&:focus:required:invalid {
-			border-color: red;
-		}
-		&:required:valid {
-			border-color: green;
-		}
-	}
-}
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  min-width: 320px;
+  position: relative;
+  line-height: 1.65;
+  font-family: 'Roboto', sans-serif;
+  overflow-x: hidden;
+  color: $text;
 
-* {
-	box-sizing: border-box;
+  input, textarea {
+    border: #666 1px solid;
+    outline: none;
+
+    &:focus:required:invalid {
+      border-color: red;
+    }
+
+    &:required:valid {
+      border-color: green;
+    }
+  }
 }
 
 .container--map {
-	position: relative;
-	display: flex;
+  position: relative;
+  display: flex;
 }
 
 .shadow {
-	box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .2);
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, .2);
 }
 
-.button {
-	border-radius: 8px;
-	border: 1px solid rgba(0, 0, 0, .2);
-	padding: 10px 15px;
-	background-color: #ffffff;
-	transition: .3s;
-	outline: none;
-	cursor: pointer;
-	color: $text;
+// --------------------------------------------------------------------------------------------------------------
+// button
+// --------------------------------------------------------------------------------------------------------------
 
-	&:focus,
-	&:hover {
-		//fix
-	}
+.button {
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, .2);
+  padding: 10px 15px;
+  background-color: #ffffff;
+  transition: .3s;
+  outline: none;
+  cursor: pointer;
+  color: $text;
+}
+
+.button-icon {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:focus,
+  &:hover {
+    background-color: transparent;
+
+    svg {
+      fill: #000000;
+    }
+  }
 }
 
 .flex {
-	display: flex;
+  display: flex;
 
-	&--between {
-		justify-content: space-between;
-	}
+  &--between {
+    justify-content: space-between;
+  }
 }
 
 .track-vertical {
-	top: 0;
-	bottom: 0;
-	right: 0;
-	border-radius: 3px;
-	background: rgba(255, 255, 255, 0.111);
+  top: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.111);
 
-	.thumb-vertical {
-		position: relative;
-		display: block;
-		width: 100%;
-		cursor: pointer;
-		border-radius: inherit;
-		background-color: rgba(123, 154, 255, 0.418); // changed the color
-	}
-
+  .thumb-vertical {
+    position: relative;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    border-radius: inherit;
+    background-color: rgba(123, 154, 255, 0.418); // changed the color
+  }
 }
 
 .track-horizontal {
-	position: absolute;
-	height: 6px;
-	right: 2px;
-	bottom: 2px;
-	left: 2px;
-	border-radius: 3px;
+  position: absolute;
+  height: 6px;
+  right: 2px;
+  bottom: 2px;
+  left: 2px;
+  border-radius: 3px;
 
-	.thumb-horizontal {
-		position: relative;
-		display: block;
-		height: 100%;
-		cursor: pointer;
-		border-radius: inherit;
-		background-color: rgba(125, 149, 255, 0.993); // changed the color
-	}
+  .thumb-horizontal {
+    position: relative;
+    display: block;
+    height: 100%;
+    cursor: pointer;
+    border-radius: inherit;
+    background-color: rgba(125, 149, 255, 0.993); // changed the color
+  }
 }
 
 .input-field {
 
-	label {
-		pointer-events: none;
-	}
+  label {
+    pointer-events: none;
+  }
 }
 
+// --------------------------------------------------------------------------------------------------------------
+// link
+// --------------------------------------------------------------------------------------------------------------
+.link, .link-neutral {
+  color: $link;
+  cursor: pointer;
+
+  &:hover {
+    transition: 0.3s;
+    color: $link-hover;
+  }
+}
+
+.link-neutral{
+  color: black ;
+}
 /*
 @include media-breakpoint-down(md) {
 }

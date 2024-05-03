@@ -30,6 +30,7 @@ export const ModalInfo = (props) => {
         props.update()
       }
     } catch (e) {}
+    // eslint-disable-next-line
   }, [request])
 
   useEffect(() => {
@@ -50,6 +51,7 @@ export const ModalInfo = (props) => {
         props.update()
       }
     } catch (e) {}
+    // eslint-disable-next-line
   }, [request])
 
   const handleFieldChange = (e) => {

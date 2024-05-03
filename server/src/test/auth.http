@@ -1,0 +1,26 @@
+### auth/sign-up
+POST http://localhost:3002/api/auth/sign-up
+content-type: application/json
+
+{
+  "name": "expert",
+  "password": "12345679"
+}
+
+### auth/login
+POST http://localhost:3002/api/auth/login
+content-type: application/json
+
+{
+  "nameEmail": "admin",
+  "password": "12345679"
+}
+
+### auth/forgot-password
+POST http://localhost:3002/api/auth/forgot-password
+content-type: application/json
+
+{
+  "email": "AkitaSpam@gmail.com"
+}
+
