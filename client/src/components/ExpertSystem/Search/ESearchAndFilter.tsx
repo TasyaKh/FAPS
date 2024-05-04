@@ -26,6 +26,7 @@ export const ESearchAndFilter:
 
     return (
         <CardPanel className={scroll ? "sidebar__header" : "sidebar__header sidebar__header--fixed"}>
+            {/*Search button*/}
             <ESearch handleInput={handleInput}
                      childButton={
                          <button
@@ -35,7 +36,7 @@ export const ESearchAndFilter:
                              <img src='/img/filter.svg' alt='back'/>
                          </button>
                      }/>
-
+            {/*Filter*/}
             <ESearchFilter
                 isVisible={filterShow}
                 onFilterChanged={onFilterChanged}

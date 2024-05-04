@@ -127,7 +127,7 @@ export const ESidebar: FC<ESidebarProps> = ({
             </button>
 
             <div className="sidebar__wrapper">
-
+                {/*filters*/}
                 <ESearchAndFilter
                     filterShow={state.filter.show}
                     scroll={state.scroll}

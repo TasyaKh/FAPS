@@ -16,8 +16,9 @@ export class DistanceDto {
 // ************************************************************************************************************************
 // addition dtos
 export class LocalitiesAndNearMcsDto {
-    region_id?: number;
-    district_id?: number;
+    region_id?: number
+    district_id?: number
+    population_id?: number
 
     search?: string
     // orders

@@ -86,7 +86,7 @@ export const ENavigation: FC<ENavigationProps> = ({
             <div className="navigation__wrapper">
 
                 <div className="navigation__nav navigation__nav--top">
-
+                    {/*Калькулятор*/}
                     {roleHierarchy[role]?.includes(Roles.EXPERT) ?
                         <div className={'navigation__button navigation__link'}>
                             <Link to="/expert-system/solution-localities" className="auth-btn">
@@ -105,7 +105,7 @@ export const ENavigation: FC<ENavigationProps> = ({
                 </div>
 
                 <div className="navigation__nav navigation__nav--bottom">
-
+                    {/*legend*/}
                     <div className="navigation__controls">
                         <Button
                             className=""

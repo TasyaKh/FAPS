@@ -11,6 +11,7 @@ import {Order} from "../../enums";
 
 export interface IFilterEMap {
     district_id: number,
+    population_id: number,
     population_population_adult_order: Order,
     search: string,
 
@@ -36,6 +37,7 @@ export const EMapPage = () => {
 
     const [filters, setFilters] = useState<IFilterEMap>({
         district_id: 2,
+        population_id:1,
         search: '',
         population_population_adult_order: Order.DESC,
         showFaps: getLocalStorageValue('showFaps'),
@@ -48,7 +50,7 @@ export const EMapPage = () => {
         // error: localitiesWithDistMcsError,
         isLoading: localitiesWithDistMcsLoading,
         // refetch: localitiesWithDistMcsRefetch
-    } = useQuery(['getLocalitiesWithDistMcs', filters.district_id, filters.search], () => getLocalitiesWithDistMcs({...filters}));
+    } = useQuery(['getLocalitiesWithDistMcs', filters.district_id, filters.search, filters.population_id], () => getLocalitiesWithDistMcs({...filters}));
 
     const fetchMedicalCenters = async () => {
         try {

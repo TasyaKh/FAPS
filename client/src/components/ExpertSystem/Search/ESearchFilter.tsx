@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from 'react'
 import './ESearchFilter.scss'
-import {CardPanel, Checkbox} from "react-materialize"
+import {CardPanel, Checkbox, Select} from "react-materialize"
 import {useHttp} from "../../../hooks/http.hook";
 import {SelectArea} from "../../FAPS/SelectArea";
 import {IFilterEMap} from "../../../pages/ExpertSystem/EMapPage";
@@ -88,15 +88,26 @@ export const ESearchFilter: FC<ESearchFilterProps> = ({
                             onChange={handleCheckBoxFilterClick}
                         /></div>
                 </div>
+                {/*district*/}
                 <div className="row">
                     <SelectArea
-                        // empty={true}
                         value={filters.district_id}
                         name="district_id"
                         onChange={handleSelectChange}
                         disabled={loading}
                         label="Район:"
                         query="district"
+                    />
+                </div>
+                {/*population*/}
+                <div className="row">
+                    <SelectArea
+                        value={filters.population_id}
+                        name="population_id"
+                        onChange={handleSelectChange}
+                        disabled={loading}
+                        label="Население:"
+                        query="population"
                     />
                 </div>
             </div>

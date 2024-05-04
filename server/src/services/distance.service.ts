@@ -172,6 +172,26 @@ export class DistanceService {
                 .andWhere('district.region_id = :region_id', {region_id: dto.region_id})
         }
 
+        // population_id
+        if (dto.population_id)
+            switch (Number(dto.population_id)) {
+                case 1:
+                    query.andWhere('population.population_adult < 100')
+                    break
+                case 2:
+                    query.andWhere('population.population_adult >= 100 AND population.population_adult <=300')
+                    break
+                case 3:
+                    query.andWhere('population.population_adult > 300 AND population.population_adult <=1000')
+                    break
+                case 4:
+                    query.andWhere('population.population_adult > 1000 AND population.population_adult <=2000')
+                    break
+                case 5:
+                    query.andWhere('population.population_adult > 2000')
+                    break
+            }
+
         // search
         dto.search ?
             query.andWhere('LOWER(locality.name) LIKE :name', {name: `%${dto.search}%`})
