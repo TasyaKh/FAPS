@@ -16,7 +16,7 @@ import apiAddress from '../routes/faps/address.routes'
 import apiLocation from '../routes/faps/location.routes'
 
 // expert system
-import apiDev from '../routes/expert_system/dev_fetch_data.routes'
+import apiDev from './expert_system/dev.routes'
 import apiDist from '../routes/expert_system/distance.routes'
 
 import apiEdit from '../routes/faps/edit.routes'

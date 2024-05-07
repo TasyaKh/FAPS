@@ -37,7 +37,7 @@ export const EMapPage = () => {
 
     const [filters, setFilters] = useState<IFilterEMap>({
         district_id: 2,
-        population_id:1,
+        population_id:0,
         search: '',
         population_population_adult_order: Order.DESC,
         showFaps: getLocalStorageValue('showFaps'),

@@ -60,7 +60,6 @@ content-type: application/json
 
 
 
-
 ### CLUSTER clusterize/district
 
 POST http://localhost:3000/api/clusterize/district
@@ -69,25 +68,6 @@ content-type: application/json
 {
   "district_id":8
 }
-
-
-
-
-
-### DEV dev/openrouteservice_distances
-
-POST http://localhost:3000/api/dev_fetch_data/openrouteservice_distances
-content-type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwicm9sZSI6IiIsImlhdCI6MTcwNjkzNzc0MiwiZXhwIjoxNzA3MDI0MTQyfQ.FSXTxRn5U-4L7ZodnRmu5ReDkIVyjKLl8ku7y4jsJc8
-
-
-{
-  "district_id":1,
-  "region_id":1,
-  "distance": 30
-}
-
-
 
 
 

@@ -24,7 +24,7 @@ export class DevService {
 
     // получить расстояния между заданным НП и мед учреждениями и мохранить в бд
     async findAndSaveDistancesToLocality(locality: any, mcs: any) {
-
+        const dS = new DistanceService()
         const dist = new DistanceOpenRoute()
 
         let localitiyCoords: number[] = [locality["longitude"], locality["latitude"]]
@@ -43,7 +43,6 @@ export class DevService {
                     distance.locality_id = locality.id
                     distance.mc_id = mc.id
                     // save distances
-                    const dS = new DistanceService()
 
                     return await dS.saveDistance(distance).catch(console.log)
                 }).catch(console.log)
@@ -79,20 +78,6 @@ export class DevService {
         // save distances
         const dS = new DistanceService()
         let r = await dS.saveDistance(minDistOrg).catch(console.log)
-        // med_centers
-
-
-    }
-
-    async findAndSaveDistances(localities: any, mcs: any) {
-
-        const dist = new DistanceOpenRoute()
-
-        //localities
-        for (let i = 0; i < localities?.length; i++) {
-
-            await this.findAndSaveDistancesToLocality(localities[i], mcs)
-        }
     }
 
     async filterMCsHaversine(locality: number[], mcs: any, rangeKm: number) {
@@ -107,7 +92,6 @@ export class DevService {
             if (distance <= rangeKm) {
                 medicalCenters.push(mc);
             }
-
         }
 
         return medicalCenters

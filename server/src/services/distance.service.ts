@@ -15,7 +15,7 @@ export class DistanceService {
 
         const entityManager = AppDataSource.createEntityManager()
 
-        await this.delDistance(distance)
+        await this.delDistanceIfExists(distance)
 
         const query: string = `INSERT INTO distance (
         distance, duration, locality_id, mc_id, mc_facility_id) 
@@ -55,7 +55,7 @@ export class DistanceService {
     }
 
 // Удалить существующие записи
-    async delDistance(distance: DistanceDto) {
+    async delDistanceIfExists(distance: DistanceDto) {
         let res: any
         const entityManager = AppDataSource.createEntityManager()
 
