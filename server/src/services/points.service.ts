@@ -9,6 +9,7 @@ import {PointsMedicalCenter} from "../entities/points_medical_center.entity";
 import {MedicalCenterDto, PointsMedicalCenterDto, SolutionsMCS} from "../dto/points_medical_center.dto";
 import {getMedicalCenters} from "./medical_center.service";
 import express from "express";
+import {SolutionsMCSDto} from "../dto/solutions_mcs.dto";
 
 export class PointsService {
 
@@ -109,28 +110,32 @@ export class PointsService {
     }
 
 
-    async getSolutionsMCS(userId: number, body: MedicalCenterDto, res: express.Response) {
+    async getSolutionsMCS(userId: number, dto: SolutionsMCSDto, res: express.Response) {
 
         const existingConditions = await this.getPointsMCS(userId)
 
         if (!existingConditions) {
             return null
         } else {
-            const mcs = await getMedicalCenters(body, res)
+            const mcs = await getMedicalCenters({...dto}, res)
 
-            const points: SolutionsMCS[] = []
+            let points: SolutionsMCS[] = []
 
             mcs.forEach((mc, index) => {
                 const p: SolutionsMCS = {}
                 const currYear = new Date().getFullYear()
                 if (currYear - mc?.founding_year >= existingConditions.max_found_year)
                     p.foundation_year = Number((existingConditions.foundation_year).toFixed(1))
+
                 p.staffing = Number(((((1.0 - mc?.staffing) * 100) / existingConditions.each_pers_staffing) * existingConditions.staffing)
                     .toFixed(1))
+
                 p.state = Number((mc.building_condition?.state === 'строится' ? existingConditions.state : 0)
                     .toFixed(1))
+
                 p.adult_population = Number((mc.locality?.population?.population_adult * existingConditions.adult_population)
                     .toFixed(1))
+
                 p.child_population = Number((mc.locality?.population?.population_child * existingConditions.child_population)
                     .toFixed(1))
 
@@ -140,7 +145,32 @@ export class PointsService {
                 points.push(p)
             })
 
+            // sort ASC|DESC
+            dto.mc_population_adult_order ? points = this.sortSolutionsMCSByASCDesc(points, "adult_population", dto.mc_population_adult_order) : null
+            dto.mc_population_child_order ? points = this.sortSolutionsMCSByASCDesc(points, "child_population", dto.mc_population_child_order) : null
+            dto.foundation_year_order ? points = this.sortSolutionsMCSByASCDesc(points, "foundation_year", dto.foundation_year_order) : null
+            dto.mc_staffing_order ? points = this.sortSolutionsMCSByASCDesc(points, "staffing", dto.mc_staffing_order) : null
+            dto.sum_order ? points = this.sortSolutionsMCSByASCDesc(points, "sum", dto.sum_order) : null
+
             return points
         }
     }
+
+    // Function to sort points array by adult_population with direction
+    sortSolutionsMCSByASCDesc(points: SolutionsMCS[], field = "adult_population", direction: 'ASC' | 'DESC' = 'ASC',) {
+        return points.sort((a, b) => {
+            let aValue = a[field] ?? 0;
+            let bValue = b[field] ?? 0;
+
+            if (isNaN(aValue)) aValue = 0
+            if (isNaN(bValue)) bValue = 0
+
+            if (direction === 'ASC') {
+                return aValue - bValue;
+            } else {
+                return bValue - aValue;
+            }
+        });
+    }
+
 }

@@ -16,12 +16,12 @@ export const TableMCS:
 
     const columns = [
         {col: 'МП', filterName: "mc_name_order", hasFilter: false},
-        {col: 'Взрослое насел.', filterName: "mc_population_adult_order", hasFilter: false},
-        {col: 'Детское насел.', filterName: "mc_population_child_order", hasFilter: false},
-        {col: 'Год', filterName: "foundation_year_order", hasFilter: false},
-        {col: 'Медик', filterName: "mc_staffing_order", hasFilter: false},
+        {col: 'Взрослое насел.', filterName: "mc_population_adult_order", hasFilter: true},
+        {col: 'Детское насел.', filterName: "mc_population_child_order", hasFilter: true},
+        {col: 'Год', filterName: "foundation_year_order", hasFilter: true},
+        {col: 'Медик', filterName: "mc_staffing_order", hasFilter: true},
         {col: 'Состояние', filterName: "state_order", hasFilter: false},
-        {col: 'Сумма', filterName: "", hasFilter: false},
+        {col: 'Сумма', filterName: "sum_order", hasFilter: true},
     ]
 
     const [selectedFilter, setSelectedFilter] = useState({

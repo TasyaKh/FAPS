@@ -3,7 +3,8 @@ POST http://localhost:3002/api/auth/sign-up
 content-type: application/json
 
 {
-  "name": "expert",
+  "name": "user2",
+  "email": "deneg.null@gmail.com",
   "password": "12345679"
 }
 
@@ -12,8 +13,8 @@ POST http://localhost:3002/api/auth/login
 content-type: application/json
 
 {
-  "nameEmail": "admin",
-  "password": "123456"
+  "nameEmail": "expert",
+  "password": "12345679"
 }
 
 ### auth/forgot-password

@@ -1,0 +1,12 @@
+### DEV dev/openrouteservice_distances
+
+POST http://localhost:3000/api/dev/openrouteservice_distances
+content-type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6ImFkbWluIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzE0NzkxMTg1LCJleHAiOjE3MTQ4Nzc1ODV9.tuFKhb4yRjetTSIt4V1eGV7t3GLq0kvURQcwujoH-Pk
+
+{
+  "district_id":1,
+  "region_id":1,
+  "distance": 30
+}
+
