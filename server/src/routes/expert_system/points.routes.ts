@@ -25,14 +25,16 @@ export default (app: Router) => {
             }),
         }),
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            const userId = req.user.id
-            const body = req.query as LocalitiesAndNearMcsDto
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                const userId = req.user.id
+                const body = req.query as LocalitiesAndNearMcsDto
 
-            const pointsService = new PointsService()
-            const result = await pointsService.getSolutionsLocalities(userId, body)
+                const pointsService = new PointsService()
+                const result = await pointsService.getSolutionsLocalities(userId, body)
 
-            res.json(result)
+                res.json(result)
+            }
         }
     )
 
@@ -48,20 +50,23 @@ export default (app: Router) => {
             }),
         }),
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            const userId = req.user.id
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
 
-            const pointsService = new PointsService()
-            try {
-                const uS = new UserService()
-                const user = await uS.getUser(userId)
-                await pointsService.createOrUpdateConditionsLocality(user, req.body as ConditionsLocalityDto);
-            } catch (err) {
-                res.status(500).json({message: err})
-                console.log(err)
+                const userId = req.user.id
+
+                const pointsService = new PointsService()
+                try {
+                    const uS = new UserService()
+                    const user = await uS.getUser(userId)
+                    await pointsService.createOrUpdateConditionsLocality(user, req.body as ConditionsLocalityDto);
+                } catch (err) {
+                    res.status(500).json({message: err})
+                    console.log(err)
+                }
+
+                res.status(200).json({message: "Сохранено"})
             }
-
-            res.status(200).json({message: "Сохранено"})
         }
     )
 
@@ -70,15 +75,17 @@ export default (app: Router) => {
         '/conditions-localities',
         verifyUserToken,
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            const userId = req.user.id
-            const pointsService = new PointsService()
-            try {
-                const data = await pointsService.getConditionsLocality(userId);
-                return res.status(200).json(data)
-            } catch (err) {
-                res.status(500).json({message: err})
-                console.log(err)
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                const userId = req.user.id
+                const pointsService = new PointsService()
+                try {
+                    const data = await pointsService.getConditionsLocality(userId);
+                    return res.status(200).json(data)
+                } catch (err) {
+                    res.status(500).json({message: err})
+                    console.log(err)
+                }
             }
         }
     )
@@ -91,15 +98,17 @@ export default (app: Router) => {
         '/points-mcs',
         verifyUserToken,
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            const userId = req.user.id
-            const pointsService = new PointsService()
-            try {
-                const data = await pointsService.getPointsMCS(userId);
-                return res.status(200).json(data)
-            } catch (err) {
-                res.status(500).json({message: err})
-                console.log(err)
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                const userId = req.user.id
+                const pointsService = new PointsService()
+                try {
+                    const data = await pointsService.getPointsMCS(userId);
+                    return res.status(200).json(data)
+                } catch (err) {
+                    res.status(500).json({message: err})
+                    console.log(err)
+                }
             }
         }
     )
@@ -121,20 +130,22 @@ export default (app: Router) => {
         }),
 
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            const userId = req.user.id
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                const userId = req.user.id
 
-            const pointsService = new PointsService()
-            try {
-                const uS = new UserService()
-                const user = await uS.getUser(userId)
-                await pointsService.createOrUpdatePointsMCS(user, req.body as PointsMedicalCenterDto);
-            } catch (err) {
-                res.status(500).json({message: err})
-                console.log(err)
+                const pointsService = new PointsService()
+                try {
+                    const uS = new UserService()
+                    const user = await uS.getUser(userId)
+                    await pointsService.createOrUpdatePointsMCS(user, req.body as PointsMedicalCenterDto);
+                } catch (err) {
+                    res.status(500).json({message: err})
+                    console.log(err)
+                }
+
+                res.status(200).json({message: "Сохранено"})
             }
-
-            res.status(200).json({message: "Сохранено"})
         }
     )
 
@@ -148,14 +159,16 @@ export default (app: Router) => {
             }),
         }),
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            const userId = req.user.id
-            const body: MedicalCenterDto = req.query
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                const userId = req.user.id
+                const body: MedicalCenterDto = req.query
 
-            const pointsService = new PointsService()
-            const result = await pointsService.getSolutionsMCS(userId, body, res)
+                const pointsService = new PointsService()
+                const result = await pointsService.getSolutionsMCS(userId, body, res)
 
-            res.json(result)
+                res.json(result)
+            }
         }
     )
 }

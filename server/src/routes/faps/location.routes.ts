@@ -138,19 +138,21 @@ export default (app: Router) => {
         '/update/district',
         verifyUserToken,
         async (req, res) => {
-            try {
-                checkUserRoleOrErr(req, res, Roles.EXPERT)
-                const entityManager = AppDataSource.createEntityManager()
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
+                    const entityManager = AppDataSource.createEntityManager()
 
-                const query = "UPDATE `district` SET `region_id` = " + req.body.region_id + ", `name` = '" + req.body.name + "' WHERE `district`.`id` = " + req.body.id
+                    const query = "UPDATE `district` SET `region_id` = " + req.body.region_id + ", `name` = '" + req.body.name + "' WHERE `district`.`id` = " + req.body.id
 
-                const result = await entityManager.query(query)
-                res.json({
-                    success: true
-                })
-            } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                    const result = await entityManager.query(query)
+                    res.json({
+                        success: true
+                    })
+                } catch (e) {
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                }
             }
         }
     )
@@ -160,19 +162,21 @@ export default (app: Router) => {
         '/update/locality',
         verifyUserToken,
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            try {
-                const entityManager = AppDataSource.createEntityManager()
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
+                    const entityManager = AppDataSource.createEntityManager()
 
-                const query = "UPDATE `locality` SET `district_id` = '" + req.body.district_id + "', `name` = '" + req.body.name + "' WHERE `locality`.`id` = " + req.body.id
+                    const query = "UPDATE `locality` SET `district_id` = '" + req.body.district_id + "', `name` = '" + req.body.name + "' WHERE `locality`.`id` = " + req.body.id
 
-                const result = await entityManager.query(query)
-                res.json({
-                    success: true
-                })
-            } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                    const result = await entityManager.query(query)
+                    res.json({
+                        success: true
+                    })
+                } catch (e) {
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                }
             }
         }
     )
@@ -182,19 +186,21 @@ export default (app: Router) => {
         '/update/region',
         verifyUserToken,
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            try {
-                const entityManager = AppDataSource.createEntityManager()
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
+                    const entityManager = AppDataSource.createEntityManager()
 
-                const query = "UPDATE `region` SET `name` = '" + req.body.name + "' WHERE `region`.`id` = " + req.body.id
+                    const query = "UPDATE `region` SET `name` = '" + req.body.name + "' WHERE `region`.`id` = " + req.body.id
 
-                const result = await entityManager.query(query)
-                res.json({
-                    success: true
-                })
-            } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                    const result = await entityManager.query(query)
+                    res.json({
+                        success: true
+                    })
+                } catch (e) {
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                }
             }
         }
     )
@@ -206,20 +212,22 @@ export default (app: Router) => {
         '/add/district',
         verifyUserToken,
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            try {
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
 
-                const entityManager = AppDataSource.createEntityManager()
+                    const entityManager = AppDataSource.createEntityManager()
 
-                const query = "INSERT INTO `district` (`id`, `region_id`, `name`) VALUES (NULL, " + req.body.region_id + ", '" + req.body.name + "')"
+                    const query = "INSERT INTO `district` (`id`, `region_id`, `name`) VALUES (NULL, " + req.body.region_id + ", '" + req.body.name + "')"
 
-                const result = await entityManager.query(query)
-                res.json({
-                    success: true
-                })
-            } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                    const result = await entityManager.query(query)
+                    res.json({
+                        success: true
+                    })
+                } catch (e) {
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                }
             }
         }
     )
@@ -229,20 +237,22 @@ export default (app: Router) => {
         '/add/locality',
         verifyUserToken,
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            try {
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
 
-                const entityManager = AppDataSource.createEntityManager()
+                    const entityManager = AppDataSource.createEntityManager()
 
-                const query = "INSERT INTO `locality` (`id`, `district_id`, `name`) VALUES (NULL, " + req.body.district_id + ", '" + req.body.name + "')"
+                    const query = "INSERT INTO `locality` (`id`, `district_id`, `name`) VALUES (NULL, " + req.body.district_id + ", '" + req.body.name + "')"
 
-                const result = await entityManager.query(query)
-                res.json({
-                    success: true
-                })
-            } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                    const result = await entityManager.query(query)
+                    res.json({
+                        success: true
+                    })
+                } catch (e) {
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                }
             }
         }
     )
@@ -252,20 +262,22 @@ export default (app: Router) => {
         '/add/region',
         verifyUserToken,
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            try {
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
 
-                const entityManager = AppDataSource.createEntityManager()
+                    const entityManager = AppDataSource.createEntityManager()
 
-                const query = "INSERT INTO `region` (`id`, `name`) VALUES (NULL, '" + req.body.name + "')"
+                    const query = "INSERT INTO `region` (`id`, `name`) VALUES (NULL, '" + req.body.name + "')"
 
-                const result = await entityManager.query(query)
-                res.json({
-                    success: true
-                })
-            } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                    const result = await entityManager.query(query)
+                    res.json({
+                        success: true
+                    })
+                } catch (e) {
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                }
             }
         }
     )
@@ -278,20 +290,22 @@ export default (app: Router) => {
         '/delete/district',
         verifyUserToken,
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            try {
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
 
-                const entityManager = AppDataSource.createEntityManager()
+                    const entityManager = AppDataSource.createEntityManager()
 
-                const query = "DELETE FROM `district` WHERE `district`.`id` = " + req.body.id
+                    const query = "DELETE FROM `district` WHERE `district`.`id` = " + req.body.id
 
-                const result = await entityManager.query(query)
-                res.json({
-                    success: true
-                })
-            } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                    const result = await entityManager.query(query)
+                    res.json({
+                        success: true
+                    })
+                } catch (e) {
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                }
             }
         }
     )
@@ -301,20 +315,22 @@ export default (app: Router) => {
         '/delete/locality',
         verifyUserToken,
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            try {
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
 
-                const entityManager = AppDataSource.createEntityManager()
+                    const entityManager = AppDataSource.createEntityManager()
 
-                const query = "DELETE FROM `locality` WHERE `locality`.`id` = " + req.body.id
+                    const query = "DELETE FROM `locality` WHERE `locality`.`id` = " + req.body.id
 
-                const result = await entityManager.query(query)
-                res.json({
-                    success: true
-                })
-            } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                    const result = await entityManager.query(query)
+                    res.json({
+                        success: true
+                    })
+                } catch (e) {
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                }
             }
         }
     )
@@ -324,20 +340,22 @@ export default (app: Router) => {
         '/delete/region',
         verifyUserToken,
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            try {
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
 
-                const entityManager = AppDataSource.createEntityManager()
+                    const entityManager = AppDataSource.createEntityManager()
 
-                const query = "DELETE FROM `region` WHERE `region`.`id` = " + req.body.id
+                    const query = "DELETE FROM `region` WHERE `region`.`id` = " + req.body.id
 
-                const result = await entityManager.query(query)
-                res.json({
-                    success: true
-                })
-            } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                    const result = await entityManager.query(query)
+                    res.json({
+                        success: true
+                    })
+                } catch (e) {
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                }
             }
         }
     )

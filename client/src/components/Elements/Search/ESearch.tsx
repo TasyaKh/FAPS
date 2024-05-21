@@ -1,10 +1,10 @@
-import React, {FC, ReactNode} from 'react'
+import React, {FC, ReactNode, useState} from 'react'
 import {TextInput} from "react-materialize";
 import './ESearch.scss'
 
 interface ESearchProps {
-    handleInput?: (e: any) => void
-    handleOnSearch?:(e: any) => void
+    handleInput?: (txt: string) => void
+    handleOnSearch?:(txt: string) => void
     placeholder?: string
     childButton?: ReactNode //maybe we need add some button
 }
@@ -16,30 +16,46 @@ export const ESearch: FC<ESearchProps> = ({
                                               childButton
                                           }) => {
 
+    const [searchTxt, setSearchTxt] = useState("")
+
+    const handleInputT = (e: any) => {
+        const txt:string =  e.target.value.trim().toLowerCase()
+        setSearchTxt(txt)
+        if (handleInput) {
+            handleInput(txt)
+        }
+    }
+
+    const handleOnSearchT = (e: any) => {
+        if (handleOnSearch) {
+            handleOnSearch(searchTxt)
+        }
+    }
+
     return (
-        <>
-            <div className="sidebar__search">
+        <div className="e-sidebar">
+            <div className="e-sidebar__search">
 
                 <TextInput
-                    id="sidebar-input"
-                    inputClassName="sidebar__text-input"
+                    id="e-sidebar-input"
+                    inputClassName="e-sidebar__text-input"
                     placeholder={placeholder}
-                    onChange={handleInput}
+                    onChange={handleInputT}
                 />
 
             </div>
 
-            <div className="sidebar__controls">
+            <div className="e-sidebar__controls">
 
                 <button
-                    className="sidebar__button sidebar__button--search"
-                    onClick={handleOnSearch}
+                    className="e-sidebar__button e-sidebar__button--search"
+                    onClick={handleOnSearchT}
                 >
                     <img src='/img/magnifier.svg' alt="Поиск"/>
                 </button>
 
                 {childButton}
             </div>
-        </>
+        </div>
     )
 }

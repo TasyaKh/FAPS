@@ -8,7 +8,7 @@
     "run": "node dist/my-app.js",
     "build:watch": "tsc --watch",
     "start": "cross-env NODE_ENV=default node app.js",
-    "dev:server": "nodemon src/app.ts",
+    "dev:server": "nodemon  src/app.ts",
     "client:install": "npm install --prefix client",
     "client:build": "npm run build --prefix client",
     "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
@@ -21,11 +21,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@adminjs/express": "^6.1.0",
     "@types/ejs": "^3.1.5",
     "@types/html-pdf": "^3.0.3",
     "@types/multer": "^1.4.11",
     "@types/mysql": "^2.15.24",
     "@types/node-fetch": "^2.6.4",
+    "adminjs": "^7.8.1",
     "axios": "^1.5.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
@@ -68,7 +70,7 @@
     "commonjs": "^0.0.1",
     "concurrently": "^6.3.0",
     "nodemon": "^2.0.22",
-    "ts-node": "^10.9.1",
+    "ts-node": "^10.9.2",
     "typeorm": "^0.3.17",
     "typescript": "^5.3.2"
   }

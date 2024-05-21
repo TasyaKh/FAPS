@@ -14,7 +14,7 @@ export default class EmailService {
 
     async sendPasswordResetEmail(to: string, token: string, firstName?: string) {
         const subject = 'Сбросить пароль';
-        const url = `${(this.HOST)}/reset-password/${token}`;
+        const url = `${(this.HOST)}/auth/reset-password/${token}`;
 
         const htmlEmailContent = `
         <!DOCTYPE html>

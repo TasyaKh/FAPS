@@ -1,6 +1,8 @@
-
-
 ## Клиент (_Windows_)
+
+### Запуск 
+изменить порт в package.json PORT=3456 и proxy
+`npm run start`
 
 ### Ошибка при запуске npm run start в папке \client
 
@@ -19,6 +21,10 @@
 
 
 ## Сервер (Windows)
+
+### Запуск
+изменить config/default.json
+`npm run dev:server`
 
 ### локальная разработка
 

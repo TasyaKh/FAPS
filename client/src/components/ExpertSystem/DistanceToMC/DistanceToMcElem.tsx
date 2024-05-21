@@ -41,7 +41,7 @@ export const DistanceToMcElem:
     return (
         <div className="distance-elem">
             <div className="distance-elem__body">
-                <div className={"distance-elem__link"} onClick={(e) => onMcClick(e, longitude, latitude)}>
+                <div className={"link"} onClick={(e) => onMcClick(e, longitude, latitude)}>
                 <span
                     className={"accent-4 white-text crumb " + (distKm < 10 ? "teal" : (distKm < 20 ? "yellow" : "red"))}>
                     {duration}, {distKm} км.  &rarr;  </span>

@@ -48,16 +48,22 @@ export const Login: FC<Props> = ({onSend}) => {
                         />
                         <label htmlFor="password">Пароль</label>
                     </div>
-                    <button
-                        className="grey p-3 darken-4 white-text rounded my-4 login button col s12"
-                        type="submit"
-                        onClick={authHandler}
-                    >
-                        Войти
-                    </button>
-                    <Link to={"/auth/forgot-password"}>
-                        <div className={"link"}>Забыли пароль?</div>
-                    </Link>
+                    <div className={"col s12"}>
+                        <button
+                            className="grey p-3 darken-4 white-text rounded my-4 login button col s12"
+                            type="submit"
+                            onClick={authHandler}
+                        >
+                            Войти
+                        </button>
+                    </div>
+
+                    <div className={"col s12"}>
+                        <Link to={"/auth/forgot-password"}>
+                            <div className={"link"}>Забыли пароль?</div>
+                        </Link>
+
+                    </div>
 
                 </div>
 

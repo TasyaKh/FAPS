@@ -4,6 +4,9 @@ import path from 'path'
 import AppDataSource from "./typeorm.config";
 import  config from "config";
 import createAppRouter from './routes/createAppRouter'
+
+// import AdminJSExpress from '@adminjs/express'
+
 async function startServer() {
     const app = express()
 // const __dirname = path.resolve()
@@ -12,6 +15,12 @@ async function startServer() {
         // extended: true,
         limit: '50mb'
     }))
+
+    // admin panel
+    // const admin = new AdminJS({})
+    //
+    // const adminRouter = AdminJSExpress.buildRouter(admin)
+    // app.use(admin.options.rootPath, adminRouter)
 
     const appRouter = createAppRouter();
     app.use('/api', appRouter);

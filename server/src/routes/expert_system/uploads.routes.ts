@@ -20,16 +20,17 @@ export default (app: Router) => {
             }),
         }),
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                const userId = req.user.id
+                const body = req.query as LocalitiesAndNearMcsDto
 
-            const userId = req.user.id
-            const body = req.query as LocalitiesAndNearMcsDto
-
-            const uploadsService = new UploadsService()
-            try {
-                await uploadsService.getExcelSolutionsLocalities(userId, res, body)
-            } catch (err) {
-                res.status(500).json({message: err})
+                const uploadsService = new UploadsService()
+                try {
+                    await uploadsService.getExcelSolutionsLocalities(userId, res, body)
+                } catch (err) {
+                    res.status(500).json({message: err})
+                }
             }
         }
     )
@@ -43,16 +44,17 @@ export default (app: Router) => {
             }),
         }),
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                const userId = req.user.id
+                const body = req.query as MedicalCenterDto
 
-            const userId = req.user.id
-            const body = req.query as MedicalCenterDto
-
-            const uploadsService = new UploadsService()
-            try {
-                await uploadsService.getExcelSolutionsMCS(userId, res, body)
-            } catch (err) {
-                res.status(500).json({message: err})
+                const uploadsService = new UploadsService()
+                try {
+                    await uploadsService.getExcelSolutionsMCS(userId, res, body)
+                } catch (err) {
+                    res.status(500).json({message: err})
+                }
             }
         }
     )

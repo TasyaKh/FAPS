@@ -16,8 +16,9 @@ import apiAddress from '../routes/faps/address.routes'
 import apiLocation from '../routes/faps/location.routes'
 
 // expert system
-import apiDev from '../routes/expert_system/dev_fetch_data.routes'
+import apiDev from './expert_system/dev.routes'
 import apiDist from '../routes/expert_system/distance.routes'
+import apiUser from '../routes/expert_system/user.routes'
 
 import apiEdit from '../routes/faps/edit.routes'
 import apiPoints from '../routes/expert_system/points.routes'
@@ -44,10 +45,12 @@ export default () => {
     apiAddress(app);
     apiLocation(app);
     apiEdit(app);
+
     // expert
     apiDev(app);
     apiDist(app);
     apiPoints(app);
+    apiUser(app);
     // reports
     apiUploads(app);
     return app

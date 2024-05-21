@@ -34,7 +34,7 @@ export const ESidebar: FC<ESidebarProps> = ({
 
     const [state, setState] = useState({
         scroll: false,
-        search: null,
+        search: "",
         filter: {
             show: false
         }
@@ -54,8 +54,7 @@ export const ESidebar: FC<ESidebarProps> = ({
         })
     }
 
-    const handleInputSearch = (e: any) => {
-        const txt =  e.target.value.trim().toLowerCase()
+    const handleInputSearch = (txt:string) => {
         setState({...state, 'search':txt})
         onFilterChanged({...filters, search: txt})
     }
@@ -127,7 +126,7 @@ export const ESidebar: FC<ESidebarProps> = ({
             </button>
 
             <div className="sidebar__wrapper">
-
+                {/*filters*/}
                 <ESearchAndFilter
                     filterShow={state.filter.show}
                     scroll={state.scroll}

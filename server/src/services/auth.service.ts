@@ -8,6 +8,7 @@ import express from "express";
 import {v4 as uuid} from 'uuid';
 import {UserService} from "./user.service";
 import EmailService from "./email.service";
+import {UserDto} from "../dto/user.dto";
 
 export const signup = async (newUser: { password: string; name: string, email: string }) => {
 
@@ -131,4 +132,29 @@ export const checkUserRoleOrErr = (req: express.Request, res: express.Response, 
     if (userRole === Roles.ADMIN || roleHierarchy[userRole]?.includes(requiredRole)) {
         return true
     } else res.status(403).send("У вас нет доступа - " + requiredRole);
+}
+
+export const grantRole = async (dto: UserDto) => {
+    const userRepository = AppDataSource.getRepository(User);
+
+    return await userRepository.update(dto.id, {...dto})
+}
+
+export const findUsers = async (dto: UserDto) => {
+    const userRepository = AppDataSource.getRepository(User);
+
+    let query = userRepository.createQueryBuilder("users")
+        .limit(dto.limit)
+        .offset(dto.offset)
+
+    // search
+    dto.search ? query.andWhere(
+        `(LOWER(users.name) like :search 
+         or LOWER(users.email) like :search)`,
+        {
+            search: `%${dto.search}%`,
+        },
+    ) : null
+
+    return query.getManyAndCount()
 }

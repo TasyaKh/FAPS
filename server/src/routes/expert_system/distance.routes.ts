@@ -34,6 +34,7 @@ export default (app: Router) => {
         celebrate({
             params: Joi.object({
                 district_id: Joi.number(),
+                population_id: Joi.number()
             }),
         }),
         async (req, res) => {

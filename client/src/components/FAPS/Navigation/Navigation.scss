@@ -1,5 +1,11 @@
 .navigation {
 
+	.justified-btn{
+		justify-content: center !important;
+		align-items: center;
+		display: flex !important;
+	}
+
 	&__wrapper {
 		z-index: 2;
 	}

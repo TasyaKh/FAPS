@@ -59,33 +59,35 @@ export default (app: Router) => {
         verifyUserToken,
         multer(({storage: storageConfig, fileFilter: fileFilter})).single("filedata"),
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            try {
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
 
-                if (!req.file)
-                    res.status(500).json({message: 'Неверный формат файла'})
+                    if (!req.file)
+                        res.status(500).json({message: 'Неверный формат файла'})
 
-                let query:string = 'INSERT INTO `photo` (`id`, `medical_center_id`, `name`) VALUES (?, ?, ?)'
-                const entityManager = AppDataSource.createEntityManager()
+                    let query: string = 'INSERT INTO `photo` (`id`, `medical_center_id`, `name`) VALUES (?, ?, ?)'
+                    const entityManager = AppDataSource.createEntityManager()
 
-                const result = await entityManager.query(query, [null, req.body.id, req.file.filename]).catch((err)=>{
-                    deleteFile(req.file.filename)
-                    throw err
-                }).then((rows)=>{
-                    res.status(200).send({
-                        message: 'Файл загружен',
-                        image: {
-                            id: rows.insertId,
-                            medical_center_id: parseInt(req.body.id),
-                            name: req.file.filename
-                        }
+                    const result = await entityManager.query(query, [null, req.body.id, req.file.filename]).catch((err) => {
+                        deleteFile(req.file.filename)
+                        throw err
+                    }).then((rows) => {
+                        res.status(200).send({
+                            message: 'Файл загружен',
+                            image: {
+                                id: rows.insertId,
+                                medical_center_id: parseInt(req.body.id),
+                                name: req.file.filename
+                            }
+                        })
                     })
-                })
 
-            } catch (e) {
-                deleteFile(req.file.filename)
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                } catch (e) {
+                    deleteFile(req.file.filename)
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                }
             }
         }
     )
@@ -95,24 +97,25 @@ export default (app: Router) => {
         '/images/delete',
         verifyUserToken,
         async (req, res) => {
-            checkUserRoleOrErr(req, res, Roles.EXPERT)
-            try {
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
 
-                const entityManager = AppDataSource.createEntityManager()
+                    const entityManager = AppDataSource.createEntityManager()
 
-                let query = 'DELETE FROM `photo` WHERE `photo`.`id` = ?'
-                const result = await entityManager.query(query, [req.body.id])
+                    let query = 'DELETE FROM `photo` WHERE `photo`.`id` = ?'
+                    const result = await entityManager.query(query, [req.body.id])
 
-                deleteFile(req.body.name)
+                    deleteFile(req.body.name)
 
-                res.status(200).send({
-                    message: 'Файл удален'
-                })
-            } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                    res.status(200).send({
+                        message: 'Файл удален'
+                    })
+                } catch (e) {
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                }
             }
         }
     )
-
 }
