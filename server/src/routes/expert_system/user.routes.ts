@@ -11,17 +11,16 @@ export default (app: Router) => {
         '/grant-role',
         verifyUserToken,
         async (req: express.Request, res: express.Response) => {
-            checkUserRoleOrErr(req, res, Roles.ADMIN)
+            const granted = checkUserRoleOrErr(req, res, Roles.ADMIN)
+            if (granted) {
+                try {
+                    const dto = req.body as UserDto;
 
-            try {
-                const dto = req.body as UserDto;
-
-                await grantRole(dto).then(() => {
-                    res.status(200).json({message: "Успешно"});
-                })
-
-            } catch (err) {
-                res.status(400).json(err.message)
+                    await grantRole(dto)
+                    res.json({message: "Успешно"});
+                } catch (err) {
+                    res.status(400).json(err.message)
+                }
             }
         }
     )
@@ -35,7 +34,7 @@ export default (app: Router) => {
                 const dto = req.query as UserDto;
 
                 const users = await findUsers(dto)
-                 return res.json(users)
+                res.json(users)
 
             } catch (err) {
                 res.status(400).json(err.message)

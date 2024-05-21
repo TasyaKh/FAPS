@@ -2,11 +2,12 @@ import React, {FC, useState} from 'react'
 import './UserChangeRoles.scss'
 import {DefaultModal} from "../../../components/ExpertSystem/Modals/TemplateModal";
 import {Roles} from "../../../roles";
-import { IUser} from "../../../types/types";
+import {IUser} from "../../../types/types";
 import {useMutation, useQuery} from "react-query";
 import {findUsers, grantRole} from "../../../api/users";
 import {ESearch} from "../../../components/Elements/Search/ESearch";
-import {Button, Select} from "react-materialize";
+import {Button, ProgressBar, Select} from "react-materialize";
+import {showToast} from "../../../functions/toast";
 
 export const UserChangeRoles = () => {
 
@@ -33,6 +34,18 @@ export const UserChangeRoles = () => {
         enabled: true,
     });
 
+    const {
+        mutateAsync,
+        isLoading: grantRoleLoading
+    } = useMutation("grantRole", (newData: IUser) =>
+            grantRole(newData), {
+            onSuccess: (res) => {
+                setModalState({show: false})
+                showToast(res.message, "save")
+            },
+        }
+    );
+
     const handleInputSearch = (txt: string) => {
         setFilters({...filters, 'search': txt})
     }
@@ -45,27 +58,16 @@ export const UserChangeRoles = () => {
     // user modal
     const User = () => {
 
-        const {
-            mutateAsync,
-            isLoading: grantRoleLoading
-        } = useMutation("grantRole", (newData: IUser) =>
-                grantRole(newData), {
-                onSuccess: () => {
-
-                },
-                onError: (error) => {
-
-                },
-            }
-        );
-
         const [selectedRole, setSelectedRole] = useState(Roles.USER);
 
         const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-            const formData:IUser = grantRoleUser;
+            const formData: IUser = grantRoleUser;
             formData.role_name = selectedRole
-            await mutateAsync(formData)
+            await mutateAsync(formData).catch((error) => {
+                if (error)
+                    showToast(error?.toString(), "error")
+            })
         };
 
         const handleRoleChange = (newRole: Roles) => {
@@ -96,6 +98,7 @@ export const UserChangeRoles = () => {
                     <i className="material-icons right">check</i>
                 </button>
             </form>
+            {grantRoleLoading && <ProgressBar/>}
         </div>)
     }
 

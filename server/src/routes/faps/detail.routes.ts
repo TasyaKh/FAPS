@@ -99,17 +99,19 @@ export default (app: Router) => {
         '/delete',
         verifyUserToken,
         async (req, res) => {
-            try {
-                checkUserRoleOrErr(req, res, Roles.EXPERT)
-                const entityManager = AppDataSource.createEntityManager()
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
+                    const entityManager = AppDataSource.createEntityManager()
 
-                const query = 'DELETE FROM `medical_center` WHERE `medical_center`.`id` = ' + req.body.id
+                    const query = 'DELETE FROM `medical_center` WHERE `medical_center`.`id` = ' + req.body.id
 
-                const result = await entityManager.query(query)
-                res.json(result)
-            } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                    const result = await entityManager.query(query)
+                    res.json(result)
+                } catch (e) {
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                }
             }
         }
     )
@@ -119,20 +121,22 @@ export default (app: Router) => {
         '/update',
         verifyUserToken,
         async (req, res) => {
-            try {
-                checkUserRoleOrErr(req, res, Roles.EXPERT)
-                const entityManager = AppDataSource.createEntityManager()
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
+                    const entityManager = AppDataSource.createEntityManager()
 
-                const query = "UPDATE `medical_center` SET `locality_id` = ?, `medical_facility_id` = ?, `type_id` = ?, `name` = ?, `street` = ?, `number_of_house` = ?, `phone` = ?, `latitude` = ?, `longitude` = ?, `pharmacy` = ?, `founding_year` = ?, `availability_of_emergency_mediical_care` = ?, `access_to_primary_health_care` = ?, `founding_year` = ? WHERE `medical_center`.`id` = ?"
-                const data = [req.body.locality_id, req.body.medical_facility_id, req.body.type_id, req.body.name, req.body.street, req.body.number_of_house, req.body.phone, req.body.latitude, req.body.longitude, req.body.pharmacy, null, req.body.availability_of_emergency_mediical_care, req.body.access_to_primary_health_care, req.body.founding_year, req.body.id]
+                    const query = "UPDATE `medical_center` SET `locality_id` = ?, `medical_facility_id` = ?, `type_id` = ?, `name` = ?, `street` = ?, `number_of_house` = ?, `phone` = ?, `latitude` = ?, `longitude` = ?, `pharmacy` = ?, `founding_year` = ?, `availability_of_emergency_mediical_care` = ?, `access_to_primary_health_care` = ?, `founding_year` = ? WHERE `medical_center`.`id` = ?"
+                    const data = [req.body.locality_id, req.body.medical_facility_id, req.body.type_id, req.body.name, req.body.street, req.body.number_of_house, req.body.phone, req.body.latitude, req.body.longitude, req.body.pharmacy, null, req.body.availability_of_emergency_mediical_care, req.body.access_to_primary_health_care, req.body.founding_year, req.body.id]
 
-                const result = await entityManager.query(query, data)
-                res.json({
-                    success: true
-                })
-            } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                    const result = await entityManager.query(query, data)
+                    res.json({
+                        success: true
+                    })
+                } catch (e) {
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+                }
             }
         }
     )
@@ -142,36 +146,38 @@ export default (app: Router) => {
         '/add',
         verifyUserToken,
         async (req, res) => {
-            try {
-                checkUserRoleOrErr(req, res, Roles.EXPERT)
-                const entityManager = AppDataSource.createEntityManager()
+            const granted = checkUserRoleOrErr(req, res, Roles.EXPERT)
+            if (granted) {
+                try {
+                    const entityManager = AppDataSource.createEntityManager()
 
-                if (req.body.phone) {
-                    req.body.phone = req.body.phone.substr(0, 11)
+                    if (req.body.phone) {
+                        req.body.phone = req.body.phone.substr(0, 11)
+                    }
+
+                    if (req.body.founding_year) {
+                        req.body.founding_year = req.body.founding_year.substr(0, 4)
+                    }
+
+                    if (req.body.medical_facility_id === 0) {
+                        req.body.medical_facility_id = null
+                    }
+
+                    const query = "INSERT INTO `medical_center` (`id`, `locality_id`, `medical_facility_id`, `type_id`, `name`, `street`, `number_of_house`, `phone`, `latitude`, `longitude`, `pharmacy`, `founding_year`, `availability_of_emergency_mediical_care`, `access_to_primary_health_care`, `staffing`) VALUES (?);"
+                    const data = [null, req.body.locality_id, req.body.medical_facility_id, req.body.type_id, req.body.name, req.body.street, req.body.number_of_house, req.body.phone, req.body.latitude, req.body.longitude, req.body.pharmacy, req.body.founding_year, req.body.availability_of_emergency_mediical_care, req.body.access_to_primary_health_care, null]
+
+                    const result = await entityManager.query(query, data)
+                    // TODO: CHECK  connection.query(query, [data], (err, rows)
+
+                    res.json({
+                        success: true,
+                        id: result.insertId
+                    })
+
+                } catch (e) {
+                    console.log(e)
+                    res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
                 }
-
-                if (req.body.founding_year) {
-                    req.body.founding_year = req.body.founding_year.substr(0, 4)
-                }
-
-                if (req.body.medical_facility_id === 0) {
-                    req.body.medical_facility_id = null
-                }
-
-                const query = "INSERT INTO `medical_center` (`id`, `locality_id`, `medical_facility_id`, `type_id`, `name`, `street`, `number_of_house`, `phone`, `latitude`, `longitude`, `pharmacy`, `founding_year`, `availability_of_emergency_mediical_care`, `access_to_primary_health_care`, `staffing`) VALUES (?);"
-                const data = [null, req.body.locality_id, req.body.medical_facility_id, req.body.type_id, req.body.name, req.body.street, req.body.number_of_house, req.body.phone, req.body.latitude, req.body.longitude, req.body.pharmacy, req.body.founding_year, req.body.availability_of_emergency_mediical_care, req.body.access_to_primary_health_care, null]
-
-                const result = await entityManager.query(query, data)
-                // TODO: CHECK  connection.query(query, [data], (err, rows)
-
-                res.json({
-                    success: true,
-                    id: result.insertId
-                })
-
-            } catch (e) {
-                console.log(e)
-                res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
             }
         }
     )
