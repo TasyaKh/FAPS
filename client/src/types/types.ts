@@ -79,6 +79,10 @@ export interface IUser {
     email?: string;
     password?: string;
     forgot_password_token?:string
+    role_name?: string;
+
+//     additional
+    search?:string
 }
 
 // --------------------------------------------------------------------------------------------------------------

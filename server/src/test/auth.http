@@ -13,8 +13,8 @@ POST http://localhost:3002/api/auth/login
 content-type: application/json
 
 {
-  "nameEmail": "expert",
-  "password": "12345679"
+  "nameEmail": "admin",
+  "password": "123456"
 }
 
 ### auth/forgot-password

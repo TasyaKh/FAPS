@@ -89,13 +89,26 @@ export const ENavigation: FC<ENavigationProps> = ({
                     {/*Калькулятор*/}
                     {roleHierarchy[role]?.includes(Roles.EXPERT) ?
                         <div className={'navigation__button navigation__link'}>
-                            <Link to="/expert-system/solution-localities" className="auth-btn">
+                            <Link to="/expert-system/solution-localities" className="justified-btn">
                                 <Button
                                     className="grey darken-4 "
                                     node="button"
                                     waves="light"
                                 >
                                     Калькулятор
+                                </Button>
+                            </Link></div> : null
+                    }
+
+                    {roleHierarchy[role]?.includes(Roles.ADMIN) ?
+                        <div className={'navigation__button navigation__link'} >
+                            <Link to="/management" className={"justified-btn"}>
+                                <Button
+                                    className="grey darken-4 "
+                                    node="button"
+                                    waves="light"
+                                >
+                                    Админ панель
                                 </Button>
                             </Link></div> : null
                     }

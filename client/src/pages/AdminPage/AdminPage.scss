@@ -1,44 +1,4 @@
 .management {
+	background: #e6e6e6;
 	height: 100vh;
-	min-height: 100%;
-
-	&__header {
-		margin-top: 80px;
-		margin-bottom: 50px;
-	}
-
-	&__title {
-		font-size: 36px;
-		font-weight: bold;
-		margin: 0;
-	}
-
-	&__wrapper {
-		display: flex;
-		justify-content: space-between;
-		flex-wrap: wrap;
-	}
-
-	&__block {
-		max-width: 47%;
-		width: 100%;
-		margin-bottom: 80px;
-	}
-
-	&__nav {
-		margin: 20px 0;
-	}
-}
-
-@media only screen and (max-width: 1024px) {
-	.management {
-
-		&__container {
-			width: 80%;
-		}
-
-		&__block {
-			max-width: 100%;
-		}
-	}
 }

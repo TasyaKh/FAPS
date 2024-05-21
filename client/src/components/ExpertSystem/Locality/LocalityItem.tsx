@@ -29,7 +29,7 @@ export const LocalityItem: FC<LocalityItemProps> = ({locality, onLocalityTitleCl
             let dist = locality.min_distance
             let formattedDist = distKm(dist)
             setMinDistKmMc(formattedDist)
-        } else setMinDistKmMc("0")
+        } else setMinDistKmMc("-1")
 
         // medical center durationMc
         if (locality.min_duration)

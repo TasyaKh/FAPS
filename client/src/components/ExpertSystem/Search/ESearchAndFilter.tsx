@@ -7,7 +7,7 @@ import {ESearch} from "../../Elements/Search/ESearch";
 
 interface ESearchProps {
     scroll: boolean,
-    handleInput: (e: any) => void
+    handleInput: (txt:string) => void
     handleFilter: (e: any) => void
     filterShow: boolean
     onFilterChanged: (changed: IFilterEMap) => void
