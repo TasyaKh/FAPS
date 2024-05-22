@@ -27,7 +27,9 @@
   },
   "scripts": {
     "start": "set PORT=3456 && react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts build",
+    "build": "npm run clean && npm run copy && tsc && react-scripts build",
+    "clean": "rimraf build",
+    "copy": "copyfiles -u 1 src/**/*.scss build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
