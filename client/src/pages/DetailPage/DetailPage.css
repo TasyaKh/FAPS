@@ -1,0 +1,112 @@
+.detail {
+  height: 100vh;
+}
+.detail__wrapper {
+  padding: 50px 0;
+}
+.detail__controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.detail__button {
+  margin-right: 5px;
+}
+.detail__button:last-of-type {
+  margin-right: 0;
+}
+.detail__title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+.detail__gallery {
+  margin: 40px 0 0 0;
+}
+.detail__map {
+  margin: 20px 0;
+}
+.detail__info {
+  margin: 20px 0;
+}
+.detail__preloader {
+  background-color: #f1f1f1;
+  position: relative;
+  margin-top: 4px;
+  margin-bottom: 7px;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.detail__preloader:before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0));
+  animation: shine 2s infinite;
+}
+@keyframes shine {
+  100% {
+    transform: translateX(100%);
+  }
+}
+.detail__block {
+  margin: 5px 0;
+}
+.detail__back-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.detail__back-button:focus, .detail__back-button:hover {
+  background-color: transparent;
+}
+.detail__back-button:focus svg, .detail__back-button:hover svg {
+  fill: #000000;
+}
+.detail__back-button span {
+  transform: rotate(180deg);
+  margin-right: 5px;
+  display: inline-block;
+  line-height: 15px;
+}
+.detail__elem {
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 5px;
+}
+.detail__map, .detail__y-map {
+  width: 100%;
+  height: 300px;
+}
+
+@media only screen and (max-width: 425px) {
+  .detail {
+    font-size: 14px;
+  }
+  .detail__button {
+    font-size: 12px;
+  }
+  .detail__info {
+    margin: 10px 0;
+  }
+  .detail__gallery {
+    margin: 20px 0 0 0;
+  }
+  .detail__wrapper {
+    padding: 15px 0;
+  }
+  .detail__title {
+    font-size: 18px;
+  }
+}
+
+/*# sourceMappingURL=DetailPage.css.map */

@@ -1,0 +1,10 @@
+{
+  "apps" : [
+    {
+      "name"      : "app.ts",
+      "script"    : "npx",
+      "interpreter": "none",
+      "args": "serve -p 8443 -T"
+    }
+  ]
+}

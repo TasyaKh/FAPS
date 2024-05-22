@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title><%=title %></title>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            font-weight: 400;
+            width: 100%;
+            zoom: <%=zoom %>;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            width: 100%;
+            line-height: 1.65;
+            font-size: 14px;
+            color: #000000;
+            padding: 20px;
+            font-weight: 400;
+        }
+
+        .document__title {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        .header {
+            width: 100%;
+        }
+
+        .header__title {
+            margin: 0;
+            float: left;
+            max-width: 70%;
+            width: 100%;
+        }
+
+        .header__info {
+            float: right;
+            text-align: right;
+        }
+
+        .clearfix { clear: both; }
+
+        .table {
+            width: 100%;
+            display: table;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .table__wrapper {
+            margin-top: 40px;
+        }
+
+        tr {
+            border-bottom: 1px solid rgba(0,0,0,0.12);
+        }
+
+        td, th {
+            padding: 15px 5px;
+            display: table-cell;
+            text-align: left;
+            vertical-align: middle;
+            border-radius: 2px;
+        }
+
+        .table tr td, .table tr th {
+            page-break-inside: avoid;
+        }
+
+        .params {
+            margin-top: 20px;
+        }
+
+        .params__title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header__title">
+            <h1 class="document__title"><%=title %></h1>
+        </div>
+        <div class="header__info">
+            <p>Дата: <%=date %></p>
+        </div>
+    </header>
+    <div class="clearfix"></div>
+
+    <% if(params.length > 0){ %>
+
+        <div class="params">
+
+            <div class="params__title">
+                Параметры поиска:
+            </div>
+
+            <div class="params__wrapper">
+
+                <% for (var i = 0; i < params.length; i++) {%>
+                    <div class="params__item">
+                        <b><%=params[i].name %>:</b> <%=params[i].value %>
+                    </div>
+                <%} %>
+
+            </div>
+
+        </div>
+
+    <% } %>
+
+
+    <div class="table__wrapper">
+
+        <Table class="table">
+            <thead>
+            <tr>
+                <% for(let i = 0; i < headers.length; i++) {%>
+                    <th>
+                        <%=headers[i] %>
+                    </th>
+                <%} %>
+            </tr>
+            </thead>
+            <tbody>
+            <% for(let i = 0; i < data.length; i++) {%>
+                <tr>
+                    <td><%=i+1 %></td>
+                    <% for(let j = 0; j < data[i].length; j++) {%>
+                        <td>
+                            <% switch (data[i][j]) {
+                            case null: %>
+                            -
+                            <% break;
+
+                            case 1: %>
+                            Есть
+                            <% break;
+
+                            case 0: %>
+                            Нет
+                            <% break;
+
+                            default: %>
+                            <%=data[i][j] %>
+                            <% break;
+
+                            } %>
+                        </td>
+                    <%} %>
+                </tr>
+            <%} %>
+
+            </tbody>
+        </Table>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+.report-panel {
+  background-color: #ffffff;
+  position: fixed;
+  overflow: hidden;
+  top: 20px;
+  right: 20px;
+  border-radius: 8px;
+  max-width: 640px;
+  width: 100%;
+  z-index: 3;
+}
+.report-panel .select-dropdown {
+  max-height: 300px;
+}
+.report-panel__wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.report-panel__wrapper:last-of-type {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+.report-panel__container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.report-panel__container--margin {
+  margin-top: 20px;
+}
+.report-panel__close {
+  position: absolute;
+  top: 24px;
+  right: 25px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.report-panel__collapsible {
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+}
+.report-panel__collapsible-item--prepared .input-field {
+  margin-top: 0;
+}
+.report-panel__collapsible-item:last-of-type .collapsible-body {
+  border-bottom: none;
+}
+.report-panel__collapsible-item.active .collapsible-header {
+  border-bottom: none;
+}
+.report-panel__collapsible-item .collapsible-header {
+  font-size: 18px;
+  padding: 20px 30px;
+}
+.report-panel__collapsible-item .collapsible-body {
+  padding: 20px 30px;
+}
+.report-panel__button {
+  margin: 5px 0;
+}
+.report-panel__select {
+  margin-bottom: 10px;
+  max-width: 280px;
+}
+.report-panel__subtitle {
+  font-size: 18px;
+  padding: 0;
+  margin: 10px 0 25px;
+}
+.report-panel__subtitle--margin {
+  margin: 10px 0 0 0;
+}
+.report-panel__span {
+  display: block;
+}
+.report-panel__label {
+  margin-left: 5px;
+}
+.report-panel__button {
+  min-height: 40px;
+  height: auto;
+  line-height: 1.6;
+}
+.report-panel__button--close {
+  display: none;
+}
+.report-panel__block--half {
+  width: 48%;
+}
+.report-panel__block--wrap .input-field {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+.report-panel__block [type=checkbox] + span:not(.lever) {
+  line-height: 130%;
+}
+
+@media only screen and (max-width: 768px) {
+  .report-panel {
+    max-width: 100%;
+    width: auto;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    z-index: 2;
+    overflow-y: auto;
+    height: auto;
+    max-height: 97%;
+  }
+  .report-panel__controls {
+    margin-bottom: 10px;
+  }
+  .report-panel__button--close {
+    margin-left: 10px;
+    display: inline-block;
+  }
+}
+@media only screen and (max-width: 425px) {
+  .report-panel__collapsible-item .collapsible-header {
+    padding: 15px 20px;
+  }
+  .report-panel__collapsible-item .collapsible-body {
+    padding: 10px 20px;
+  }
+  .report-panel__block--half {
+    width: 100%;
+  }
+  .report-panel__block--mobile-width {
+    flex-direction: column;
+  }
+  .report-panel__control {
+    width: 100%;
+  }
+  .report-panel__button {
+    font-size: 12px;
+  }
+  .report-panel__button--close {
+    margin-top: 10px;
+    margin-left: 0;
+  }
+}
+
+/*# sourceMappingURL=ReportPanel.css.map */

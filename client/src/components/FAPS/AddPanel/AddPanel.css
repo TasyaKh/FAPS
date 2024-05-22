@@ -1,0 +1,33 @@
+.add-panel__row {
+  display: flex;
+  width: 100%;
+}
+.add-panel__column {
+  width: 33%;
+  margin-right: 20px;
+}
+.add-panel__block--height {
+  min-height: 36px;
+  margin-top: 10px;
+}
+.add-panel__block--height label {
+  position: relative;
+}
+.add-panel__block img {
+  max-width: 100%;
+}
+.add-panel__input[type=text]:not(.browser-default) {
+  margin-bottom: 0;
+}
+.add-panel .input-field {
+  margin: 20px 0;
+}
+.add-panel .input-field.col label {
+  left: 0;
+  color: #000000;
+}
+.add-panel .select-wrapper {
+  margin-bottom: 10px;
+}
+
+/*# sourceMappingURL=AddPanel.css.map */

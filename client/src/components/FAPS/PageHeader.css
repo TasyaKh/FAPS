@@ -1,0 +1,57 @@
+.page-header__title {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 0;
+}
+.page-header__subtitle {
+  font-size: 18px;
+}
+.page-header__controls {
+  margin: 50px 0;
+}
+.page-header__controls a {
+  vertical-align: middle;
+}
+.page-header__control {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  line-height: 36px;
+  height: 36px;
+  display: inline-block;
+}
+.page-header__search-filter {
+  position: absolute;
+  right: 0;
+  left: auto;
+  top: 50px;
+}
+
+@media only screen and (max-width: 768px) {
+  .page-header__controls {
+    margin: 30px 0;
+  }
+}
+@media only screen and (max-width: 425px) {
+  .page-header__title {
+    font-size: 26px;
+  }
+  .page-header__subtitle {
+    font-size: 14px;
+    margin: 12px 0 6px 0;
+  }
+  .page-header__controls {
+    margin: 15px 0;
+  }
+  .page-header__search {
+    margin-top: 40px;
+  }
+  .page-header__control {
+    display: block;
+    width: 100%;
+  }
+  .page-header__control > button {
+    width: 100%;
+  }
+}
+
+/*# sourceMappingURL=PageHeader.css.map */

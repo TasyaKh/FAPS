@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.ts",
+
   "scripts": {
     "build": "tsc",
-    "run": "node dist/my-app.js",
+    "clean": "rimraf dist",
+    "run": "nodemon dist/src/app.js",
     "build:watch": "tsc --watch",
     "start": "cross-env NODE_ENV=default node app.js",
     "dev:server": "nodemon  src/app.ts",

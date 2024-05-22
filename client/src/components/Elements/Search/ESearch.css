@@ -1,0 +1,36 @@
+.search {
+  position: relative;
+}
+.search__controls {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+.search__button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: transparent;
+  margin: 0 10px 0 0;
+  padding: 0;
+}
+.search__button:focus, .search__button:hover {
+  background-color: transparent;
+}
+.search__button:last-of-type {
+  margin: 0;
+}
+.search__button--search {
+  width: 16px;
+  height: 16px;
+}
+.search__button--search img {
+  width: inherit;
+  height: inherit;
+  opacity: 0.5;
+}
+
+/*# sourceMappingURL=ESearch.css.map */

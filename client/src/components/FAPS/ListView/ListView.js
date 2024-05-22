@@ -1,5 +1,5 @@
 import React from 'react'
-import './ListView.scss'
+import './list-view.scss'
 import {SearchView} from "../Search/SearchView";
 import getAddress from "../../../functions/getAddress"
 

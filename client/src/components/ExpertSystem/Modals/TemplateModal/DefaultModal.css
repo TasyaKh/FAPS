@@ -1,0 +1,40 @@
+.modal-panel {
+  background-color: #ffffff;
+  position: fixed;
+  overflow: hidden;
+  top: 20px;
+  right: 20px;
+  border-radius: 8px;
+  max-width: 640px;
+  width: 100%;
+  z-index: 3;
+  overflow-y: auto;
+  height: auto;
+  max-height: 97%;
+}
+.modal-panel__close {
+  position: absolute;
+  top: 24px;
+  right: 25px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.modal-panel__collapsible {
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+}
+.modal-panel__collapsible-item.active .collapsible-header {
+  border-bottom: none;
+}
+.modal-panel__collapsible-item .collapsible-header {
+  font-size: 18px;
+  padding: 20px 30px;
+}
+.modal-panel__collapsible-item .collapsible-body {
+  padding: 20px 30px;
+}
+
+/*# sourceMappingURL=DefaultModal.css.map */

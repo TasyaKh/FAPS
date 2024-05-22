@@ -1,0 +1,50 @@
+.legend-heatmap .block {
+  align-items: center;
+  display: flex;
+}
+.legend-heatmap .block .info-block {
+  display: inline-block;
+  padding: 5px;
+}
+.legend-heatmap .block:first-child .colored-block {
+  border-radius: 20px 20px 0 0;
+}
+.legend-heatmap .block:last-child .colored-block {
+  border-radius: 0px 0px 20px 20px;
+}
+.legend-heatmap .block .colored-block {
+  width: 20px;
+  height: 40px;
+}
+.legend-heatmap .block:nth-child(1) .colored-block {
+  background-color: rgba(0, 8, 230, 0.4);
+}
+.legend-heatmap .block:nth-child(2) .colored-block {
+  background-color: rgba(0, 180, 230, 0.4);
+}
+.legend-heatmap .block:nth-child(3) .colored-block {
+  background-color: rgba(0, 220, 230, 0.5);
+}
+.legend-heatmap .block:nth-child(4) .colored-block {
+  background-color: rgba(0, 250, 195, 0.5);
+}
+.legend-heatmap .block:nth-child(5) .colored-block {
+  background-color: rgba(0, 230, 19, 0.6);
+}
+.legend-heatmap .block:nth-child(6) .colored-block {
+  background-color: rgba(138, 230, 0, 0.6);
+}
+.legend-heatmap .block:nth-child(7) .colored-block {
+  background-color: rgba(230, 226, 0, 0.7);
+}
+.legend-heatmap .block:nth-child(8) .colored-block {
+  background-color: rgba(230, 176, 0, 0.8);
+}
+.legend-heatmap .block:nth-child(9) .colored-block {
+  background-color: rgba(230, 123, 0, 0.9);
+}
+.legend-heatmap .block:nth-child(10) .colored-block {
+  background-color: rgb(230, 69, 0);
+}
+
+/*# sourceMappingURL=ELegendHetmap.css.map */

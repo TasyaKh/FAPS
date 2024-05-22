@@ -1,0 +1,21 @@
+.rates-item {
+  padding: 20px;
+  border: 1px dotted rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  position: relative;
+}
+.rates-item__percent {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-weight: bold;
+  font-size: 35px;
+}
+.rates-item__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+/*# sourceMappingURL=RatesItem.css.map */

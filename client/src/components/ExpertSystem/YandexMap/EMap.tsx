@@ -132,20 +132,21 @@ export const EMap: FC<EMapProps> = ({
     // get heatmap points
     function prepareFeaturesHeatmap(localities) {
         let features = []
-        localities?.forEach((locality) => {
-            let weight = getPopulationWeight(locality.population_population_adult ?? 0)
-            features.push({
-                id: locality.id,
-                type: 'Feature',
-                geometry: {
-                    type: 'Point',
-                    coordinates: [locality.locality_latitude, locality.locality_longitude]
-                },
-                properties: {
-                    weight: weight // set weight on base of population
-                }
+        if (localities)
+            localities?.forEach((locality) => {
+                let weight = getPopulationWeight(locality.population_population_adult ?? 0)
+                features.push({
+                    id: locality.id,
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [locality.locality_latitude, locality.locality_longitude]
+                    },
+                    properties: {
+                        weight: weight // set weight on base of population
+                    }
+                })
             })
-        })
 
         return features
     }
@@ -176,7 +177,7 @@ export const EMap: FC<EMapProps> = ({
                     '0.9': 'rgba(230,123,0,0.9)',
                     '1.0': 'rgba(230,69,0,1)',
                 })
-            console.log('features', features)
+                console.log('features', features)
                 heatmap.setMap(map);
             }
         );

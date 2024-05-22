@@ -1,0 +1,42 @@
+.view {
+  height: 100vh;
+  min-height: 100%;
+}
+.view__header {
+  margin-top: 80px;
+}
+.view__reports {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+}
+.view__report-panel {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+.view .table-container {
+  margin: 80px auto 80px auto;
+}
+
+@media only screen and (max-width: 1280px) {
+  .view__container,
+  .view .table-container {
+    width: 90%;
+  }
+}
+@media only screen and (max-width: 425px) {
+  .view__header {
+    margin-top: 40px;
+  }
+  .view .table-container {
+    margin: 40px auto;
+  }
+}
+
+/*# sourceMappingURL=ViewPage.css.map */

@@ -1,0 +1,71 @@
+.error-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+.error-page__icon {
+  display: block;
+  font-size: 150px;
+  margin-bottom: 120px;
+  z-index: 2;
+  color: transparent;
+  position: relative;
+}
+.error-page__title {
+  font-weight: normal;
+  text-align: center;
+  font-size: 30px;
+  position: relative;
+  margin-top: 100px;
+  z-index: 2;
+}
+.error-page__title span {
+  z-index: 1;
+  color: #ebebeb;
+  font-size: 400px;
+  display: block;
+  font-weight: bold;
+  line-height: 1;
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+}
+.error-page__button {
+  margin-right: 10px;
+}
+.error-page__button:last-of-type {
+  margin-right: 0;
+}
+.error-page__buttons {
+  text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .error-page__icon {
+    margin-bottom: 80px;
+    font-size: 40px;
+  }
+  .error-page__title {
+    font-size: 24px;
+  }
+  .error-page__title span {
+    font-size: 200px;
+  }
+}
+@media only screen and (max-width: 425px) {
+  .error-page__icon {
+    margin-bottom: 70px;
+    font-size: 20px;
+  }
+  .error-page__title {
+    font-size: 18px;
+  }
+  .error-page__title span {
+    font-size: 150px;
+  }
+}
+
+/*# sourceMappingURL=ErrorPage.css.map */

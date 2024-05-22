@@ -1,0 +1,112 @@
+.search-filter {
+  position: fixed;
+  top: 12px;
+  left: 365px;
+  min-width: 280px;
+}
+.search-filter .select-dropdown {
+  max-height: 500px;
+}
+.search-filter__select {
+  margin-bottom: 10px;
+  max-width: 280px;
+}
+.search-filter__block--high {
+  margin-bottom: 25px;
+}
+.search-filter__block--high:last-of-type {
+  margin-bottom: 0;
+}
+.search-filter__block--years {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+.search-filter__span {
+  display: block;
+}
+.search-filter__label {
+  margin-left: 5px;
+}
+.search-filter__title {
+  font-size: 18px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+.search-filter--hidden {
+  display: none;
+}
+.search-filter.inline {
+  min-width: 100%;
+  position: relative;
+  top: 0;
+  box-shadow: none;
+  padding: 20px 0 10px 0;
+}
+
+.inline .search-filter__block--years {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.inline .search-filter__elem {
+  width: 31%;
+}
+.inline .search-filter__elem--offset {
+  margin-top: 40px;
+}
+.inline .search-filter__elem--offset .search-filter__block {
+  margin-bottom: 8px;
+}
+.inline .search-filter__flex {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 768px) {
+  .inline .search-filter__flex {
+    flex-wrap: wrap;
+  }
+  .inline .search-filter__elem {
+    width: 48%;
+  }
+  .inline .search-filter__elem--offset {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  .inline .search-filter__elem--offset .search-filter__block {
+    margin-right: 20px;
+  }
+  .inline .search-filter__block {
+    margin-bottom: 15px;
+  }
+  .inline .search-filter__block--years {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 425px) {
+  .inline .search-filter__flex {
+    flex-wrap: wrap;
+  }
+  .inline .search-filter__elem {
+    width: 100%;
+  }
+  .inline .search-filter__elem--offset {
+    flex-direction: column;
+  }
+  .inline .search-filter__elem--offset .search-filter__block {
+    margin-right: 0;
+  }
+  .inline .search-filter__block {
+    margin-bottom: 15px;
+  }
+  .inline .search-filter__block--years {
+    width: 100%;
+  }
+}
+
+/*# sourceMappingURL=SearchFilter.css.map */

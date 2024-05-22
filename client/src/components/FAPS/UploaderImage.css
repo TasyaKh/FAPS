@@ -1,0 +1,33 @@
+.uploader {
+  border: 1px dashed rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+}
+.uploader:after {
+  display: none;
+}
+.uploader:focus, .uploader:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.uploader input {
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+}
+.uploader--loading {
+  cursor: wait;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.uploader--loading input {
+  pointer-events: none;
+}
+
+/*# sourceMappingURL=UploaderImage.css.map */

@@ -1,5 +1,5 @@
 import React from 'react'
-import '../ListView/ListView.scss'
+import '../ListView/list-view.scss'
 import {CardPanel, TextInput} from "react-materialize";
 import {SearchFilter} from "./SearchFilter"
 import './Search.scss'

@@ -1,0 +1,19 @@
+.scrollbar {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  top: 0;
+  width: 7px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.scrollbar__slider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100px;
+  cursor: grab;
+}
+
+/*# sourceMappingURL=Scrollbar.css.map */

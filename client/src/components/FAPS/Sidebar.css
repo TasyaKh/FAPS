@@ -1,0 +1,151 @@
+.sidebar {
+  box-shadow: 2px 0 2px 0 rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  max-width: 352px;
+  width: 100%;
+  height: 100vh;
+  z-index: 2;
+  position: relative;
+  transition: 0.3s;
+  transform: translateX(0);
+}
+.sidebar img, .sidebar svg {
+  max-width: 100%;
+}
+.sidebar__wrapper {
+  max-height: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.sidebar__header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 20px 20px;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 5px 15px;
+  z-index: 10;
+}
+.sidebar__header--fixed {
+  box-shadow: none;
+}
+.sidebar__panel {
+  overflow-y: scroll;
+  height: 100%;
+  max-height: 100%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.sidebar__panel::-webkit-scrollbar {
+  display: none;
+}
+.sidebar__search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.sidebar__search .input-field {
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.sidebar__controls {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+.sidebar__loader {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  margin-top: 105px;
+}
+.sidebar__toggle-button {
+  background-color: rgba(0, 0, 0, 0.8);
+  border: none;
+  border-radius: 5px;
+  position: absolute;
+  width: 25px;
+  height: 35px;
+  padding: 5px 5px;
+  margin: 0;
+  top: 10px;
+  right: -10px;
+  transform: translateX(100%);
+  z-index: 2;
+  cursor: pointer;
+  display: none;
+}
+.sidebar__toggle-button:before {
+  transition: 0.2s;
+  content: "";
+  width: 2px;
+  height: 5px;
+  position: absolute;
+  left: 9px;
+  top: 10px;
+  border: 7px solid transparent;
+  border-left: 7px solid rgba(255, 255, 255, 0.8);
+  transform: rotate(0);
+}
+.sidebar__button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: transparent;
+  margin: 0 10px 0 0;
+  padding: 0;
+}
+.sidebar__button:focus, .sidebar__button:hover {
+  background-color: transparent;
+}
+.sidebar__button:last-of-type {
+  margin: 0;
+}
+.sidebar__button--filter {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.sidebar__button--filter svg {
+  fill: rgba(0, 0, 0, 0.4);
+}
+.sidebar__button--search {
+  width: 16px;
+  height: 16px;
+}
+.sidebar__button--search img {
+  width: inherit;
+  height: inherit;
+  opacity: 0.5;
+}
+
+@media only screen and (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+  }
+  .sidebar--hidden {
+    transform: translateX(-100%);
+  }
+  .sidebar__toggle-button {
+    display: block;
+  }
+}
+@media only screen and (max-width: 425px) {
+  .sidebar {
+    max-width: 270px;
+  }
+}
+
+/*# sourceMappingURL=Sidebar.css.map */

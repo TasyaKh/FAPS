@@ -1,0 +1,47 @@
+.search-view {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 20px;
+  transition: 0.3s;
+  background-color: #ffffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+.search-view:focus, .search-view:hover {
+  background-color: #f6f6f6;
+  cursor: pointer;
+}
+.search-view:last-of-type {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.search-view__link {
+  color: #000000;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+}
+.search-view__address {
+  margin-top: 5px;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 14px;
+}
+.search-view__schedule {
+  margin-top: 10px;
+  font-size: 14px;
+}
+.search-view__photo {
+  background-color: #0145fe;
+  border-radius: 5px;
+  width: 64px;
+  height: 64px;
+  position: relative;
+}
+.search-view__photo img {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+/*# sourceMappingURL=SearchView.css.map */

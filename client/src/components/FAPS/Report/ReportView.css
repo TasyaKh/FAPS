@@ -1,0 +1,125 @@
+.report-view__title {
+  font-size: 36px;
+  font-weight: bold;
+}
+.report-view__wrapper {
+  position: relative;
+}
+.report-view__empty {
+  width: 100%;
+  text-align: center;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.report-view__empty--size {
+  max-width: 60px;
+  margin: 20px auto;
+}
+.report-view__empty--size img {
+  max-width: 100%;
+}
+.report-view__empty p {
+  margin: 0;
+}
+.report-view__loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 100%;
+}
+.report-view__loader-message {
+  margin-top: 15px;
+}
+.report-view__modal {
+  width: 100%;
+  max-width: 80%;
+  max-height: 80%;
+}
+.report-view__modal.modal-fixed-footer {
+  height: 100%;
+}
+.report-view__modal.modal .report-view__button--footer {
+  margin-right: 10px;
+}
+.report-view__modal.modal .report-view__button--footer:last-of-type {
+  margin-right: 0;
+}
+.report-view__modal .modal-footer {
+  padding: 10px 24px;
+  height: auto;
+}
+
+@media only screen and (max-width: 768px) {
+  .report-view__modal {
+    top: 50px;
+    max-height: 80%;
+    max-width: 95%;
+  }
+  .report-view__wrapper thead {
+    display: none;
+  }
+  .report-view__wrapper tr {
+    display: block;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+  }
+  .report-view__wrapper tr:last-of-type {
+    margin-bottom: 0;
+  }
+  .report-view__wrapper td {
+    display: block;
+    text-align: right;
+    font-size: 15px;
+    border-bottom: 1px dotted #ccc;
+    padding: 15px;
+  }
+  .report-view__wrapper td:last-of-type {
+    border-bottom: none;
+  }
+  .report-view__wrapper td:before {
+    content: attr(data-label);
+    float: left;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 20px;
+  }
+}
+@media only screen and (max-width: 425px) {
+  .report-view__button--footer {
+    width: 100%;
+  }
+  .report-view__title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .report-view__modal {
+    top: 2% !important;
+    max-height: 96%;
+  }
+  .report-view__modal.modal-fixed-footer .modal-content {
+    padding: 10px;
+    height: calc(100% - 147px);
+  }
+  .report-view__modal .modal-footer {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+  .report-view__modal .modal-footer .btn {
+    margin: 3px 0;
+  }
+  .report-view__wrapper td {
+    font-size: 12px;
+  }
+}
+
+/*# sourceMappingURL=ReportView.css.map */

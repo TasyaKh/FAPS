@@ -1,5 +1,5 @@
 import React, {FC} from 'react'
-import '../../FAPS/ListView/ListView.scss'
+import '../../FAPS/ListView/list-view.scss'
 import {LocalityItem} from "./LocalityItem";
 import {ILocalitiDistToNearectMC, ILocality} from "../../../types/types";
 
