@@ -19,9 +19,9 @@ class DistanceOpenRoute {
     constructor() {
         this.url = config_1.default.get('url_openservice');
     }
-    findDist2Points() {
-        return __awaiter(this, arguments, void 0, function* (from = [0, 0], to = [0, 0]) {
-            var _a, _b;
+    findDist2Points(from = [0, 0], to = [0, 0]) {
+        var _a, _b;
+        return __awaiter(this, void 0, void 0, function* () {
             // const query= "driving-car"
             const data = {
                 locations: [from, to],

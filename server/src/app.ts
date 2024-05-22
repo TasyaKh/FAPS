@@ -4,12 +4,22 @@ import path from 'path'
 import AppDataSource from "./typeorm.config";
 import  config from "config";
 import createAppRouter from './routes/createAppRouter'
+import cors, {CorsOptions} from 'cors'
 
 // import AdminJSExpress from '@adminjs/express'
 
 async function startServer() {
     const app = express()
 // const __dirname = path.resolve()
+
+    let corsOptions:CorsOptions = {
+        origin:  config.get('SERVER_HOST'),
+        allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Methods', 'Access-Control-Request-Headers'],
+        credentials: true,
+    }
+    app.use(cors(corsOptions))
+    app.use('*', cors(corsOptions ))
+
 
     app.use(express.json({
         // extended: true,

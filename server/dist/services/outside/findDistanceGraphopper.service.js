@@ -19,8 +19,8 @@ class Distance {
         this.defaultKey = config_1.default.get('api_graphopper');
         this.url = config_1.default.get('url_graphopper');
     }
-    findDist2Points() {
-        return __awaiter(this, arguments, void 0, function* (from = [0, 0], to = [0, 0]) {
+    findDist2Points(from = [0, 0], to = [0, 0]) {
+        return __awaiter(this, void 0, void 0, function* () {
             const query = new URLSearchParams({
                 key: this.defaultKey
             }).toString();

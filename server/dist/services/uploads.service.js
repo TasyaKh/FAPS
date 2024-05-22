@@ -15,8 +15,8 @@ const exceljs_1 = require("exceljs");
 class UploadsService {
     // excel get solutions for localities
     getExcelSolutionsLocalities(userId, res, locsAndNearMcsDto) {
+        var _a, _b, _c, _d, _e;
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e;
             const pointsService = new points_service_1.PointsService();
             const solutionsLocs = yield pointsService.getSolutionsLocalities(userId, locsAndNearMcsDto);
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -61,8 +61,8 @@ class UploadsService {
     }
     // excel get solutions for localities
     getExcelSolutionsMCS(userId, res, medicalCenterDto) {
+        var _a, _b, _c, _d, _e, _f;
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f;
             const pointsService = new points_service_1.PointsService();
             const solutionsMCS = yield pointsService.getSolutionsMCS(userId, medicalCenterDto, res);
             res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

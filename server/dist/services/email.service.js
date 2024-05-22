@@ -71,8 +71,8 @@ class EmailService {
     }
     // to -which email we nedd to send, subject - some title, html - message
     sendMail(to, subject, html) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            var _a;
             const port = (_a = config_1.default.get("SMTP_PORT")) !== null && _a !== void 0 ? _a : 465;
             const transporter = nodemailer.createTransport({
                 // service: "gmail",

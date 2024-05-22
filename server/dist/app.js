@@ -17,11 +17,19 @@ const path_1 = __importDefault(require("path"));
 const typeorm_config_1 = __importDefault(require("./typeorm.config"));
 const config_1 = __importDefault(require("config"));
 const createAppRouter_1 = __importDefault(require("./routes/createAppRouter"));
+const cors_1 = __importDefault(require("cors"));
 // import AdminJSExpress from '@adminjs/express'
 function startServer() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = (0, express_1.default)();
         // const __dirname = path.resolve()
+        let corsOptions = {
+            origin: config_1.default.get('SERVER_HOST'),
+            allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Methods', 'Access-Control-Request-Headers'],
+            credentials: true,
+        };
+        app.use((0, cors_1.default)(corsOptions));
+        app.use('*', (0, cors_1.default)(corsOptions));
         app.use(express_1.default.json({
             // extended: true,
             limit: '50mb'

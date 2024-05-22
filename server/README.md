@@ -87,6 +87,14 @@ MySQL80 должет быть в состоянии "выполняется" в 
 * **REST Client** (testApi.http, можно быстро протестировать api-шки)
 
 
+## pm2 
+### client
+
+`pm2 serve build/ 3456 --name "client" `
+
+### server
+`pm2 start dist/app.js --name server`
+
 
 
 

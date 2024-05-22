@@ -1,7 +1,8 @@
 import axios, {AxiosInstance} from 'axios';
+import {BASE_URL} from "../config/constants";
 
 const instance: AxiosInstance = axios.create({
-    // baseURL:"http://localhost:3003",
+    baseURL:BASE_URL,
     withCredentials: true,
     headers:{Authorization:localStorage.getItem("authToken")}
 });

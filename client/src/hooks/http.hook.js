@@ -1,4 +1,5 @@
 import {useCallback, useState} from 'react'
+import {BASE_URL} from "../config/constants";
 
 export const useHttp = (callback, deps) => {
     const [loading, setLoading] = useState(false)
@@ -16,7 +17,7 @@ export const useHttp = (callback, deps) => {
                 headers['Content-Type'] = 'application/json'
             }
 
-            const response = await fetch(url, {method, body, headers})
+            const response = await fetch(BASE_URL + url, {method, body, headers})
 
             const data = await response.json()
 
