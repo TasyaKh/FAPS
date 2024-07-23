@@ -21,4 +21,6 @@
 5) Применение фильтров к отображени НП-ов (населенные пункты) и МП-ов (мед. пункты)
 ![image](https://github.com/user-attachments/assets/4dabeaab-439a-44e3-80fc-ad8d2fa72da2)
 
+## Figma
+Макеты интерфейса в Figma. URL: https://www.figma.com/file/mFzD6WFQPeU2d25sfqIhT4/faps%2FaiTranslator?type=design&node-id=0%3A1&mode=design&t=lGm7foEA2wjStH8k-1 (Дата обращения: 28.05.2024)
 
